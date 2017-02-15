@@ -1,0 +1,413 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Applicants Service API",
+        "description": "API to modify and access any/all applicants' information",
+        "version": "1.0.0"
+    },
+    "host": "students.appta.com",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/applicants": {
+            "get": {
+                "operationId": "getApplicants",
+                "summary": "Get Applicants",
+                "description": "The Applicants endpoint returns applicants'information.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "student_number",
+                        "in": "query",
+                        "description": "Student number of applicant.",
+                        "required": false,
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    {
+                        "name": "year_of_study",
+                        "in": "query",
+                        "description": "Applicant year of study.",
+                        "required": false,
+                        "type": "number",
+                        "format": "integer"
+                    },
+                    {
+                        "name": "department",
+                        "in": "query",
+                        "description": "Applicants' department.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "program",
+                        "in": "query",
+                        "description": "Applicants' program.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "emails",
+                        "in": "query",
+                        "description": "Applicants' emails.",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv"
+                    },
+                    {
+                        "name": "courses_taken",
+                        "in": "query",
+                        "description": "Courses taken by applicants. Filters out all applicants who have not taken the courses listed.",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv"
+                    },
+                    {
+                        "name": "previous_assignments",
+                        "in": "query",
+                        "description": "Applicants' previous assignments. Filters out all applicants who have not have not previously been assigned to the courses listed.",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv"
+                    }
+                ],
+                "tags": [
+                    "Applicants"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of applicants. The array is guaranteed to have one element if the student_number parameter is specified.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Applicant"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Applicants Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "createApplicant",
+                "summary": "Create Applicants",
+                "description": "The create applicant endpoint is used to add applicants to the system. There cannot be multiple applicants with the same student number or email.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "applicant",
+                        "in": "body",
+                        "description": "Applicant to create.",
+                        "required": true,
+                        "schema": {
+                          "$ref": "#/definitions/Applicant"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Applicants"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "The applicant object which was created in the system.",
+                        "schema": {
+                            "$ref": "#/definitions/Applicant"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Complete applicant object not provided.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict: Applicant already exists.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+         "/applicants/{id}": {
+            "get": {
+                "operationId": "getApplicantById",
+                "summary": "Get Applicant By Id",
+                "description": "The Applicant by id endpoint returns a single applicant with the specified id.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Applicant Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "tags": [
+                    "Applicants"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single applicant object.",
+                        "schema": {
+                            "$ref": "#/definitions/Applicant"
+                        }
+                    },
+                    "404": {
+                        "description": "Applicants Not Found",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "updateApplicant",
+                "summary": "Update Applicant By Id",
+                "description": "The Update Applicant by id endpoint updates a given applicant with the applicant object provided.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Applicant Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "applicant",
+                        "in": "body",
+                        "description": "Updated applicant onject. Can be partial",
+                        "required": true,
+                        "schema": {
+                          "$ref": "#/definitions/Applicant"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Applicants"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The Applicant object of the updated applicant.",
+                        "schema": {
+                            "$ref": "#/definitions/Applicant"
+                          }
+                    },
+                    "404": {
+                        "description": "Not Found: Applicant to update was not found.",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Valid applicant object not provided.",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict: Applicant with updated sutdent number or email already exists.",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "deleteApplicant",
+                "summary": "Delete Applicant By Id",
+                "description": "Delete an applicant specified by its unique identifier.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Applicant Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "tags": [
+                    "Applicants"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The applicant object of the deleted applicant.",
+                        "schema": {
+                            "$ref": "#/definitions/Applicant"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found: Applicant to delete was not found.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Applicant": {
+            "type": "object",
+            "required": [
+              "courses_taken",
+              "email",
+              "last_name",
+              "first_name",
+              "id",
+              "phone_number",
+              "program",
+              "department",
+              "department_explain",
+              "student_number",
+              "previous_assignments",
+              "work_status",
+              "work_status_explain",
+              "year_of_study"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique identiifer for each applicant."
+                },
+                "student_number": {
+                    "type": "number",
+                    "format": "integer",
+                    "description": "Unique identifier for each student assigned to them by the university."   
+                },
+                "first_name": {
+                    "type": "string",
+                    "description": "Given first name of applicant as per university records."
+                },
+                "last_name": {
+                    "type": "string",
+                    "description": "Last name of applicant as per university records."
+                },
+                "phone_number": {
+                    "type": "string",
+                    "description": "A telephone number at which the applicant can be reached."
+                },
+                "email": {
+                    "type": "string",
+                    "description": "An university email address at which the applicant can be reached."
+                },
+                "program": {
+                    "type": "string",
+                    "description": "The level of study of the applicant. i.e. UG, MSC, PHD"   
+                },
+                "year_of_study": {
+                    "type": "string",
+                    "description": "The year of study of the applicant."
+                },
+                "department": {
+                    "type": "string",
+                    "description": "The department in which the applicant is studying.."
+                },
+                "department_explain": {
+                    "type": "string",
+                    "description": "Explanation of department field."
+                },
+                "work_status": {
+                    "type": "string",
+                    "description": "Work status of the applicant."
+                },
+                "work_status_explain": {
+                    "type": "string",
+                    "description": "Explanation of work_status field."
+                },
+                "student_status": {
+                    "type": "string",
+                    "description": "The student status of the applicant."
+                },
+                "student_status_explain": {
+                    "type": "string",
+                    "description": "Explanation of the student_status field."
+                },
+                "previous_assignments": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Course codes of previous assignments."
+                    }
+                },
+                "courses_taken": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Course codes of courses previously taken."
+                    }
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
