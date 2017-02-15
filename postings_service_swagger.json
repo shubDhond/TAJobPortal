@@ -1,0 +1,57 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Postings Service API",
+        "description": "API to modify and access any/all postings, applications, and courses information",
+        "version": "1.0.0"
+    },
+    "host": "postings.appta.com",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1/api",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        
+    },
+    "definitions": {
+        "Courses": {
+            "type": "object",
+            "required": [
+                "course_code",
+                "course_name"
+            ],
+            "properties": {
+                "course_code": {
+                    "type": "string",
+                    "description": "Unique identiifer for each course."
+                },
+                "course_name": {
+                    "type": "string",
+                    "description": "Name of the course."
+                },
+                "course_description": {
+                    "type": "string",
+                    "description": "Description of the course."
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

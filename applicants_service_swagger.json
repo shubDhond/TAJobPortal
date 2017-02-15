@@ -2,14 +2,14 @@
     "swagger": "2.0",
     "info": {
         "title": "Applicants Service API",
-        "description": "API to modify and access any/all applicants' information",
+        "description": "API to modify and access any/all applicants information",
         "version": "1.0.0"
     },
     "host": "students.appta.com",
     "schemes": [
         "http"
     ],
-    "basePath": "/v1",
+    "basePath": "/v1/api",
     "produces": [
         "application/json"
     ],
@@ -391,6 +391,10 @@
                         "type": "string",
                         "description": "Course codes of courses previously taken."
                     }
+                },
+                "assigned": {
+                    "type": "boolean",
+                    "description": "True or false value of whether the applicant has been assigned to TA a course."
                 }
             }
         },
