@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Applicants Service API",
-        "description": "API to modify and access any/all applicants information",
+        "title": "Applications Service API",
+        "description": "API to modify and access any/all Applications information",
         "version": "1.0.0"
     },
     "host": "students.appta.com",
@@ -14,25 +14,33 @@
         "application/json"
     ],
     "paths": {
-        "/applicants": {
+        "/Applications": {
             "get": {
-                "operationId": "getApplicants",
-                "summary": "Get Applicants",
-                "description": "The Applicants endpoint returns applicants'information.\n",
+                "operationId": "getApplications",
+                "summary": "Get Applications",
+                "description": "The Applications endpoint returns Applications'information.\n",
                 "produces": ["application/json"],
                 "parameters": [
                     {
                         "name": "student_number",
                         "in": "query",
-                        "description": "Student number of applicant.",
+                        "description": "Student number of Application.",
                         "required": false,
                         "type": "number",
                         "format": "integer"
                     },
                     {
+                        "name": "posting_id",
+                        "in": "query",
+                        "description": "The unique identifier of the posting to which this application is for.",
+                        "required": false,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
                         "name": "year_of_study",
                         "in": "query",
-                        "description": "Applicant year of study.",
+                        "description": "Application year of study.",
                         "required": false,
                         "type": "number",
                         "format": "integer"
@@ -40,21 +48,21 @@
                     {
                         "name": "department",
                         "in": "query",
-                        "description": "Applicants' department.",
+                        "description": "Applications' department.",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "program",
                         "in": "query",
-                        "description": "Applicants' program.",
+                        "description": "Applications' program.",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "emails",
                         "in": "query",
-                        "description": "Applicants' emails.",
+                        "description": "Applications' emails.",
                         "required": false,
                         "type": "array",
                         "items": {
@@ -65,7 +73,7 @@
                     {
                         "name": "courses_taken",
                         "in": "query",
-                        "description": "Courses taken by applicants. Filters out all applicants who have not taken the courses listed.",
+                        "description": "Courses taken by Applications. Filters out all Applications who have not taken the courses listed.",
                         "required": false,
                         "type": "array",
                         "items": {
@@ -76,7 +84,7 @@
                     {
                         "name": "previous_assignments",
                         "in": "query",
-                        "description": "Applicants' previous assignments. Filters out all applicants who have not have not previously been assigned to the courses listed.",
+                        "description": "Applications' previous assignments. Filters out all Applications who have not have not previously been assigned to the courses listed.",
                         "required": false,
                         "type": "array",
                         "items": {
@@ -86,20 +94,20 @@
                     }
                 ],
                 "tags": [
-                    "Applicants"
+                    "Applications"
                 ],
                 "responses": {
                     "200": {
-                        "description": "An array of applicants. The array is guaranteed to have one element if the student_number parameter is specified.",
+                        "description": "An array of Applications. The array is guaranteed to have one element if the student_number parameter is specified.",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/Applicant"
+                                "$ref": "#/definitions/Application"
                             }
                         }
                     },
                     "404": {
-                        "description": "Applicants Not Found",
+                        "description": "Applications Not Found",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -113,39 +121,39 @@
                 }
             },
             "post": {
-                "operationId": "createApplicant",
-                "summary": "Create Applicants",
-                "description": "The create applicant endpoint is used to add applicants to the system. There cannot be multiple applicants with the same student number or email.\n",
+                "operationId": "createApplication",
+                "summary": "Create Applications",
+                "description": "The create Application endpoint is used to add Applications to the system. There cannot be multiple Applications with the same student number or email.\n",
                 "produces": ["application/json"],
                 "parameters": [
                     {
-                        "name": "applicant",
+                        "name": "Application",
                         "in": "body",
-                        "description": "Applicant to create.",
+                        "description": "Application to create.",
                         "required": true,
                         "schema": {
-                          "$ref": "#/definitions/Applicant"
+                          "$ref": "#/definitions/Application"
                         }
                     }
                 ],
                 "tags": [
-                    "Applicants"
+                    "Applications"
                 ],
                 "responses": {
                     "201": {
-                        "description": "The applicant object which was created in the system.",
+                        "description": "The Application object which was created in the system.",
                         "schema": {
-                            "$ref": "#/definitions/Applicant"
+                            "$ref": "#/definitions/Application"
                         }
                     },
                     "400": {
-                        "description": "Bad Request: Complete applicant object not provided.",
+                        "description": "Bad Request: Complete Application object not provided.",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
                     },
                     "409": {
-                        "description": "Conflict: Applicant already exists.",
+                        "description": "Conflict: Application already exists.",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -159,34 +167,34 @@
                 }
             }
         },
-         "/applicants/{id}": {
+         "/Applications/{id}": {
             "get": {
-                "operationId": "getApplicantById",
-                "summary": "Get Applicant By Id",
-                "description": "The Applicant by id endpoint returns a single applicant with the specified id.\n",
+                "operationId": "getApplicationById",
+                "summary": "Get Application By Id",
+                "description": "The Application by id endpoint returns a single Application with the specified id.\n",
                 "produces": ["application/json"],
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Unique Applicant Identifier.",
+                        "description": "Unique Application Identifier.",
                         "required": true,
                         "type": "string",
                         "format": "uuid"
                     }
                 ],
                 "tags": [
-                    "Applicants"
+                    "Applications"
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single applicant object.",
+                        "description": "A single Application object.",
                         "schema": {
-                            "$ref": "#/definitions/Applicant"
+                            "$ref": "#/definitions/Application"
                         }
                     },
                     "404": {
-                        "description": "Applicants Not Found",
+                        "description": "Applications Not Found",
                         "schema": {
                           "$ref": "#/definitions/Error"
                         }
@@ -200,53 +208,53 @@
                 }
             },
             "put": {
-                "operationId": "updateApplicant",
-                "summary": "Update Applicant By Id",
-                "description": "The Update Applicant by id endpoint updates a given applicant with the applicant object provided.\n",
+                "operationId": "updateApplication",
+                "summary": "Update Application By Id",
+                "description": "The Update Application by id endpoint updates a given Application with the Application object provided.\n",
                 "produces": ["application/json"],
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Unique Applicant Identifier.",
+                        "description": "Unique Application Identifier.",
                         "required": true,
                         "type": "string",
                         "format": "uuid"
                     },
                     {
-                        "name": "applicant",
+                        "name": "Application",
                         "in": "body",
-                        "description": "Updated applicant onject. Can be partial",
+                        "description": "Updated Application onject. Can be partial",
                         "required": true,
                         "schema": {
-                          "$ref": "#/definitions/Applicant"
+                          "$ref": "#/definitions/Application"
                         }
                     }
                 ],
                 "tags": [
-                    "Applicants"
+                    "Applications"
                 ],
                 "responses": {
                     "200": {
-                        "description": "The Applicant object of the updated applicant.",
+                        "description": "The Application object of the updated Application.",
                         "schema": {
-                            "$ref": "#/definitions/Applicant"
+                            "$ref": "#/definitions/Application"
                           }
                     },
                     "404": {
-                        "description": "Not Found: Applicant to update was not found.",
+                        "description": "Not Found: Application to update was not found.",
                         "schema": {
                           "$ref": "#/definitions/Error"
                         }
                     },
                     "400": {
-                        "description": "Bad Request: Valid applicant object not provided.",
+                        "description": "Bad Request: Valid Application object not provided.",
                         "schema": {
                           "$ref": "#/definitions/Error"
                         }
                     },
                     "409": {
-                        "description": "Conflict: Applicant with updated sutdent number or email already exists.",
+                        "description": "Conflict: Application with updated sutdent number or email already exists.",
                         "schema": {
                           "$ref": "#/definitions/Error"
                         }
@@ -260,32 +268,32 @@
                 }
             },
             "delete": {
-                "operationId": "deleteApplicant",
-                "summary": "Delete Applicant By Id",
-                "description": "Delete an applicant specified by its unique identifier.\n",
+                "operationId": "deleteApplication",
+                "summary": "Delete Application By Id",
+                "description": "Delete an Application specified by its unique identifier.\n",
                 "produces": ["application/json"],
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Unique Applicant Identifier.",
+                        "description": "Unique Application Identifier.",
                         "required": true,
                         "type": "string",
                         "format": "uuid"
                     }
                 ],
                 "tags": [
-                    "Applicants"
+                    "Applications"
                 ],
                 "responses": {
                     "200": {
-                        "description": "The applicant object of the deleted applicant.",
+                        "description": "The Application object of the deleted Application.",
                         "schema": {
-                            "$ref": "#/definitions/Applicant"
+                            "$ref": "#/definitions/Application"
                         }
                     },
                     "404": {
-                        "description": "Not Found: Applicant to delete was not found.",
+                        "description": "Not Found: Application to delete was not found.",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -301,9 +309,10 @@
         }
     },
     "definitions": {
-        "Applicant": {
+        "Application": {
             "type": "object",
             "required": [
+              "posting_id",
               "courses_taken",
               "email",
               "last_name",
@@ -323,7 +332,12 @@
                 "id": {
                     "type": "string",
                     "format": "uuid",
-                    "description": "Unique identiifer for each applicant."
+                    "description": "Unique identiifer for each Application."
+                },
+                "posting_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique identiifer for the posting which was applied to."
                 },
                 "student_number": {
                     "type": "number",
@@ -332,31 +346,31 @@
                 },
                 "first_name": {
                     "type": "string",
-                    "description": "Given first name of applicant as per university records."
+                    "description": "Given first name of Application as per university records."
                 },
                 "last_name": {
                     "type": "string",
-                    "description": "Last name of applicant as per university records."
+                    "description": "Last name of Application as per university records."
                 },
                 "phone_number": {
                     "type": "string",
-                    "description": "A telephone number at which the applicant can be reached."
+                    "description": "A telephone number at which the Application can be reached."
                 },
                 "email": {
                     "type": "string",
-                    "description": "An university email address at which the applicant can be reached."
+                    "description": "An university email address at which the Application can be reached."
                 },
                 "program": {
                     "type": "string",
-                    "description": "The level of study of the applicant. i.e. UG, MSC, PHD"   
+                    "description": "The level of study of the Application. i.e. UG, MSC, PHD"   
                 },
                 "year_of_study": {
                     "type": "string",
-                    "description": "The year of study of the applicant."
+                    "description": "The year of study of the Application."
                 },
                 "department": {
                     "type": "string",
-                    "description": "The department in which the applicant is studying.."
+                    "description": "The department in which the Application is studying.."
                 },
                 "department_explain": {
                     "type": "string",
@@ -364,7 +378,7 @@
                 },
                 "work_status": {
                     "type": "string",
-                    "description": "Work status of the applicant."
+                    "description": "Work status of the Application."
                 },
                 "work_status_explain": {
                     "type": "string",
@@ -372,7 +386,7 @@
                 },
                 "student_status": {
                     "type": "string",
-                    "description": "The student status of the applicant."
+                    "description": "The student status of the Application."
                 },
                 "student_status_explain": {
                     "type": "string",
@@ -394,7 +408,12 @@
                 },
                 "assigned": {
                     "type": "boolean",
-                    "description": "True or false value of whether the applicant has been assigned to TA a course."
+                    "description": "True or false value of whether the Application has been assigned to TA a course."
+                },
+                "status": {
+                    "type": "string",
+                    "description": "The status of the application.",
+                    "readOnly": true
                 }
             }
         },
