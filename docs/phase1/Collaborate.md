@@ -46,7 +46,7 @@ The main focus of the meeting was to decide what we features we want to work on 
   <tr>
     <td>Frontend</td>
     <td>Backend</td>
-    <td>TDD/CI</td>
+    <td>TDD/CI/PM</td>
   </tr>
   <tr>
     <td>David</td>
