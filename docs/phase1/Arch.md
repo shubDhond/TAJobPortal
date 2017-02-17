@@ -4,7 +4,7 @@ Our product will be split into two client facing applications, one for the TA co
 
 Below is a diagram illustrating the communication:
 
-![Alt text](/service_diagram.png?raw=true "Optional Title")
+![Alt text](./service_diagram.png?raw=true "Optional Title")
 
 For server side technologies, both applications will be using Node.js, Express js along with JWT and libraries including bcrypt-nodejs, body-parser, cookie-parser, debug, lodash, mongodb, mongoose, latest, morgan, node-rest-client, request, and request-promise.
 The client side technologies we'll be using are React.js for the views with redux for front end state management.
