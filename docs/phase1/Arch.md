@@ -1,6 +1,6 @@
 ### **Arch.md: Slice the app and select middleware**
 
-Our product will be split into two client facing applications, one for the TA coordinators and one for the student applicants. On the server side we will be hosting three services, the users service, the applications service, and the ta coordinators service. The users service will handle user sign up and authentication and serving all static files for both applications. The applications service will support all actions associated with student applications to postings. The ta coordinators service will support all actions associates with job postings, assignments and courses. All services will be used by both applications to support the use cases.
+Our product will be split into two client facing applications, one for the TA coordinators and one for the student applicants. On the server side we will be hosting three services, the users service, the applications service, and the ta coordinators service. The users service will handle user sign up and authentication and serving all static files for both applications. The applications service will support all actions associated with student applications. The ta coordinators service will support all actions associated with job postings, assignments and courses. All services will be used by both applications to support the use cases.
 
 Below is a diagram illustrating the communication:
 
