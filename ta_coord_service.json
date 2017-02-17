@@ -1,0 +1,322 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Coordinator Service API",
+        "description": "API to modify and access courses, TA assignments for courses and post Job Postings for TA positions",
+        "version": "1.0.0"
+    },
+    "host": "coord.appta.com",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1/api",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/courses": {
+            "get": {
+                "operationId": "getCourses",
+                "summary": "Get Courses",
+                "description": "The Courses' endpoint returns courses' information.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "course_code",
+                        "in": "query",
+                        "description": "Course code.",
+                        "required": false,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "campus",
+                        "in": "query",
+                        "description": "Campus the course is offer.",
+                        "required": false,
+                        "type": "string",
+                        "format": "sting"
+                    },
+                    {
+                        "name": "term",
+                        "in": "query",
+                        "description": "Term when a course is offered.",
+                        "required": false,
+                        "type": "string",
+                        "format": "sting"
+                    }
+                ],
+                "tags": [
+                    "Courses"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of courses. The array is guaranteed to have one element if a valid code parameter is specified.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Courses"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Courses Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "createCourses",
+                "summary": "Create New Courses",
+                "description": "The create course endpoint is used to add new courses to the system. There cannot be multiple courses with the same course code, term and campus.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "course",
+                        "in": "body",
+                        "description": "course to create.",
+                        "required": true,
+                        "schema": {
+                          "$ref": "#/definitions/Courses"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Courses"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "The course object which was created in the system.",
+                        "schema": {
+                            "$ref": "#/definitions/Courses"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Complete course object not provided.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict: Course already exists.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+         "/courses/{id}": {
+            "get": {
+                "operationId": "getCoursesById",
+                "summary": "Get courses By Id",
+                "description": "The Course by id endpoint returns a single Course with the specified id.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Course Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "tags": [
+                    "Courses"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single course object.",
+                        "schema": {
+                           "$ref": "#/definitions/Courses"
+                        }
+                    },
+                    "404": {
+                        "description": "Course Not Found",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "updateCourse",
+                "summary": "Update Course By Id",
+                "description": "The Update Course by id endpoint updates a given course with the course object provided.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Course Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "course",
+                        "in": "body",
+                        "description": "Updated course onject. Can be partial",
+                        "required": true,
+                        "schema": {
+                          "$ref": "#/definitions/Courses"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Courses"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The Course object of the updated course.",
+                        "schema": {
+                            "$ref": "#/definitions/Courses"
+                          }
+                    },
+                    "404": {
+                        "description": "Not Found: Course to update was not found.",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Valid course object not provided.",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict: course with updated sutdent number or email already exists.",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "deleteCourse",
+                "summary": "Delete Course By Id",
+                "description": "Delete an course specified by its unique identifier.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Course Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "tags": [
+                    "Courses"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The course object of the deleted course.",
+                        "schema": {
+                            "$ref": "#/definitions/Courses"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found: Course to delete was not found.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Courses": {
+            "type": "object",
+            "required": [
+              "course_code",
+              "term",
+              "campus",
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique identiifer for each course."
+                },
+                "course_code": {
+                    "type": "string",
+                    "description": "Unique identifier for each course assigned by the university."   
+                },
+                "term": {
+                    "type": "string",
+                    "description": "All the courses offered in that term."
+                },
+                "instructors": {
+                    "type": "array",
+                      "items": {
+                          "type": "string",
+                          "description": "Instructors for the course."
+                      }
+                },
+                "campus": {
+                    "type": "string",
+                    "description": "The campus where the course is offered."
+                },
+                "tas": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "TAs for the course."
+                      }
+                },
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
