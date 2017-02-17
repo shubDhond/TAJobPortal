@@ -207,7 +207,7 @@
                         }
                     },
                     "409": {
-                        "description": "Conflict: course with updated sutdent number or email already exists.",
+                        "description": "Conflict: course with term and campus already exists.",
                         "schema": {
                           "$ref": "#/definitions/Error"
                         }
@@ -259,7 +259,269 @@
                     }
                 }
             }
-        }
+        },
+        "/postings": {
+            "get": {
+                "operationId": "getPostings",
+                "summary": "Get Postings",
+                "description": "The Postings' endpoint returns all the active Postings' information.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "course_id",
+                        "in": "query",
+                        "description": "Course id.",
+                        "required": false,
+                        "type": "string",
+                        "format": "string"
+                    },
+                    {
+                        "name": "term",
+                        "in": "query",
+                        "description": "Term of the course is offered.",
+                        "required": false,
+                        "type": "string",
+                        "format": "sting"
+                    },
+                    {
+                        "name": "requiremnets",
+                        "in": "query",
+                        "description": "Requirements of Posting.",
+                        "required": false,
+                        "type": "string",
+                        "format": "sting"
+                    },
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date of Posting.",
+                        "required": false,
+                        "type": "string",
+                        "format": "sting"
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date of Posting.",
+                        "required": false,
+                        "type": "string",
+                        "format": "sting"
+                    },
+                ],
+                "tags": [
+                    "Postings"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of Postings.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Posting"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Courses Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "createPostings",
+                "summary": "Create New Postings",
+                "description": "The create posting endpoint is used to add new postings to the system.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "course",
+                        "in": "body",
+                        "description": "course to create.",
+                        "required": true,
+                        "schema": {
+                          "$ref": "#/definitions/Posting"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Postings"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "The postings object which was created in the system.",
+                        "schema": {
+                            "$ref": "#/definitions/Posting"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Complete postings object not provided.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict: Posting already exists.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/postings/{id}": {
+            "get": {
+                "operationId": "getPostingsById",
+                "summary": "Get postings By Id",
+                "description": "The Course by id endpoint returns a single posting with the specified id.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Course Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "tags": [
+                    "Postings"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single posting object.",
+                        "schema": {
+                           "$ref": "#/definitions/Posting"
+                        }
+                    },
+                    "404": {
+                        "description": "Posting Not Found",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "updatePostings",
+                "summary": "Update Posting By Id",
+                "description": "The Update Posting by id endpoint updates a given course with the course object provided.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Posting Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "course",
+                        "in": "body",
+                        "description": "Updated posting inject. Can be partial",
+                        "required": true,
+                        "schema": {
+                          "$ref": "#/definitions/Posting"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Postings"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The Posting object of the updated posting.",
+                        "schema": {
+                            "$ref": "#/definitions/Posting"
+                          }
+                    },
+                    "404": {
+                        "description": "Not Found: Posting to update was not found.",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request: Valid posting object not provided.",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict: Posting with updated course_id already exists.",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "deletePosting",
+                "summary": "Delete Posting By Id",
+                "description": "Delete an Posting specified by its unique identifier.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique Posting Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "tags": [
+                    "Postings"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The posting object of the deleted posting.",
+                        "schema": {
+                            "$ref": "#/definitions/Posting"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found: Posting to delete was not found.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
     },
     "definitions": {
         "Courses": {
@@ -301,6 +563,45 @@
                         "description": "TAs for the course."
                       }
                 },
+            }
+        },
+        "Posting": {
+            "type": "object",
+            "required": [
+              "course_id",
+              "term",
+              "requirements", 
+              "start_date", 
+              "end_date"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique identiifer for each course."
+                },
+            "course_id": {
+                    "type": "string",
+                    "description": "Unique identifier for each course assigned by the university."   
+                },
+            "term": {
+                  "type": "string",
+                  "description": "All the courses offered in that term."
+                },
+                "requirements": {
+                    "type": "string",
+                    "description": "They requirements for the Job Posting."
+                },
+            "start_date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Start date and time of the posting."
+                  },
+                  "end_date": {
+                  "type": "string",
+                  "format": "date-time", 
+                  "description": "End date and time of the posting."
+                  },
             }
         },
         "Error": {
