@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Applications Service API",
-        "description": "API to modify and access any/all Applications information",
+        "title": "Users Service API",
+        "description": "API to handle all authentication for users and serve static application files.",
         "version": "1.0.0"
     },
     "host": "users.appta.com",
