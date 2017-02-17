@@ -522,8 +522,172 @@
                 }
             }
         },
+        "/assignments/{course_id}": {
+            "get": {
+                "operationId": "getAssignmentsByCourseId",
+                "summary": "Get Ta assignments By course Id",
+                "description": "The assignments endpoint returns a list of userId of students who were assigned as TAs to a course.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "course_id",
+                        "in": "path",
+                        "description": "Unique Course Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "tags": [
+                    "Assignments"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single assignment object.",
+                        "schema": {
+                           "$ref": "#/definitions/Assignments"
+                        }
+                    },
+                    "404": {
+                        "description": "Assignment for the course Not Found",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put" : {
+                "operationId": "updateAssignments",
+                "summary": "Update Ta Assignments By Course id",
+                "description": "The Update Assignment by  course id endpoint updates the list of Ta assignmnets of the given course.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "course_id",
+                        "in": "path",
+                        "description": "Unique course id  Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "formData",
+                        "description": "Unique user Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+              
+                ],
+                "tags": [
+                    "Assignments"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The Assignment object of the updated course.",
+                        "schema": {
+                            "$ref": "#/definitions/Assignments"
+                          }
+                    },
+                    "404": {
+                        "description": "Not Found: Curse id not found.",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict: user id already exisits in the course assignmnet object.",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            
+              },
+            "delete": {
+                "operationId": "deleteAssignment",
+                "summary": "Delete an assignment By course Id and userId",
+                "description": "Delete an assignment specified by its unique identifierand userID.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "course_id",
+                        "in": "path",
+                        "description": "Unique Posting Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }, 
+                    {
+                        "name": "user_id",
+                        "in": "formData",
+                        "description": "Unique user Identifier.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                    
+                ],
+                "tags": [
+                    "Assignments"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The new assignmet object after deletion of user id.",
+                        "schema": {
+                            "$ref": "#/definitions/Assignments"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found: Posting to delete was not found.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+        
     },
     "definitions": {
+        "Assignments":{
+          "type": "object",
+            "required": [
+              "course_id",
+              ],
+            "properties":{
+              "course_id" : {
+              "type":"string", 
+              "description": "Unique identiifer for a course."
+              },
+              "tas": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "user_ids of students assigned as TAs for this course."
+                      }
+                }
+            }  
+          },
         "Courses": {
             "type": "object",
             "required": [
