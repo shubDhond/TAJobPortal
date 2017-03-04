@@ -5,7 +5,7 @@
         "description": "API to modify and access any/all Applications information",
         "version": "1.0.0"
     },
-    "host": "students.appta.com",
+    "host": "applicants.appta.com",
     "schemes": [
         "http"
     ],
@@ -14,7 +14,7 @@
         "application/json"
     ],
     "paths": {
-        "/Applications": {
+        "/applications": {
             "get": {
                 "operationId": "getApplications",
                 "summary": "Get Applications",
@@ -22,20 +22,28 @@
                 "produces": ["application/json"],
                 "parameters": [
                     {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "The unique identifier of the posting to which this application is for.",
+                        "required": false,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "posting_id",
+                        "in": "query",
+                        "description": "The unique identifier of the user who applied.",
+                        "required": false,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
                         "name": "student_number",
                         "in": "query",
                         "description": "Student number of Application.",
                         "required": false,
                         "type": "number",
                         "format": "integer"
-                    },
-                    {
-                        "name": "posting_id",
-                        "in": "query",
-                        "description": "The unique identifier of the posting to which this application is for.",
-                        "required": false,
-                        "type": "string",
-                        "format": "uuid"
                     },
                     {
                         "name": "year_of_study",
@@ -127,7 +135,7 @@
                 "produces": ["application/json"],
                 "parameters": [
                     {
-                        "name": "Application",
+                        "name": "application",
                         "in": "body",
                         "description": "Application to create.",
                         "required": true,
@@ -167,7 +175,7 @@
                 }
             }
         },
-         "/Applications/{id}": {
+         "/applications/{id}": {
             "get": {
                 "operationId": "getApplicationById",
                 "summary": "Get Application By Id",
@@ -222,7 +230,7 @@
                         "format": "uuid"
                     },
                     {
-                        "name": "Application",
+                        "name": "application",
                         "in": "body",
                         "description": "Updated Application onject. Can be partial",
                         "required": true,
@@ -312,6 +320,7 @@
         "Application": {
             "type": "object",
             "required": [
+              "user_id",
               "posting_id",
               "courses_taken",
               "email",
@@ -332,7 +341,13 @@
                 "id": {
                     "type": "string",
                     "format": "uuid",
-                    "description": "Unique identiifer for each Application."
+                    "description": "Unique identiifer for each Application.",
+                    "readOnly": true
+                },
+                "user_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique identiifer for the user who applied."
                 },
                 "posting_id": {
                     "type": "string",

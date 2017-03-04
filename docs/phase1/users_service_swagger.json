@@ -1,0 +1,356 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Users Service API",
+        "description": "API to handle all authentication for users and serve static application files.",
+        "version": "1.0.0"
+    },
+    "host": "users.appta.com",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1/api",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+          "/students/sign-up": {
+            "post": {
+                "operationId": "studentSignUp",
+                "summary": "Student Sign Up",
+                "description": "The student sign up endpoint allows students to create an account for authentication.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "User",
+                        "in": "body",
+                        "description": "User object with email and password.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                      "description": "User was successfully signed up.",
+                      "schema": {
+                        "$ref": "#/definitions/User"
+                      }
+                    },
+                    "409": {
+                      "description": "Conflict: User with email already exists.",
+                      "schema": {
+                        "$ref": "#/definitions/Error"
+                      }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/students/authenticate": {
+            "post": {
+                "operationId": "studentsAuthenticate",
+                "summary": "Student Authenticate",
+                "description": "The student authenticate endpoint is used for students login.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "User",
+                        "in": "body",
+                        "description": "User object with email and password.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                      "description": "User was successfully authenticated.",
+                      "schema": {
+                        "$ref": "#/definitions/User"
+                      }
+                    },
+                    "401": {
+                      "description": "Unauthorized: User was not successfully authorized.",
+                      "schema": {
+                        "$ref": "#/definitions/Error"
+                      }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/ta-coordinator/sign-up": {
+          "post": {
+                "operationId": "coordinatorSignUp",
+                "summary": "TA Coordinator Sign Up",
+                "description": "The TA coordinator sign up endpoint is used for coordinators to create an account for authentication.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "User",
+                        "in": "body",
+                        "description": "User object with email and password.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    {
+                      "name": "x-coordinator-account-key",
+                      "in": "header",
+                      "description": "One time access key required for coordinators to sign up.",
+                      "required": true,
+                      "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                      "description": "User was successfully signed up.",
+                      "schema": {
+                        "$ref": "#/definitions/User"
+                      }
+                    },
+                    "409": {
+                      "description": "Conflict: User with email already exists.",
+                      "schema": {
+                        "$ref": "#/definitions/Error"
+                      }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+         "/ta-coordinator/authenticate": {
+            "post": {
+                "operationId": "coordinatorAuthenticate",
+                "summary": "TA Coordinator Authenticate",
+                "description": "The coordinator authenticate endpoint is used for coordinator login.\n",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "User",
+                        "in": "body",
+                        "description": "User object with email and password.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                      "description": "User was successfully authenticated.",
+                      "schema": {
+                        "$ref": "#/definitions/User"
+                      }
+                    },
+                    "401": {
+                      "description": "Unauthorized: User was not successfully authorized.",
+                      "schema": {
+                        "$ref": "#/definitions/Error"
+                      }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/coordinator-access-keys": {
+            "post": {
+                "operationId": "createAccessKey",
+                "summary": "Create TA Coordinator Sign Up Key",
+                "description": "The create coordinator access key endpoint is used to create one time sign up keys for ta coordinators to sign up. It can only be accessed by an existing ta coordinator.",
+                "produces": ["application/json"],
+                "responses": {
+                    "201": {
+                      "description": "Access key was successfully created.",
+                      "schema": {
+                        "$ref": "#/definitions/AccessKey"
+                      }
+                    },
+                    "401": {
+                      "description": "Unauthorized: Coordinator authorization needed.",
+                      "schema": {
+                        "$ref": "#/definitions/Error"
+                      }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "getAllAccessKeys",
+                "summary": "List All Access Keys",
+                "description": "The get all access keys endpoint returns all valid access keys available for coordinator sign up. It can only be accessed by an existing ta coordinator.",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                      "description": "List of all valid access keys.",
+                      "schema": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/definitions/AccessKey"
+                          }
+                      }
+                    },
+                    "401": {
+                      "description": "Unauthorized: Coordinator authorization needed.",
+                      "schema": {
+                        "$ref": "#/definitions/Error"
+                      }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/coordinator-access-key/{id}": {
+            "delete": {
+                "operationId": "deleteAccessKeyById",
+                "summary": "Delete Access Key By Id",
+                "description": "The delete access key by id endpoint is used to delete a particular access keys. It can only be accessed by an existing TA Coordinator.",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Unique identifier of access key to delete.",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                      "description": "Access key successfully deleted.",
+                       "schema": {
+                            "$ref": "#/definitions/AccessKey"
+                        }
+                    },
+                    "404": {
+                      "description": "Not Found: Access key for deletion was not found.",
+                      "schema": {
+                        "$ref": "#/definitions/Error"
+                      }
+                    },
+                    "401": {
+                      "description": "Unauthorized: Coordinator authorization needed.",
+                      "schema": {
+                        "$ref": "#/definitions/Error"
+                      }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "required": [
+                "id",
+                "email",
+                "password",
+                "user_type",
+                "user_token"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique identiifer for each user.",
+                    "readOnly": true
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Unique email chosen by user for login."
+                },
+                "password": {
+                    "type": "string",
+                    "description": "Password chosen by user for login."
+                },
+                "user_type": {
+                    "type": "string",
+                    "description": "Type of user (student or ta_coordinator).",
+                    "readOnly": true
+                },
+                "user_token": {
+                  "type": "string",
+                  "description": "JSON web token used to authenticate requests.",
+                  "readOnly": true
+                }
+            }
+        },
+        "AccessKey": {
+            "type": "object",
+            "required": [
+                "id",
+                "key"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "Unique identifier for a particular key.",
+                    "readOnly": true
+                },
+                "key": {
+                    "type": "string",
+                    "description": "One time sign up key used by ta coordinators to sign up",
+                    "readOnly": true
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
