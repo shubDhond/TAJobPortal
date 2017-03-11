@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var coordinator = require('./routes/coordinator');
 var course = require('./routes/course');
 var assignments = require('./routes/assignments');
 var posting = require('./routes/posting');
@@ -19,7 +18,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', index);
-app.use('/coordinator', coordinator);
 app.use('/course', course);
 app.use('/assignment', assignments);
 app.use('/posting', posting);
