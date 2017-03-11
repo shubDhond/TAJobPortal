@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - "6.10.0"
+  - "7.7.2"
+
+env:
+  - TEST_DIR=ta-corrd-service
+script: cd $TEST_DIR && npm install && npm test
