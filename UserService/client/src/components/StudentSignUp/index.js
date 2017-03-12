@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import { Card } from 'material-ui/Card';
+import Card from 'grommet/components/Card';
 import { connect } from 'react-redux';
+import Box from 'grommet/components/Box';
 import './style.css';
-
-const styles = {
-  centered: {
-    height: '400px',
-    width: '600px',
-    margin: '200px auto'
-  }
-}
 
 @connect((store) => {
   return {
@@ -19,12 +12,11 @@ const styles = {
 class App extends Component {
   render() {
     return (
-      <div style={styles.centered}>
-        <Card>
-          <form action="this.submit()">
-          </form>
-        </Card>
-      </div>
+      <Box align='center' full={true}>
+        <Card label='Sample Label'
+              heading='Sample Heading'
+              description='Sample description providing more details.' />
+      </Box>
     );
   }
 }
