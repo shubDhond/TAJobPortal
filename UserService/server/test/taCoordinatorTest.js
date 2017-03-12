@@ -1,6 +1,7 @@
 /**
  * Created by TenzinLama on 2017-03-7.
  */
+
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let expect = chai.expect;
@@ -13,12 +14,11 @@ chai.use(chaiHttp);
 
 let token;
 let user_email;
-
+let x_coordinator_account_key;
 describe('taCoordinator', function () {
     this.timeout(0);
 
     beforeEach(function (done) {
-      x_coordinator_account_key = 0;
       let accessKey = new CoordinatorAccessKey({
           id: uuid(),
           key: keygenerator._()
@@ -45,21 +45,93 @@ describe('taCoordinator', function () {
                     user_email = res.body.user.email;
                     done();
                   });
-                });
               });
-            });
-    //console.log(token);
+         });
+    });
+
+    it('should return 401 if signing up with invalid coordinator account key', function(done){
+      chai.request(app)
+      .post('/ta-coordinators/sign-up')
+      .set('x-coordinator-account-key', 'test')
+      .send({
+        email:'test1',
+        id: 'test',
+        password: 'test',
+        user_type: 'ta-coordinator'
+      })
+      .end(function(err, res){
+        expect(res).to.have.status(401);
+        done();
+      });
+    });
+
+    it('should return 409 if signing up with existing user', function(done){
+      chai.request(app)
+      .post('/ta-coordinators/sign-up')
+      .set('x-coordinator-account-key','test')
+      .send({
+        email:'test',
+        id: 'test',
+        password:'test',
+      })
+      .end(function(err,res){
+        expect(res).to.have.status(409);
+        done();
+      });
+    });
+
     it('should return successfull authentication', function(done){
       chai.request(app)
       .post('/ta-coordinators/authenticate')
       .set('x-access-token', token)
       .send({
-          email: user_email
+          email: user_email,
+          password: 'test',
+
       })
       .end(function(err, res){
-        expect(err).to.be.notFound;
+        expect(err).to.be.null;
         expect(res).to.have.status(200);
         done();
-      })
+      });
     });
+
+    it('should successfully verify token', function(done){
+      chai.request(app)
+      .post('/ta-coordinators/check-token')
+      .set('x-access-token', token)
+      .end(function(err,res){
+        expect(res).to.have.status(200);
+        done();
+      });
+    });
+
+    it('should return 401 with wrong password', function(done){
+      chai.request(app)
+      .post('/ta-coordinators/authenticate')
+      .set('x-access-token',token)
+      .send({
+        email: user_email,
+        password: 'test2'
+      })
+      .end(function(err,res){
+        expect(res).to.have.status(401);
+        done();
+      });
+    });
+
+    it('should return 404 with non-existing email', function(done){
+      chai.request(app)
+      .post('/ta-coordinators/authenticate')
+      .set('x-access-token',token)
+      .send({
+        email: 'wrong-email',
+        password: 'random-pass'
+      })
+      .end(function(err,res){
+        expect(res).to.have.status(404);
+        done();
+      });
+    });
+
   });
