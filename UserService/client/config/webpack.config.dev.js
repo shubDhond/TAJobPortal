@@ -159,10 +159,6 @@ module.exports = {
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
-      },
-      {  
-        test: /\.scss$/,
-        loader: 'style!css!sass?outputStyle=compressed'
       }
     ].concat(customConfig.loaders)
   },
