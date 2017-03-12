@@ -1,12 +1,12 @@
 ### **Arch.md: Slice the app and select middleware**
 
-Our product will be split into two client facing applications, one for the TA coordinators and one for the student applicants. On the server side we will be hosting three services, the users service, the applications service, and the ta coordinators service. The users service will handle user sign up and authentication and serving all static files for both applications. The applications service will support all actions associated with student applications to postings. The ta coordinators service will support all actions associates with job postings, assignments and courses. All services will be used by both applications to support the use cases.
+Our product will be split into two client facing applications, one for the TA coordinators and one for the student applicants. On the server side we will be hosting three services, the users service, the applications service, and the ta coordinators service. The users service will handle user sign up and authentication and serving all static files for both applications. The applications service will support all actions associated with student applications. The ta coordinators service will support all actions associated with job postings, assignments and courses. All services will be used by both applications to support the use cases.
 
 Below is a diagram illustrating the communication:
 
 ![Alt text](./service_diagram.png?raw=true "Optional Title")
 
-For server side technologies, both applications will be using Node.js, Express js along with JWT and libraries including bcrypt-nodejs, body-parser, cookie-parser, debug, lodash, mongodb, mongoose, latest, morgan, node-rest-client, request, and request-promise.
+For server side technologies, all services will be using Node.js and Express JS for the endpoints and routing along with JWT (JSON Web Tokens) for authentication. For our data store we will be using MongoDB for it's schema flexibility and ease of use with Node.js. We'll be using the mongoose js npm package as an interface for mongo queries.
 The client side technologies we'll be using are React.js for the views with redux for front end state management.
 
 The list of use cases that we will cover for the Applicants app are

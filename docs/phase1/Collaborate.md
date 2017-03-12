@@ -46,10 +46,10 @@ The main focus of the meeting was to decide what we features we want to work on 
   <tr>
     <td>Frontend</td>
     <td>Backend</td>
-    <td>TDD/CI/PM</td>
+    <td>Testing, TDD/CI</td>
   </tr>
   <tr>
-    <td>David</td>
+    <td>David(PM)</td>
     <td>Shubham</td>
     <td>Tenzin</td>
   </tr>
@@ -105,15 +105,17 @@ Every Wednesday @5pm at Bahen.
 
 **Strategy**
 
-Frontend - "applicant": Wayne
+Frontend - "applicant [applicants-facing]": Wayne
 
-Frontend - "TA-COORD": John, Rafael
+Frontend - "TA-COORD [instructors-facing]": John, Rafael
 
-Frontend - Design: David
+Frontend - Design, UI/UX: David
+
+PM - David
 
 Backend: Shubham, Shrey
 
-TDD/CI/PM: Tenzin
+TDD/CI: Tenzin
 
 All shared documents will be accessed through the Google Folder/Facebook/Github.
 
