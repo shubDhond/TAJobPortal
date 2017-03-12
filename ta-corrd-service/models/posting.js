@@ -2,9 +2,9 @@
  * Created by shrey.mahendru on 2017-03-04.
  */
 
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
-var postingSchema = mongoose.Schema({
+let postingSchema = mongoose.Schema({
 
     course_id :{
         type: mongoose.Schema.Types.ObjectId,

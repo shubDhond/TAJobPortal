@@ -1,15 +1,15 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+let express = require('express');
+let path = require('path');
+let logger = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var course = require('./routes/course');
-var assignments = require('./routes/assignments');
-var posting = require('./routes/posting');
+let index = require('./routes/index');
+let course = require('./routes/course');
+let assignments = require('./routes/assignments');
+let posting = require('./routes/posting');
 
-var app = express();
+let app = express();
 
 
 app.use(logger('dev'));
@@ -24,7 +24,7 @@ app.use('/posting', posting);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });

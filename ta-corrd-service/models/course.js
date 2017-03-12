@@ -2,9 +2,9 @@
  * Created by shrey.mahendru on 2017-03-04.
  */
 
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
-var courseSchema = mongoose.Schema({
+let courseSchema = mongoose.Schema({
 
     course_code : {
         type : String,

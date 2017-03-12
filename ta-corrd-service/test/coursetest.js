@@ -1,10 +1,10 @@
 /**
  * Created by TenzinLama on 2017-03-7.
  */
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var expect = chai.expect;
-var app = require('../app');
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let expect = chai.expect;
+let app = require('../app');
 chai.use(chaiHttp);
 
 //basic test for now...
@@ -19,4 +19,4 @@ describe('course', function(){
     });
 
   });
-})
+});
