@@ -27,7 +27,7 @@ router.post('/sign-up', (req, res) => {
                      key: req.headers['x-coordinator-account-key']
                  }, (err, coordinatorAccessKey) => {
                     if (err) throw err;
-                    
+
                     if (!coordinatorAccessKey) {
                         res.status(401).json({
                             message: 'Invalid coordinator sign up key'
