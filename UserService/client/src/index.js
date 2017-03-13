@@ -5,6 +5,8 @@ import {Provider} from "react-redux";
 import {browserHistory} from "react-router";
 import Routes from "./routes";
 import store from "./store";
+import App from 'grommet/components/App';
+import 'grommet/scss/vanilla/index.scss';
 
 import "./index.css";
 import "./bootstrap-style.css";

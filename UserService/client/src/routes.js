@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route, IndexRoute } from 'react-router';
 
-import StudentSignUp from './components/StudentSignUp';
+import SignUp from './components/SignUp';
 import Layout from "./components/pages/Layout";
 import Jobs from "./components/pages/jobs/Jobs";
 import Inbox from "./components/pages/Inbox";
@@ -9,10 +9,12 @@ import Profile from "./components/pages/Profile";
 import JobsSingleView from "./components/pages/jobs/JobSingleView";
 import Listings from "./components/pages/jobs/Listings";
 import CoordLayout from "./components/TaCoord/CoordLayout";
+import Login from './components/Login';
 
 const Routes = (props) => (
   <Router {...props}>
-    <Route path="/" component={StudentSignUp} />
+    <Route path="/sign-up" component={SignUp} />
+    <Route path="/" component={Login} />
     <Route path="/app" component={Layout}>
       <Route path="/app/profile" component={Profile} pageTitle="Open Jobs"/>
       <Route path="/app/jobs" component={Jobs} pageTitle="Open Jobs">
