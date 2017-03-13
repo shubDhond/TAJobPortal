@@ -1,0 +1,34 @@
+export function setUserType(userType){
+  return {
+    type: 'SET_USER_TYPE',
+    payload: userType
+  };
+}
+
+export function userPasswordError(error) {
+  return {
+    type: 'USER_PASSWORD_ERROR',
+    payload: error
+  };
+}
+
+export function userEmailError(error) {
+  return {
+    type: 'USER_EMAIL_ERROR',
+    payload: error
+  };
+}
+
+export function userAccessKeyError(error) {
+  return {
+    type: 'USER_ACCESS_KEY_ERROR',
+    payload: error
+  };
+}
+
+export function userAuthenticate(requestPromise) {
+  return {
+    type: 'USER_AUTHENTICATE',
+    payload: requestPromise
+  };
+}

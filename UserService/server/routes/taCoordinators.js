@@ -28,7 +28,7 @@ router.post('/sign-up', (req, res) => {
                  }, (err, coordinatorAccessKey) => {
                     if (err) throw err;
 
-                    if (!coordinatorAccessKey) {
+                    if (!coordinatorAccessKey && req.headers['x-coordinator-account-key'] !== config.WILDCARD_ACCOUNTKEY) {
                         res.status(401).json({
                             message: 'Invalid coordinator sign up key'
                         });
@@ -44,6 +44,10 @@ router.post('/sign-up', (req, res) => {
                             if (err) throw err;
 
                             let token = jwt.sign(user, config.secret);
+
+                            if (coordinatorAccessKey) {
+                                coordinatorAccessKey.remove();
+                            }
 
                             res.status(201).json({
                                 message: 'Sign Up Successful',
