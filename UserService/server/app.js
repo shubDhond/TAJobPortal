@@ -30,8 +30,6 @@ mongoose.connect(config.MONGO_URI);
 let jwt = require('jsonwebtoken');
 app.set('secret', config.secret);
 
-app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   let err = new Error('Not Found');
