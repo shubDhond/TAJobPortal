@@ -13,14 +13,9 @@ let courseSchema = mongoose.Schema({
     term : {
         type: String,
         enum: ['Summer', 'Winter', 'Fall'],
-        required:true},
+        required:true}  ,
 
     instructor: [String],
-
-    campus: {
-        type: String,
-        enum:['St George', 'UTM', 'UTSC'],
-        required: true},
 
     ta_needed: {
         type: Number,
@@ -28,9 +23,10 @@ let courseSchema = mongoose.Schema({
 
     tas : {
         type: [{
-                type : mongoose.Schema.Types.ObjectId,
+                type : String,
                 unique: true}],
-        validate: [taLimit, '{PATH} exceeds the limit of ' + this.ta_needed]}
+    }
+
 
 });
 
