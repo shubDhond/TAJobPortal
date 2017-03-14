@@ -31,12 +31,4 @@ let courseSchema = mongoose.Schema({
 });
 
 
-/**
- * Ta limit Validator.
- */
-
-function taLimit(tas) {
-    return tas.length <= this.ta_needed
-}
-
 module.exports = mongoose.model('Course', courseSchema);
