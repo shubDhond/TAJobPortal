@@ -1,9 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif|Montserrat:400,700,800');
 html {
   width: 100%;
   height: 100%;
 }
 
+.accent-font{
+    font-family: "Bree Serif";
+    color:red;
+}
 body {
   margin: 0;
   padding: 0;

@@ -1,38 +1,49 @@
 import React from "react";
-import {Nav, NavItem, Navbar} from "react-bootstrap";
+import {Nav, Navbar, NavItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
 export default class TopNav extends React.Component {
     render() {
+        const navStyle = {
+            paddingTop: "16px",
+            paddingBottom: "16px",
+            fontWeight:"700",
+            textTransform: "up"
+        }
+        const brandStyle = {
+            fontWeight:"800",
+            fontSize:24,
+            color:"#000000"
+        }
         return (
-            <Navbar >
+            <Navbar style={navStyle}>
                 <Navbar.Header>
-                    <Navbar.Brand>
-                        <a href="#">TA Application</a>
+                    <Navbar.Brand >
+                        <a href="#"style={brandStyle} >TA APPLICATION</a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
-                    <Nav bsStyle="tabs">
+                    <Nav bsStyle="pills">
                         <LinkContainer to="/app/profile">
-                            <NavItem >Profile</NavItem>
+                            <NavItem >PROFILE</NavItem>
                         </LinkContainer>
                         <LinkContainer to="/app/jobs">
-                            <NavItem>Jobs</NavItem>
+                            <NavItem>JOBS</NavItem>
                         </LinkContainer>
                         <LinkContainer to="/app/inbox">
-                            <NavItem>Inbox</NavItem>
+                            <NavItem>INBOX</NavItem>
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>
-                        <NavItem eventKey={1} href="#">Link Right</NavItem>
-                        <NavItem eventKey={2} href="#">Link Right</NavItem>
+                        <NavItem eventKey={1} href="#">SIGN IN</NavItem>
                     </Nav>
                 </Navbar.Collapse>
 
             </Navbar>
 
 
-        );
+        )
+            ;
     }
 }
