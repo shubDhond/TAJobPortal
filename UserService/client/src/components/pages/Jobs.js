@@ -1,36 +1,39 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import Listing from "./Listing";
 import SearchBar from "./SearchBar";
-import { Accordion,Panel } from "react-bootstrap";
 
-  var jobs = [
-     {title: "CSC301", 
-  description: "This course is an introduction to the theory and practice of large-scale software system design, development, and deployment. Topics include project management; advanced UML; reverse engineering; requirements inspection; verification and validation software architecture; performance modeling and analysis.", 
-  deadline: "2017-04-23"},
-  {title: "CSC302", 
-  description: "This course is an introduction to the theory and practice of large-scale software system design, development, and deployment. Topics include project management; advanced UML; reverse engineering; requirements inspection; verification and validation software architecture; performance modeling and analysis.", 
-  deadline: "2017-04-23"},
-   {title: "CSC303", 
-  description: "This course is an introduction to the theory and practice of large-scale software system design, development, and deployment. Topics include project management; advanced UML; reverse engineering; requirements inspection; verification and validation software architecture; performance modeling and analysis.", 
-  deadline: "2017-04-23"}];
+import { fetchListings } from "../../actions/listingsActions";
+
+@connect((store) => {
+  return {
+    listings : store.listings.listings
+  };
+})
 
 export default class Jobs extends React.Component {
+
+  componentWillMount(){
+    this.state = {...this.state, listings: this.props.dispatch(fetchListings).payload};
+  }
+
   constructor(props){
     super(props);
     this.state = {
-      listings: jobs
+      listings: []
     }
   }
 
   render() {
+
     return (
       <div>
         <h1>Jobs</h1>
         <SearchBar />
         {
-          this.state.listings.map(function(listing){
-            return <Listing title={listing.title} description={listing.description} 
+          this.state.listings.map(function(listing, i){
+            return <Listing title={listing.title} key={i} description={listing.description} 
             deadline={listing.deadline}/>
           })
         }
