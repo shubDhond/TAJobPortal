@@ -15,6 +15,11 @@ let courseSchema = mongoose.Schema({
         enum: ['Summer', 'Winter', 'Fall'],
         required:true}  ,
 
+    year: {
+        type: Number,
+        required:true
+    },
+
     instructor: [String],
 
     ta_needed: {
