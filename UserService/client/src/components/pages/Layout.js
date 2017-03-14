@@ -1,25 +1,33 @@
 import React from "react";
-import { Link } from "react-router";
-
-import Header from "./Header";
+import {Nav,NavItem, Col, Row, Grid} from "react-bootstrap";
+import Header from "./Header"
 
 export default class Layout extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      title: "Welcome",
-    };
-  }
+    constructor() {
+        super();
+        this.state = {
+            title: "Welcome",
+        };
+    }
 
-  render() {
-    return (
-      <div>
-        <Header />
-        <Link to="/app/profile">Profile</Link>
-        <Link to="/app/jobs">Jobs</Link>
-        <Link to="/app/inbox">Inbox</Link>
-        {this.props.children}
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <Header/>
+                <Nav bsStyle="tabs">
+                    <NavItem to="/app/profile">Profile</NavItem>
+
+                    <NavItem to="/app/jobs">Jobs</NavItem>
+                    <NavItem to="/app/inbox">Inbox</NavItem>
+                </Nav>
+                <Grid>
+                    <Row>
+                        <Col sm="{2}">
+                            {this.props.children}
+                        </Col>
+                    </Row>
+                </Grid>
+            </div>
+        );
+    }
 }

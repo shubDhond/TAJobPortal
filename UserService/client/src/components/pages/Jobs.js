@@ -2,7 +2,7 @@ import React from "react";
 
 import Listing from "./Listing";
 import SearchBar from "./SearchBar";
-import { Accordion,Panel } from "react-bootstrap";
+//import { Accordion,Panel } from "react-bootstrap";
 
   var jobs = [
      {title: "CSC301", 

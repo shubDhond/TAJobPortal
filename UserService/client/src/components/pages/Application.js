@@ -3,9 +3,9 @@ import React from "react";
 export default class Application extends React.Component {
   render() {
     return (
-      <div>
+      <Navbar>
         <h1>Application</h1>
-      </div>
+      </Navbar>
     );
   }
 }
