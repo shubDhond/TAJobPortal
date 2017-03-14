@@ -1,22 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import { Provider } from 'react-redux';
-import { browserHistory } from 'react-router';
-import App from 'grommet/components/App';
+import React from "react";
+import ReactDOM from "react-dom";
+import injectTapEventPlugin from "react-tap-event-plugin";
+import {Provider} from "react-redux";
+import {browserHistory} from "react-router";
+import Routes from "./routes";
+import store from "./store";
 
-import Routes from './routes';
-import store from './store';
-
-import './index.css';
+import "./index.css";
 
 injectTapEventPlugin();
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App>
-      <Routes history={browserHistory} />
-    </App>
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <Routes history={browserHistory}/>
+    </Provider>,
+    document.getElementById('root')
 );

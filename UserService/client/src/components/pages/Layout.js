@@ -1,6 +1,8 @@
 import React from "react";
+import {Link} from "react-router";
 import {Nav,NavItem, Col, Row, Grid} from "react-bootstrap";
-import Header from "./Header"
+import Header from "./TopNav"
+
 
 export default class Layout extends React.Component {
     constructor() {
@@ -8,21 +10,21 @@ export default class Layout extends React.Component {
         this.state = {
             title: "Welcome",
         };
+
+
     }
 
     render() {
+        const dstyle = {
+            background: "brand-danger"
+        };
         return (
-            <div>
-                <Header/>
-                <Nav bsStyle="tabs">
-                    <NavItem to="/app/profile">Profile</NavItem>
 
-                    <NavItem to="/app/jobs">Jobs</NavItem>
-                    <NavItem to="/app/inbox">Inbox</NavItem>
-                </Nav>
-                <Grid>
-                    <Row>
-                        <Col sm="{2}">
+            <div >
+                <Header/>
+                <Grid >
+                    <Row style={dstyle}>
+                        <Col xs={12}>
                             {this.props.children}
                         </Col>
                     </Row>
