@@ -1,15 +1,15 @@
 import React from "react";
-import {Glyphicon, Col, Row} from "react-bootstrap";
+import {Col, Glyphicon, Row} from "react-bootstrap";
 import ListItem from "./views/ListItem";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
-import {Link,browserHistory} from "react-router";
+import {browserHistory, Link} from "react-router";
 
 @connect((store) => {
-  return {};
+    return {};
 })
 
-export default class Listing extends React.Component {
+export default class JobItemView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,12 +32,12 @@ export default class Listing extends React.Component {
                 <Row style={{marginBottom: 24}}>
                     <Col xs={4}>
 
-                        <a> <h2 style={{margin: 0 ,fontWeight:600}}>
+                        <h2 style={{margin: 0, fontWeight: 600}}><a>
                             {this.state.title}
-                        </h2></a>
+                        </a></h2>
                     </Col>
                     {/*<Col xs={8} right>*/}
-                        {/*(2) Spaces Left*/}
+                    {/*(2) Spaces Left*/}
                     {/*</Col>*/}
 
                 </Row>
@@ -53,13 +53,18 @@ export default class Listing extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={2} xsOffset={10} >
+                    <Col xs={2} xsOffset={10}>
                         <a className="see-more right-align" onClick={this.dispatchThenRoute({
-            type: "SET_COURSE", 
-            payload: {title: this.state.title,description: this.state.description, deadline: this.state.deadline}
-        }, "/app/jobs/application")}><Link>View<Glyphicon glyph="chevron-right" /></Link></a>
+                            type: "SET_COURSE",
+                            payload: {
+                                title: this.state.title,
+                                description: this.state.description,
+                                deadline: this.state.deadline
+                            }
+                        }, "/app/jobs/single")}><Link>View<Glyphicon glyph="chevron-right"/></Link></a>
                     </Col>
                 </Row>
+
             </ListItem>
         );
     }

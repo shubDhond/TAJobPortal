@@ -3,7 +3,6 @@ import SearchBar from "./SearchBar";
 import { Row,Col } from "react-bootstrap";
 
 export default class Jobs extends React.Component {
-
   render() {
 
     return (

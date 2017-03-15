@@ -11,7 +11,7 @@ import { browserHistory } from "react-router";
   };
 })
 
-export default class Application extends React.Component {
+export default class JobsSingleView extends React.Component {
   render() {
     const { course } = this.props;
     return (

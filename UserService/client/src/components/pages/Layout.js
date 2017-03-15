@@ -11,13 +11,12 @@ export default class Layout extends React.Component {
         };
 
     }
-
     render() {
         console.log(this.props.children);
         return (
             <div >
                 <Header/>
-                <Grid >
+                <Grid style={{marginTop:64}}>
                     <Row>
                         <Col xs={12}>
                             <h1 style={{marginBottom:16,marginTop:64}}>{this.props.children.type.name}</h1>

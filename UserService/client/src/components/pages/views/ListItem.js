@@ -7,11 +7,14 @@ import React from "react";
 import {Panel} from "react-bootstrap"
 export default class Listing extends React.Component {
     render() {
-        const style={}
+        const style={
+            padding:32,
+            marginBottom:15
+        }
         return (
-            <Panel  style={style}>
+            <div  className={"card"} style={style}>
                 {this.props.children}
-            </Panel>
+            </div>
         );
     }
 }
