@@ -3,11 +3,11 @@ import { Router, Route, IndexRoute } from 'react-router';
 
 import StudentSignUp from './components/StudentSignUp';
 import Layout from "./components/pages/Layout";
-import Jobs from "./components/pages/Jobs";
+import Jobs from "./components/pages/jobs/Jobs";
 import Inbox from "./components/pages/Inbox";
 import Profile from "./components/pages/Profile";
-import JobsSingleView from "./components/pages/JobSingleView";
-import Listings from "./components/pages/Listings";
+import JobsSingleView from "./components/pages/jobs/JobSingleView";
+import Listings from "./components/pages/jobs/Listings";
 
 const Routes = (props) => (
   <Router {...props}>

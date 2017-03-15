@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import {Pagination, Row,Col} from "react-bootstrap";
-import JobItemView from "./JobItemView";
-
-import { fetchListings } from "../../actions/listingsActions";
+import { fetchListings } from "../../../actions/listingsActions";
+import RankingItemView from "./RankingItemView";
 
 @connect((store) => {
   return {
@@ -11,7 +10,7 @@ import { fetchListings } from "../../actions/listingsActions";
   };
 })
 
-export default class Listings extends React.Component {
+export default class JobsRanking extends React.Component {
 
   componentWillMount(){
     this.state = {...this.state, listings: this.props.dispatch(fetchListings).payload};
@@ -30,14 +29,14 @@ export default class Listings extends React.Component {
       <div>
         {
           this.state.listings.map(function(listing, i){
-            return <JobItemView title={listing.title} key={i} description={listing.description}
+            return <RankingItemView title={listing.title} key={i} description={listing.description}
                                 deadline={listing.deadline}/>
           })
         }
         <Row>
-          <Col xs={12}>
+          <Col xs={12}
+               className="centered">
             <Pagination
-                className="centered"
                 items={10}
                 activePage={this.state.activePage}
                 onSelect={this.handleSelect} />

@@ -1,6 +1,6 @@
 import React from "react";
 import {Col, Glyphicon, Row} from "react-bootstrap";
-import ListItem from "./views/ListItem";
+import ListItem from "../views/ListItem";
 import {connect} from "react-redux";
 
 import {browserHistory, Link} from "react-router";
@@ -29,7 +29,7 @@ export default class JobItemView extends React.Component {
     render() {
         return (
             <ListItem>
-                <Row style={{marginBottom: 24}}>
+                <Row style={{marginBottom: 360}}>
                     <Col xs={4}>
 
                         <h2 style={{margin: 0, fontWeight: 600}}><a>
