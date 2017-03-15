@@ -57,7 +57,7 @@ export default class Listing extends React.Component {
                         <a className="see-more right-align" onClick={this.dispatchThenRoute({
             type: "SET_COURSE", 
             payload: {title: this.state.title,description: this.state.description, deadline: this.state.deadline}
-        }, "/app/jobs/application")}><Link>View<Glyphicon glyph="chevron-right" /></Link></a>
+        }, "/app/jobs/single")}><Link>View<Glyphicon glyph="chevron-right" /></Link></a>
                     </Col>
                 </Row>
             </ListItem>
