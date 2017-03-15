@@ -16,7 +16,7 @@ export default class TopNav extends React.Component {
             color:"#333"
         }
         return (
-            <Navbar style={navStyle}>
+            <Navbar fixedTop style={navStyle}>
                 <Navbar.Header>
                     <Navbar.Brand >
                         <a href="#"style={brandStyle} >TA APPLICATION</a>
