@@ -1,11 +1,11 @@
 import React from "react";
-import {Col, Glyphicon, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import ListItem from "../views/ListItem";
 import {connect} from "react-redux";
 
-import { setCourse } from "../../actions/jobItemActions";
+import {setCourse} from "../../actions/jobItemActions";
 
-import {browserHistory, Link} from "react-router";
+import {browserHistory} from "react-router";
 
 @connect((store) => {
     return {};
@@ -23,7 +23,7 @@ export default class JobItemView extends React.Component {
 
     dispatchThenRoute = (myAction, myPath) => {
         return (dispatch) => {
-            this.props.dispatch(myAction(this.state))
+            this.props.dispatch(myAction(this.state));
             browserHistory.push(myPath);
         }
     };
@@ -34,33 +34,34 @@ export default class JobItemView extends React.Component {
                 <Row style={{marginBottom: 30}}>
                     <Col xs={4}>
 
-                        <h2 style={{margin: 0, fontWeight: 600}}><a>
+                        <h2 style={{margin: 0, fontWeight: 600}}><a
+                            onClick={this.dispatchThenRoute(setCourse, "/app/jobs/single") >
                             {this.state.title}
-                        </a></h2>
-                    </Col>
-                    {/*<Col xs={8} right>*/}
-                    {/*(2) Spaces Left*/}
-                    {/*</Col>*/}
+                                </a></h2>
+                                </Col>
+                            {/*<Col xs={8} right>*/}
+                            {/*(2) Spaces Left*/}
+                            {/*</Col>*/}
 
-                </Row>
-                <Row>
-                    <Col xs={12}>
-                        <p>
-                            {this.state.description}
-                        </p>
-                        <br/>
-                        <p>
-                            Apply by 02-03-2017
-                        </p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={2} xsOffset={10}>
-                        <a className="see-more right-align" onClick={this.dispatchThenRoute(setCourse, "/app/jobs/single")}><Link>View<Glyphicon glyph="chevron-right"/></Link></a>
-                    </Col>
-                </Row>
+                                </Row>
+                                <Row>
+                                <Col xs={12}>
+                                <p>
+                                {this.state.description}
+                                </p>
+                                <br/>
+                                <p>
+                                Apply by 02-03-2017
+                                </p>
+                                </Col>
+                                </Row>
+                                <Row>
+                                <Col xs={2} xsOffset={10}>
+                                <a className="see-more right-align" onClick={this.dispatchThenRoute(setCourse, "/app/jobs/single")}>View<Glyphicon glyph="chevron-right"/></a>
+                                </Col>
+                                </Row>
 
-            </ListItem>
-        );
-    }
-}
+                                </ListItem>
+                                );
+                            }
+                            }
