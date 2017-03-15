@@ -1,5 +1,5 @@
 import React from "react";
-import {Nav, Navbar, NavItem} from "react-bootstrap";
+import {Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
 export default class TopNav extends React.Component {
@@ -22,17 +22,19 @@ export default class TopNav extends React.Component {
                         <a href="#"style={brandStyle} >TA APPLICATION</a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
+
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav bsStyle="pills">
                         <LinkContainer to="/app/profile">
-                            <NavItem >PROFILE</NavItem>
+                            <NavItem >
+                                <Glyphicon glyph="glyphicon glyphicon-user"/> PROFILE</NavItem>
                         </LinkContainer>
                         <LinkContainer to="/app/jobs">
-                            <NavItem>JOBS</NavItem>
+                            <NavItem>   <Glyphicon glyph="glyphicon glyphicon-education"/> JOBS</NavItem>
                         </LinkContainer>
                         <LinkContainer to="/app/inbox">
-                            <NavItem>INBOX</NavItem>
+                            <NavItem> <Glyphicon glyph="glyphicon glyphicon-envelope"/> INBOX</NavItem>
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>

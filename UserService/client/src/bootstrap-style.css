@@ -11,3 +11,7 @@
     padding:48px;
     border: #E0E0E0 solid 1px;
 }
+
+:global .navbar{
+    background: #FFF;
+}

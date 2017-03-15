@@ -22,7 +22,6 @@ export default class Jobs extends React.Component {
       listings: []
     }
   }
-
   render() {
 
     return (
