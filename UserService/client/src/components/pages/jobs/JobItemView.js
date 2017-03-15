@@ -3,6 +3,8 @@ import {Col, Glyphicon, Row} from "react-bootstrap";
 import ListItem from "../views/ListItem";
 import {connect} from "react-redux";
 
+import { setCourse } from "../../actions/jobItemActions";
+
 import {browserHistory, Link} from "react-router";
 
 @connect((store) => {
@@ -21,7 +23,7 @@ export default class JobItemView extends React.Component {
 
     dispatchThenRoute = (myAction, myPath) => {
         return (dispatch) => {
-            this.props.dispatch(myAction)
+            this.props.dispatch(myAction(this.state))
             browserHistory.push(myPath);
         }
     };
@@ -54,14 +56,7 @@ export default class JobItemView extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={2} xsOffset={10}>
-                        <a className="see-more right-align" onClick={this.dispatchThenRoute({
-                            type: "SET_COURSE",
-                            payload: {
-                                title: this.state.title,
-                                description: this.state.description,
-                                deadline: this.state.deadline
-                            }
-                        }, "/app/jobs/single")}><Link>View<Glyphicon glyph="chevron-right"/></Link></a>
+                        <a className="see-more right-align" onClick={this.dispatchThenRoute(setCourse, "/app/jobs/single")}><Link>View<Glyphicon glyph="chevron-right"/></Link></a>
                     </Col>
                 </Row>
 
