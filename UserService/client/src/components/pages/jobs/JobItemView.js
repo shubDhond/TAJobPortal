@@ -29,7 +29,7 @@ export default class JobItemView extends React.Component {
     render() {
         return (
             <ListItem>
-                <Row style={{marginBottom: 360}}>
+                <Row style={{marginBottom: 30}}>
                     <Col xs={4}>
 
                         <h2 style={{margin: 0, fontWeight: 600}}><a>

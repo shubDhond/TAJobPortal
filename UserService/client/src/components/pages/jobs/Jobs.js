@@ -11,7 +11,7 @@ export default class Jobs extends React.Component {
             <StickyContainer  >
                 <SearchBar  />
                 <Row>
-                    <Col md={8}>
+                    <Col md={8} style={{paddingRight:0}}>
                         {this.props.children}
                     </Col>
                     <Col md={4}>

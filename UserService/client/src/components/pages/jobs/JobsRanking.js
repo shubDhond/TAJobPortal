@@ -27,21 +27,14 @@ export default class JobsRanking extends React.Component {
 
     return (
       <div>
+          <h3 style={{marginBottom:15}}>Rankings</h3>
         {
           this.state.listings.map(function(listing, i){
             return <RankingItemView title={listing.title} key={i} description={listing.description}
                                 deadline={listing.deadline}/>
           })
         }
-        <Row>
-          <Col xs={12}
-               className="centered">
-            <Pagination
-                items={10}
-                activePage={this.state.activePage}
-                onSelect={this.handleSelect} />
-          </Col>
-        </Row>
+
 
       </div>
     );
