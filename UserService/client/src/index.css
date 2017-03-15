@@ -10,19 +10,10 @@ body {
   height: 100%;
   width: 100%;
   font-family: "Montserrat";
-  background-color: #fefefe;
+  background-color: #F5F5F5;
   min-height: 100vh;
 }
 h1{
     font-weight: 600;
     font-size: 4em;
-}
-
-
-
-.donutc{
-    background:red  !important;
-    color:blue;
-    font-size: 5em;
-    padding:200px;
 }

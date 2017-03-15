@@ -1,8 +1,7 @@
 import React from "react";
 import {Link} from "react-router";
-import {Nav,NavItem, Col, Row, Grid} from "react-bootstrap";
+import { Col, Row, Grid} from "react-bootstrap";
 import Header from "./TopNav"
-
 
 export default class Layout extends React.Component {
     constructor() {
@@ -10,7 +9,6 @@ export default class Layout extends React.Component {
         this.state = {
             title: "Welcome",
         };
-
 
     }
 

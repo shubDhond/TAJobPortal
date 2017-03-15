@@ -1,30 +1,46 @@
 import React from "react";
-import { Button,ButtonGroup,Panel } from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import ListItem from "./views/ListItem";
+import {Link} from "react-router";
 
 export default class Listing extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      title: this.props.title,
-      description: this.props.description,
-      deadline: this.props.deadline
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: this.props.title,
+            description: this.props.description,
+            deadline: this.props.deadline
+        }
     }
-  }
 
 
-  render() {
-    return (
-        <ListItem header={this.state.title}>
-            ListItem
-          {this.state.description}
-          <br/>
-          Apply by: {this.state.deadline}
+    render() {
+        return (
+            <ListItem>
+                <Row>
+                    <Col xs={4}>
+                    <h2 style=""{{padding:16}}>
+                        {this.state.title}
+                    </h2>
+                    </Col>
+                    <Col xs={6} right>
+                    </Col>
+                </Row>
 
-          <ButtonGroup vertical block>
-            <Button bsStyle="success">Apply Now</Button>
-          </ButtonGroup>
-        </ListItem>
-    );
-  }
+                <Row>
+                    <p>
+                    {this.state.description}
+                    </p>
+                </Row>
+                <Row>
+                    Apply by: {this.state.deadline}
+                </Row>
+                <Row>
+                    <Col xs={2} xsOffset={10}>
+                        <a><Link>View</Link></a>
+                    </Col>
+                </Row>
+            </ListItem>
+        );
+    }
 }

@@ -1,3 +1,14 @@
-:global .panel-default>.panel-heading{
-    background: none;
+:global .panel>.panel-heading{
+    border-radius: 4px;
+    background: #fff;
+    border-bottom: none;
+    font-weight: 600;
+    font-size: 24px;
 }
+:global .panel{
+    background: #fff;
+    border-radius: 4px;
+    padding:24px;
+}
+
+:btn-p
