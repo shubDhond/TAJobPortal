@@ -17,7 +17,10 @@ h1{
     font-weight: 600;
     font-size: 4em;
 }
-
+h6{
+    font-weight: 600;
+    text-transform: uppercase;
+}
 :global .right-align{
     float:right;
 }
@@ -36,4 +39,26 @@ a:hover{
     color:#F50057;
     cursor: pointer;
     text-decoration: none;
+}
+
+:global .btn-primary{
+    font-weight: 600;
+    font-size: 16px;
+    background-color:#F50057;
+    border:none;
+    padding:16px;
+}
+:global .btn-primary:hover{
+    background-color:#FF4081;
+    border:none
+}
+
+:global .btn-primary:active{
+    background-color:#C51162 !important;
+    border:none
+}
+
+:global .btn-primary:focus{
+    background-color:#F50057 !important;
+    border:none
 }

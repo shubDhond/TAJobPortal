@@ -16,7 +16,6 @@ export default class Jobs extends React.Component {
   componentWillMount(){
     this.state = {...this.state, listings: this.props.dispatch(fetchListings).payload};
   }
-
   constructor(props){
     super(props);
     this.state = {
@@ -32,7 +31,7 @@ export default class Jobs extends React.Component {
         <SearchBar  />
         {
           this.state.listings.map(function(listing, i){
-            return <Listing title={listing.title} key={i} description={listing.description} 
+            return <Listing title={listing.title} key={i} description={listing.description}
             deadline={listing.deadline}/>
           })
         }

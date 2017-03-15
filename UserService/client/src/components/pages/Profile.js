@@ -1,85 +1,80 @@
 import React from "react";
-import { Form, Grid, Row, Col, FormControl, Button } from "react-bootstrap";
+import {Header,Button, Col, Form, FormControl, Row} from "react-bootstrap";
 
 export default class Profile extends React.Component {
-  render() {
-    return (
-      <div>
+    render() {
+        return (
+            <div>
 
 
-        <Form horizontal>
-          <Grid>
-            <Row>
-              <Col xs={3} xsOffset={1}>
-                FIRST NAME
-              </Col>
-              <Col xsOffset={6}>
-                LAST NAME
-              </Col>
-            </Row>
+                <Form horizontal className="card">
+                    <Row>
+                        <Col xs={6} >
+                            <h6> FIRST NAME</h6>
+                        </Col>
+                        <Col xs={6}>
+                            <h6>LAST NAME</h6>
+                        </Col>
+                    </Row>
 
-            <Row>
-              <Col xs={5} xsOffset={1}>
-                <FormControl type="text" placeholder="First Name" />
-              </Col>
-              <Col xs={5}>
-                <FormControl type="text" placeholder="Last Name" />
-              </Col>
-            </Row>
+                    <Row>
+                        <Col xs={6} >
+                            <FormControl type="text" placeholder="First Name"/>
+                        </Col>
+                        <Col xs={6}>
+                            <FormControl type="text" placeholder="Last Name"/>
+                        </Col>
+                    </Row>
 
-            <br />
+                    <br />
 
-            <Row>
-              <Col xs={3} xsOffset={1}>
-                STUDENT NUMBER
-              </Col>
-            </Row>
+                    <Row>
+                        <Col xs={3} >
+                            <h6>STUDENT NUMBER</h6>
+                        </Col>
+                    </Row>
 
-            <Row>
-              <Col xs={10} xsOffset={1}>
-                <FormControl type="text" pattern="[0-9]" placeholder="Student Number" />
-              </Col>
-            </Row>
+                    <Row>
+                        <Col xs={12} >
+                            <FormControl type="text" pattern="[0-9]" placeholder="Student Number"/>
+                        </Col>
+                    </Row>
 
-            <br />
+                    <br />
 
-            <Row>
-              <Col xs={3} xsOffset={1}>
-                ABOUT YOU
-              </Col>
-            </Row>
+                    <Row>
+                        <Col xs={3} >
+                            <h6>ABOUT YOU</h6>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={12} >
+                            <FormControl style={{height:128}} componentClass="textarea" placeholder="About you"/>
+                        </Col>
+                    </Row>
 
-            <Row>
-              <Col xs={10} xsOffset={1}>
-                <FormControl componentClass="textarea" placeholder="TELL US ABOUT YOU" />
-              </Col>
-            </Row>
+                    <br />
 
-            <br />
+                    <Row>
+                        <Col xs={3} >
+                            <h6>RESUME</h6>
+                        </Col>
+                        <Col >
+                            <FormControl type="file"/>
+                        </Col>
+                    </Row>
 
-            <Row>
-              <Col xs={3} xsOffset={1}>
-                RESUME
-              </Col>
-              <Col xsOffset={1}>
-                <FormControl type="file" />
-              </Col>
-            </Row>
+                    <br />
+                    <Row>
+                        <Col xs={12} >
+                            <Button className="right-align" bsStyle="primary" bsSize="large">Submit</Button>
+                        </Col>
+                    </Row>
 
-            <br />
-
-            <Row>
-              <Col xs={10} xsOffset={1}>
-                <Button bsStyle="default">Submit</Button>
-              </Col>
-            </Row>
-
-
-          </Grid>
-        </Form>
-      </div>
+                </Form>
+            </div>
 
 
-    );
-  }
+        );
+    }
 }
