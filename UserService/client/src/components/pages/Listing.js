@@ -20,9 +20,9 @@ export default class Listing extends React.Component {
                 <Row style={{marginBottom: 24}}>
                     <Col xs={4}>
 
-                        <a> <h2 style={{margin: 0 ,fontWeight:600}}>
+                        <h2 style={{margin: 0 ,fontWeight:600}}><a>
                             {this.state.title}
-                        </h2></a>
+                        </a></h2>
                     </Col>
                     {/*<Col xs={8} right>*/}
                         {/*(2) Spaces Left*/}
