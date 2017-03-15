@@ -4,7 +4,7 @@ export default class Profile extends React.Component {
   render() {
     return (
       <div>
-        <h1>Profile</h1>
+
 
         <form>
           First Name: <input type="text" name="firstName" />

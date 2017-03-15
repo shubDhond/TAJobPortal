@@ -7,6 +7,7 @@ import Routes from "./routes";
 import store from "./store";
 
 import "./index.css";
+import "./bootstrap-style.css";
 
 injectTapEventPlugin();
 

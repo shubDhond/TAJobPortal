@@ -15,16 +15,15 @@ export default class Layout extends React.Component {
     }
 
     render() {
-        const dstyle = {
-            background: "brand-danger"
-        };
         return (
 
             <div >
                 <Header/>
                 <Grid >
-                    <Row style={dstyle}>
+                    <Row>
                         <Col xs={12}>
+                            <h1 style={{marginBottom:16,marginTop:64}}>Title</h1>
+                            <h4 style={{marginBottom:48}}>Someone please make sure to hook this up corerctly.</h4>
                             {this.props.children}
                         </Col>
                     </Row>

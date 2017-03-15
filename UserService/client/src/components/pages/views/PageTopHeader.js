@@ -4,16 +4,10 @@ import {LinkContainer} from "react-router-bootstrap";
 
 export default class TopNav extends React.Component {
     render() {
-        const navStyle = {
-            paddingTop: "16px",
-            paddingBottom: "16px",
-            fontWeight:"700",
-            textTransform: "up"
-        }
         const brandStyle = {
             fontWeight:"800",
             fontSize:24,
-            color:"#333"
+            color:"#000000"
         }
         return (
             <Navbar style={navStyle}>

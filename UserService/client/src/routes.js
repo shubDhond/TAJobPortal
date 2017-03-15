@@ -13,9 +13,9 @@ const Routes = (props) => (
     <Route path="/" component={StudentSignUp} />
     <Route path="/app" component={Layout}>
 
-                <Route path="/app/profile" component={Profile}/>
-                <Route path="/app/jobs" component={Jobs}/>
-                <Route path="/app/inbox" component={Inbox}/>
+                <Route path="/app/profile" component={Profile} pageTitle="Open Jobs"/>
+                <Route path="/app/jobs" component={Jobs} pageTitle="Open Jobs"/>
+                <Route path="/app/inbox" component={Inbox} pageTitle="Inbox"/>
 
     </Route>
   </Router>
