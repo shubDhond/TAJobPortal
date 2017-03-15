@@ -1,7 +1,13 @@
 import React from "react";
 import {Glyphicon, Col, Row} from "react-bootstrap";
 import ListItem from "./views/ListItem";
-import {Link} from "react-router";
+import { connect } from "react-redux";
+
+import {Link,browserHistory} from "react-router";
+
+@connect((store) => {
+  return {};
+})
 
 export default class Listing extends React.Component {
     constructor(props) {
@@ -13,6 +19,12 @@ export default class Listing extends React.Component {
         }
     }
 
+    dispatchThenRoute = (myAction, myPath) => {
+        return (dispatch) => {
+            this.props.dispatch(myAction)
+            browserHistory.push(myPath);
+        }
+    };
 
     render() {
         return (
@@ -42,7 +54,10 @@ export default class Listing extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={2} xsOffset={10} >
-                        <a className="see-more right-align"><Link>View<Glyphicon glyph="chevron-right" /></Link></a>
+                        <a className="see-more right-align" onClick={this.dispatchThenRoute({
+            type: "SET_COURSE", 
+            payload: {title: this.state.title,description: this.state.description, deadline: this.state.deadline}
+        }, "/app/jobs/application")}><Link>View<Glyphicon glyph="chevron-right" /></Link></a>
                     </Col>
                 </Row>
             </ListItem>
