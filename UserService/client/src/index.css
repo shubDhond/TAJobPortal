@@ -17,3 +17,23 @@ h1{
     font-weight: 600;
     font-size: 4em;
 }
+
+:global .right-align{
+    float:right;
+}
+
+:global .see-more{
+    color:#333;
+    font-weight: 600;
+}
+:global .see-more:hover{
+    text-decoration: underline;
+}
+a{
+    color:#333;
+}
+a:hover{
+    color:#F50057;
+    cursor: pointer;
+    text-decoration: none;
+}
