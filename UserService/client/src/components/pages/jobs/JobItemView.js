@@ -3,7 +3,7 @@ import {Col, Glyphicon, Row} from "react-bootstrap";
 import ListItem from "../views/ListItem";
 import {connect} from "react-redux";
 
-import { setCourse } from "../../actions/jobItemActions";
+import { setCourse } from "../../../actions/jobItemActions";
 
 import {browserHistory, Link} from "react-router";
 
