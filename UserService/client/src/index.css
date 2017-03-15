@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700,800');
 html {
   width: 100%;
   height: 100%;
@@ -8,8 +9,31 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
-  font-family: sans-serif;
-  background-color: #f2f2f2;
+  font-family: "Montserrat";
+  background-color: #F5F5F5;
   min-height: 100vh;
 }
+h1{
+    font-weight: 600;
+    font-size: 4em;
+}
 
+:global .right-align{
+    float:right;
+}
+
+:global .see-more{
+    color:#333;
+    font-weight: 600;
+}
+:global .see-more:hover{
+    text-decoration: underline;
+}
+a{
+    color:#333;
+}
+a:hover{
+    color:#F50057;
+    cursor: pointer;
+    text-decoration: none;
+}

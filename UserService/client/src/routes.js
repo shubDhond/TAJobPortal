@@ -12,9 +12,11 @@ const Routes = (props) => (
   <Router {...props}>
     <Route path="/" component={StudentSignUp} />
     <Route path="/app" component={Layout}>
-      <Route path="/app/profile" component={Profile}></Route>
-      <Route path="/app/jobs" component={Jobs}></Route>
-      <Route path="/app/inbox" component={Inbox}></Route>
+
+                <Route path="/app/profile" component={Profile} pageTitle="Open Jobs"/>
+                <Route path="/app/jobs" component={Jobs} pageTitle="Open Jobs"/>
+                <Route path="/app/inbox" component={Inbox} pageTitle="Inbox"/>
+
     </Route>
   </Router>
 );
