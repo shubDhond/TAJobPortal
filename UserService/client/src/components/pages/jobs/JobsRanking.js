@@ -26,7 +26,7 @@ export default class JobsRanking extends React.Component {
   render() {
 
     return (
-      <div> <h3 style={{marginBottom:15}}> Rankings</h3>
+      <div> <h3 style={{marginBottom:15}}>Preference Rankings</h3>
         {
           this.state.listings.map(function(listing, i){
             return <RankingItemView title={listing.title} key={i} description={listing.description}
