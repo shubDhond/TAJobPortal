@@ -9,6 +9,8 @@ import Profile from "./components/pages/Profile";
 import JobsSingleView from "./components/pages/jobs/JobSingleView";
 import Listings from "./components/pages/jobs/Listings";
 
+import CoordLayout from "./components/TaCoord/CoordLayout";
+
 const Routes = (props) => (
   <Router {...props}>
     <Route path="/" component={StudentSignUp} />
@@ -19,6 +21,9 @@ const Routes = (props) => (
         <Route path="/app/jobs/single" component={JobsSingleView}/>
       </Route>
       <Route path="/app/inbox" component={Inbox} pageTitle="Inbox"/>
+    </Route>
+    <Route path="/coord" component={CoordLayout}>
+
     </Route>
   </Router>
 );
