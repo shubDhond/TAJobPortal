@@ -1,11 +1,12 @@
 import React from "react";
+import {Navbar} from "react-bootstrap";
 
 export default class Application extends React.Component {
   render() {
     return (
-      <div>
-        <h1>Application</h1>
-      </div>
+      <Navbar fixedTop="True">
+        <Navbar.Link>Application</Navbar.Link>
+      </Navbar>
     );
   }
 }
