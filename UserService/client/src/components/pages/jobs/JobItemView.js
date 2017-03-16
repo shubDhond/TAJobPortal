@@ -1,9 +1,17 @@
 import React from "react";
-import {Glyphicon, Col, Row} from "react-bootstrap";
-import ListItem from "./views/ListItem";
-import {Link} from "react-router";
+import {Col, Glyphicon, Row} from "react-bootstrap";
+import ListItem from "../views/ListItem";
+import {connect} from "react-redux";
 
-export default class Listing extends React.Component {
+import { setCourse } from "../../../actions/jobItemActions";
+
+import {browserHistory, Link} from "react-router";
+
+@connect((store) => {
+    return {};
+})
+
+export default class JobItemView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,19 +21,26 @@ export default class Listing extends React.Component {
         }
     }
 
+    dispatchThenRoute = (myAction, myPath) => {
+        return (dispatch) => {
+            this.props.dispatch(myAction(this.state));
+            browserHistory.push(myPath);
+        }
+    };
 
     render() {
         return (
             <ListItem>
-                <Row style={{marginBottom: 24}}>
+                <Row style={{marginBottom: 30}}>
                     <Col xs={4}>
 
-                        <h2 style={{margin: 0 ,fontWeight:600}}><a>
+                        <h2 style={{margin: 0, fontWeight: 600}}><a
+                            onClick={this.dispatchThenRoute(setCourse, "/app/jobs/single")}>
                             {this.state.title}
                         </a></h2>
                     </Col>
                     {/*<Col xs={8} right>*/}
-                        {/*(2) Spaces Left*/}
+                    {/*(2) Spaces Left*/}
                     {/*</Col>*/}
 
                 </Row>
@@ -41,10 +56,11 @@ export default class Listing extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={2} xsOffset={10} >
-                        <a className="see-more right-align"><Link>View<Glyphicon glyph="chevron-right" /></Link></a>
+                    <Col xs={2} xsOffset={10}>
+                        <a className="see-more right-align" onClick={this.dispatchThenRoute(setCourse, "/app/jobs/single")}>View<Glyphicon glyph="chevron-right"/></a>
                     </Col>
                 </Row>
+
             </ListItem>
         );
     }
