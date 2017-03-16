@@ -30,7 +30,7 @@ export default class JobsSingleView extends React.Component {
                             </h2>
                         </Col>
                         <Col xs={4} >
-                            <h4 className="right-align" style={{
+                            <h5 className="right-align" style={{
                                 margin: 0,
                                 fontWeight: 600,
                                 borderRadius: 4,
@@ -38,7 +38,7 @@ export default class JobsSingleView extends React.Component {
                                 padding:8
                             }}>
                                 RANK #1{/*{course.title}*/}
-                            </h4>
+                            </h5>
 
                         </Col>
                         {/*<Col xs={8} right>*/}
