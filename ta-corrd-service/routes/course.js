@@ -12,7 +12,6 @@ let Course = require('../models/course');
  * year
  * */
 router.get('/', (req, res, next) => {
-
     Course.find(req.query, (err, courses)=>{
         "use strict";
         if (err) throw err;
@@ -38,7 +37,6 @@ router.get('/', (req, res, next) => {
  * }*/
 router.post('/', (req, res, next) => {
     "use strict";
-
     //Validations
     if(!Course.schema.path('term').enumValues.includes(req.body.term)){
         res.status(400).json({

@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 //basic test for now...
 describe('course', function(){
   this.timeout(0);
-  it('should return status 200', function(done){
+  it('should return status 404', function(done){
     chai.request(app)
     .get('/course')
     .end(function(err,res){
