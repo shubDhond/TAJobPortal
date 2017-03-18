@@ -7,21 +7,20 @@ import {Col, DropdownButton, Glyphicon, MenuItem, Row} from "react-bootstrap";
 import {browserHistory} from "react-router";
 
 @connect((store) => {
-    console.log(store)
     
     return {
         listings: store.listings,
-        jobView: store.jobView,
         rankings: store.rankings
     };
 })
 
 export default class JobsSingleView extends React.Component {
     constructor(props) {
-
+        
         super(props);
-
-        var course = this.props.listings.listings[this.props.jobView.course.id]
+        
+        // where you would make the query for the information to display
+        var course = this.props.listings.listings[this.props.location.query.id]
 
         this.state = {
             id: course.id,
@@ -40,8 +39,6 @@ export default class JobsSingleView extends React.Component {
     };
 
     render() {
-
-        const {course} = this.props.jobView;
         const {topJobs} = this.props.rankings;
 
         var ranking=null;
@@ -50,7 +47,7 @@ export default class JobsSingleView extends React.Component {
 
         for (var rank in object) {
             if (object.hasOwnProperty(rank)) {
-              if(object[rank].id === course.id){
+              if(object[rank].id === this.state.id){
                 ranking = "Rank #" + rank;
               }
             }
@@ -96,7 +93,7 @@ export default class JobsSingleView extends React.Component {
                         <Col xs={8}>
 
                             <h2 style={{margin: 0, fontWeight: 600}}>
-                                CSC302{/*{course.title}*/}
+                                {this.state.title}
                             </h2>
                         </Col>
                         <Col xs={4} >
@@ -107,7 +104,7 @@ export default class JobsSingleView extends React.Component {
                                 background: "#EEE",
                                 padding:8
                             }}>
-                                {ranking/*{course.title}*/}
+                                {ranking}
                             </h5>
 
                         </Col>
@@ -119,8 +116,7 @@ export default class JobsSingleView extends React.Component {
                     <Row>
                         <Col xs={12}>
                             <p>
-                                {/*{course.description}*/}
-                                {lorem};
+                                {this.state.description}
                             </p>
                             <br/>
                             <p>
@@ -129,7 +125,6 @@ export default class JobsSingleView extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        {/*TODO: MAKE BUTTON TEXT DISPLAY RANKING.*/}
                         <Col xs={12}>
                             <div className="right-align">
                             <DropdownButton id="1" bsStyle="primary" title="I'm interested!">
