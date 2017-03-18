@@ -36,10 +36,10 @@ export default function reducer(state={
         // else move the others around
         else{
           //iterate through and if it has ranking >= then move down
-          var object = newState.topJobs
+          object = newState.topJobs
           var temp1 = {};
           var temp2 = {};
-          for (var rank in object) {
+          for (rank in object) {
               if (object.hasOwnProperty(rank)) {
                 if(rank >= load.ranking && rank < 5){
                   //gotta move it

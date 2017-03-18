@@ -29,6 +29,13 @@ export default class JobItemView extends React.Component {
         }
     };
 
+    routeToView = (path) => {
+        return () => {
+            browserHistory.push(path);
+        }
+    };
+
+
     render() {
         return (
             <ListItem>
@@ -36,7 +43,7 @@ export default class JobItemView extends React.Component {
                     <Col xs={8}>
 
                         <h2 style={{margin: 0, fontWeight: 600}}><a
-                            onClick={this.dispatchThenRoute(setCourse, "/app/jobs/single/?id=" + this.props.id)}>
+                            onClick={this.routeToView("/app/jobs/single/?id=" + this.props.id)}>
                             {this.state.title}
                         </a></h2>
                     </Col>
@@ -55,7 +62,7 @@ export default class JobItemView extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={2} xsOffset={10}>
-                        <a className="see-more right-align" onClick={this.dispatchThenRoute(setCourse, "/app/jobs/single/?id=" + this.props.id)}>View<Glyphicon glyph="chevron-right"/></a>
+                        <a className="see-more right-align" onClick={this.routeToView("/app/jobs/single/?id=" + this.props.id)}>View<Glyphicon glyph="chevron-right"/></a>
                     </Col>
                 </Row>
 

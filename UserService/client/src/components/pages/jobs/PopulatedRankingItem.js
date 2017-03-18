@@ -1,21 +1,13 @@
 import React from "react";
-import {connect} from "react-redux";
 import {Button} from "react-bootstrap";
-
-import { setCourse } from "../../../actions/jobItemActions";
 
 import {browserHistory} from "react-router";
 
-@connect((store) => {
-    return {};
-})
-
 export default class Populated extends React.Component {
     
-    dispatchThenRoute = (myAction, myPath) => {
+    routeToView = (path) => {
         return (dispatch) => {
-            this.props.dispatch(myAction(this.state));
-            browserHistory.push(myPath);
+            browserHistory.push(path);
         }
     };
 
@@ -29,7 +21,7 @@ export default class Populated extends React.Component {
             marginBottom: 15
         };
         return (
-            <Button onClick={this.dispatchThenRoute(setCourse, "/app/jobs/single")} block style={styles}>
+            <Button onClick={this.routeToView("/app/jobs/single/?id=" + this.props.id)} block style={styles}>
                 <h4 style={{
                     display: "inline-block",
                     padding:8,

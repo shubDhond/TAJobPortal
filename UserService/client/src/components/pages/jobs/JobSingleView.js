@@ -18,25 +18,45 @@ export default class JobsSingleView extends React.Component {
     constructor(props) {
         
         super(props);
-        
+
         // where you would make the query for the information to display
         var course = this.props.listings.listings[this.props.location.query.id]
 
         this.state = {
-            id: course.id,
+            id: this.props.location.query.id,
             title: course.title,
             description: course.description,
             deadline: course.deadline,
             rankings: this.props.rankings
         }
     }
+    
+    componentWillReceiveProps(nextProps){
+        if(this.state.id !== nextProps.location.query.id){
+            var course = this.props.listings.listings[nextProps.location.query.id]
+
+            this.setState({
+                id: nextProps.location.query.id,
+                title: course.title,
+                description: course.description,
+                deadline: course.deadline,
+                rankings: this.props.rankings
+            });
+
+        }
+    }
 
     dispatchRankingChange = (newRanking) => {
         return (dispatch) => {
             this.props.dispatch(setRanking(this.state, newRanking));
-            this.props.dispatch(setCourse({...this.state, ranking: newRanking}));
         }
     };
+    
+    goBackToJobs= () =>{
+        return () => {
+            browserHistory.push("/app/jobs")
+        }
+    }
 
     render() {
         const {topJobs} = this.props.rankings;
@@ -56,8 +76,6 @@ export default class JobsSingleView extends React.Component {
         if(ranking == null){
             ranking="Not Ranked";
         }
-
-        const lorem = "Ted ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?";
 
         var preferences=[];
 
@@ -85,7 +103,7 @@ export default class JobsSingleView extends React.Component {
         return (
             <div>
                 <h4 style={{marginTop: 22, marginBottom: 15}}>
-                    <a onClick={browserHistory.goBack} className="see-more">
+                    <a onClick={this.goBackToJobs()} className="see-more">
                         <Glyphicon glyph="chevron-left"/>Back</a>
                 </h4>
                 <div className="card">

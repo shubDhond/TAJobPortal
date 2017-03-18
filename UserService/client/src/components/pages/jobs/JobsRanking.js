@@ -19,13 +19,11 @@ export default class JobsRanking extends React.Component {
   }
 
   render() {
-    console.log("rendering rankings")
     const {topJobs} = this.props.rankings;
     var items = [];
     for(let i = 1; i<= 5; i++){
       if(topJobs.hasOwnProperty(i)){
-        console.log("here")
-        items.push(<RankingItemView title={topJobs[i].title} key={i} id={i} description={topJobs[i].description} deadline={topJobs[i].deadline} ranking={i}/>);
+        items.push(<RankingItemView title={topJobs[i].title} key={i} id={topJobs[i].id} ranking={i}/>);
       }
 
       else{
@@ -34,7 +32,8 @@ export default class JobsRanking extends React.Component {
     }
 
     return (
-      <div> <h3 style={{marginBottom:15}}>Preference Rankings</h3>
+      <div> 
+        <h3 style={{marginBottom:15}}>Preference Rankings</h3>
         {items}
       </div>
     );
