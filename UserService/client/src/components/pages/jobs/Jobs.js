@@ -3,7 +3,9 @@ import SearchBar from "../SearchBar";
 import {Col, Row} from "react-bootstrap";
 import JobsRanking from "./JobsRanking";
 import {Sticky, StickyContainer} from "react-sticky";
+
 export default class Jobs extends React.Component {
+
     render() {
 
         return (

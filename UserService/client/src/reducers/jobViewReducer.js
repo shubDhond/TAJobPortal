@@ -1,8 +1,6 @@
 export default function reducer(state={
     course: {
-      title: null,
-      description: null,
-      deadline: null,
+      id: null,
     },
     error: null,
   }, action) {

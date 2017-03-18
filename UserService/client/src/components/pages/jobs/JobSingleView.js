@@ -1,20 +1,90 @@
 import React from "react";
 import {connect} from "react-redux";
+import {setRanking} from "../../../actions/rankingActions";
+import { setCourse } from "../../../actions/jobItemActions";
 
 import {Col, DropdownButton, Glyphicon, MenuItem, Row} from "react-bootstrap";
 import {browserHistory} from "react-router";
 
 @connect((store) => {
-    console.log(store);
+    console.log(store)
+    
     return {
-        course: store.application.course
+        listings: store.listings,
+        jobView: store.jobView,
+        rankings: store.rankings
     };
 })
 
 export default class JobsSingleView extends React.Component {
+    constructor(props) {
+
+        super(props);
+
+        var course = this.props.listings.listings[this.props.jobView.course.id]
+
+        this.state = {
+            id: course.id,
+            title: course.title,
+            description: course.description,
+            deadline: course.deadline,
+            rankings: this.props.rankings
+        }
+    }
+
+    dispatchRankingChange = (newRanking) => {
+        return (dispatch) => {
+            this.props.dispatch(setRanking(this.state, newRanking));
+            this.props.dispatch(setCourse({...this.state, ranking: newRanking}));
+        }
+    };
+
     render() {
-        const {course} = this.props;
+
+        const {course} = this.props.jobView;
+        const {topJobs} = this.props.rankings;
+
+        var ranking=null;
+
+        var object = topJobs;
+
+        for (var rank in object) {
+            if (object.hasOwnProperty(rank)) {
+              if(object[rank].id === course.id){
+                ranking = "Rank #" + rank;
+              }
+            }
+        }
+
+        if(ranking == null){
+            ranking="Not Ranked";
+        }
+
         const lorem = "Ted ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?";
+
+        var preferences=[];
+
+        var object = topJobs;
+        var max = 0;
+        for (var rank in object) {
+            if (object.hasOwnProperty(rank)) {
+                if(rank > max) max=rank;
+            }
+        }   
+
+        if(!this.props.rankings.jobsRanked){
+            preferences.push(<MenuItem key={1} onClick={this.dispatchRankingChange(1)} eventKey={1}>Preference #1</MenuItem>)
+        }
+        else{
+            var i;
+            for( i = 1; i <= max; i++){
+                preferences.push(<MenuItem key={i} onClick={this.dispatchRankingChange(i)} eventKey={i}>Preference #{i}</MenuItem>)
+            }
+            if(max < 5){
+                preferences.push(<MenuItem key={i} onClick={this.dispatchRankingChange(i)} eventKey={i}>Preference #{i}</MenuItem>)
+            }
+        }
+
         return (
             <div>
                 <h4 style={{marginTop: 22, marginBottom: 15}}>
@@ -37,7 +107,7 @@ export default class JobsSingleView extends React.Component {
                                 background: "#EEE",
                                 padding:8
                             }}>
-                                RANK #1{/*{course.title}*/}
+                                {ranking/*{course.title}*/}
                             </h5>
 
                         </Col>
@@ -62,9 +132,8 @@ export default class JobsSingleView extends React.Component {
                         {/*TODO: MAKE BUTTON TEXT DISPLAY RANKING.*/}
                         <Col xs={12}>
                             <div className="right-align">
-                            <DropdownButton  bsStyle="primary" title="I'm interested!">
-                                <MenuItem eventKey="1">Preference #1</MenuItem>
-                                <MenuItem eventKey="2">Preference #2</MenuItem>
+                            <DropdownButton id="1" bsStyle="primary" title="I'm interested!">
+                                {preferences}
                             </DropdownButton>
                             </div>
                         </Col>

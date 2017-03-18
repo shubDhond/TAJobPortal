@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 
 import { setCourse } from "../../../actions/jobItemActions";
 
-import {browserHistory, Link} from "react-router";
+import {browserHistory} from "react-router";
 
 @connect((store) => {
     return {};
@@ -15,9 +15,10 @@ export default class JobItemView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: this.props.id,
             title: this.props.title,
             description: this.props.description,
-            deadline: this.props.deadline
+            deadline: this.props.deadline,
         }
     }
 
@@ -32,16 +33,13 @@ export default class JobItemView extends React.Component {
         return (
             <ListItem>
                 <Row style={{marginBottom: 30}}>
-                    <Col xs={4}>
+                    <Col xs={8}>
 
                         <h2 style={{margin: 0, fontWeight: 600}}><a
-                            onClick={this.dispatchThenRoute(setCourse, "/app/jobs/single")}>
+                            onClick={this.dispatchThenRoute(setCourse, "/app/jobs/single?id=1")}>
                             {this.state.title}
                         </a></h2>
                     </Col>
-                    {/*<Col xs={8} right>*/}
-                    {/*(2) Spaces Left*/}
-                    {/*</Col>*/}
 
                 </Row>
                 <Row>

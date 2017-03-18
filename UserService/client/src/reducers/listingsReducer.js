@@ -1,24 +1,36 @@
 export default function reducer(state={
-    listings: [],
+    listings: {
+      1: {title: "CSC301", 
+      description: "This course is an introduction to the theory and practice of large-scale software system design, development, and deployment. Topics include project management; advanced UML; reverse engineering; requirements inspection; verification and validation software architecture; performance modeling and analysis.", 
+      deadline: "2017-04-23"},
+      2: {title: "CSC302", 
+      description: "This course is an introduction to the theory and practice of large-scale software system design, development, and deployment. Topics include project management; advanced UML; reverse engineering; requirements inspection; verification and validation software architecture; performance modeling and analysis.", 
+      deadline: "2017-04-23"},
+      3: {title: "CSC303", 
+      description: "This course is an introduction to the theory and practice of large-scale software system design, development, and deployment. Topics include project management; advanced UML; reverse engineering; requirements inspection; verification and validation software architecture; performance modeling and analysis.", 
+      deadline: "2017-04-23"}
+    },
     fetching: false,
     fetched: false,
     error: null,
   }, action) {
 
     switch (action.type) {
-      case "FETCH_LISTINGS": {
-        return {...state, fetching: true}
-      }
-      case "FETCH_LISTINGS_REJECTED": {
-        return {...state, fetching: false, error: action.payload}
-      }
-      case "FETCH_LISTINGS_FULFILLED": {
+      case "SET_LISTINGS": {
         return {
           ...state,
-          fetching: false,
-          fetched: true,
           listings: action.payload,
         }
+      }
+      case "SET_RANKING": {
+        var course = action.payload;
+
+        return {...state, listings: 
+          {...state.listings, 
+            [course.id]:
+              {...state.listings[course.id], 
+                ranking: course.ranking}}}
+
       }
       default:
         return state
