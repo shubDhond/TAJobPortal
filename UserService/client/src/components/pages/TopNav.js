@@ -1,8 +1,15 @@
 import React from "react";
 import {Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
+import {browserHistory} from "react-router";
 
 export default class TopNav extends React.Component {
+    
+    routeToView = (path) => {
+        return (dispatch) => {
+            browserHistory.push(path);
+        }
+    };
     render() {
         const navStyle = {
             paddingTop: "16px",
@@ -38,7 +45,7 @@ export default class TopNav extends React.Component {
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>
-                        <NavItem eventKey={1} href="#">SIGN IN</NavItem>
+                        <NavItem eventKey={1} onClick={this.routeToView('/')} href="#">SIGN IN</NavItem>
                     </Nav>
                 </Navbar.Collapse>
 

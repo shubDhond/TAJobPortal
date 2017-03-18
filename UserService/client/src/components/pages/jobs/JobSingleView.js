@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {setRanking} from "../../../actions/rankingActions";
-import { setCourse } from "../../../actions/jobItemActions";
 
 import {Col, DropdownButton, Glyphicon, MenuItem, Row} from "react-bootstrap";
 import {browserHistory} from "react-router";

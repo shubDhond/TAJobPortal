@@ -3,8 +3,6 @@ import {Col, Glyphicon, Row} from "react-bootstrap";
 import ListItem from "../views/ListItem";
 import {connect} from "react-redux";
 
-import { setCourse } from "../../../actions/jobItemActions";
-
 import {browserHistory} from "react-router";
 
 @connect((store) => {
@@ -21,13 +19,6 @@ export default class JobItemView extends React.Component {
             deadline: this.props.deadline,
         }
     }
-
-    dispatchThenRoute = (myAction, myPath) => {
-        return (dispatch) => {
-            this.props.dispatch(myAction(this.state));
-            browserHistory.push(myPath);
-        }
-    };
 
     routeToView = (path) => {
         return () => {

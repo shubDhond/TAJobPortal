@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import InboxReducer from './reducer-inbox';
 import listings from "./listingsReducer";
-import jobView from "./jobViewReducer";
+import headings from "./headingsReducer";
 import rankings from "./rankingReducer";
 
 export default combineReducers({
     rankings,
     listings,
-    jobView,
+    headings,
 	inbox: InboxReducer,
 });
