@@ -6,7 +6,10 @@ import {PanelGroup, Panel, Accordion, Well, Image} from 'react-bootstrap';
 class PanelHeader extends Component{
 	render(){
 		return (
-			<div>{this.props.name}, {this.props.student_id}</div>
+			<div>
+				<Image width="80" height="80" src="https://react-bootstrap.github.io/assets/thumbnail.png" circle />
+				{this.props.name}, {this.props.student_id}
+			</div>
 		);
 	}
 }
@@ -15,7 +18,8 @@ class PanelContent extends Component{
 	render(){
 		return (
 			<div>
-				<Well>{this.props.content}</Well>
+				About me: <Well>{this.props.content}</Well>
+				Prefered Courses: <Well>{this.props.courses}</Well>
         	</div>
 		);
 	}
@@ -28,13 +32,12 @@ class ApplicantList extends Component{
 			return (
 				<Panel header=
 					{<div>
-						{applicant.first_name}, {applicant.student_id}
+						<PanelHeader name={applicant.first_name} student_id={applicant.student_id} profile_pic={applicant.profile_pic}/>
 					</div>} 
 					eventKey={applicant.id}>
-
-					{<PanelContent content={applicant.details} />}
-
-
+					{<div>
+						<PanelContent content={applicant.details} courses={applicant.courses}/>
+					</div>}
 				</Panel>
 			);
 		});
