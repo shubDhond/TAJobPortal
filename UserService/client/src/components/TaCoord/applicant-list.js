@@ -1,21 +1,46 @@
 import React, {Component} from "react";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import { Table, ListGroup, ListGroupItem} from 'react-bootstrap';
+import {PanelGroup, Panel, Accordion, Well, Image} from 'react-bootstrap';
 
-import ReactExpandableListView from 'react-expandable-listview';
-import './react-expandable-listview.css'
+class PanelHeader extends Component{
+	render(){
+		return (
+			<div>
+				Name: {this.props.name}
+				Student Number: {this.props.student_number}
+        	</div>
+		);
+	}
+}
+
+class PanelContent extends Component{
+	render(){
+		return (
+			<div>
+				<Well>{this.props.content}</Well>
+        	</div>
+		);
+	}
+}
 
 class ApplicantList extends Component{
 
+	getApplicants(){
+		return this.props.applicants.map((applicant) => {
+			return (
+				<Panel header={applicant.first_name} eventKey={applicant.id}>{<PanelContent content={applicant.details}/>}</Panel>
+			);
+		});
+	}
+	
+
 	render(){
-		const { applicants } = this.props
 		return (
 			<div>
-				<ReactExpandableListView
-			        data={applicants}
-			        headerAttName="student_name"
-			        itemsAttName="items"/>
+				<Accordion>
+					{this.getApplicants()}
+				</Accordion>
         	</div>
 		);
 	}
