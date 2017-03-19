@@ -28,9 +28,11 @@ export default class Courses extends React.Component {
     	<div className="card">
         <SearchBar />
       	<ListGroup>
+
           {
             this.state.listings.map(function(listing, i){
-              return <Listing title={listing.title}/>
+              return <Listing title={listing.title} key={i} description={listing.description}
+              deadline={listing.deadline}/>
             })
           }
 		    </ListGroup>
