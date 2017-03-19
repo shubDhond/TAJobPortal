@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import Card from 'grommet/components/Card';
 import { connect } from 'react-redux';
 import Box from 'grommet/components/Box';
-import Form from 'grommet/components/Form';
-import FormField from 'grommet/components/FormField';
-import RadioButton from 'grommet/components/RadioButton';
+import {Button, Col, Form, FormControl, Grid, Jumbotron, Row} from "react-bootstrap";
 import { 
   setUserType, 
   userEmailError, 
@@ -13,10 +11,6 @@ import {
   userPasswordValid,
   userAuthenticate
 } from '../../actions/userActions';
-import TextInput from 'grommet/components/TextInput';
-import Button from 'grommet/components/Button';
-import Spinning from 'grommet/components/icons/Spinning';
-import Footer from 'grommet/components/Footer';
 import Label from 'grommet/components/Label';
 import { Link } from 'react-router';
 import axios from 'axios';
@@ -116,63 +110,119 @@ class Login extends Component {
 
     if (this.props.user.authenticating) {
       return (
-        <Box align='center' full={true}>
-          <Box align='center' pad='large'>
-            <Card align='center' heading='Login' colorIndex='light-1'>
-              <Spinning />
-            </Card>
-          </Box>
-        </Box>
+
+        <h1>AUTHENTICATING</h1>
       );
     }
+      const jumboStyle = {
+          height: "100%",
+          background: "none"
+      };
+      return (
+          <Grid fluid style={{height: "100%"}}>
+              <Row style={{padding:64}}>
+                  <Col xs={12} sm="9">
+                      <Jumbotron style={jumboStyle}>
+                          <h1 style={{marginBottom: 16, marginTop: 64}}>Apply to be a TA</h1>
+                          <h2 style={{marginBottom: 48}}>Lorem Ipsum Lorem Ipsum</h2>
 
-    return (
-      <Box align='center' full={true}>
-        <Box align='center' pad='medium'>
-          <Card heading='Login' colorIndex='light-1'>
-            {SuccessLabel}
-            {ErrorLabel}
-            <Form onSubmit={this.login}>
-              <FormField>
-                <RadioButton id='is_student'
-                  label='Student'
-                  checked={this.props.user.user.user_type === 'student'}
-                  onChange={this.setType}
-                  value='student' />
-                <RadioButton id='is_coordinator'
-                  label='Coordinator'
-                  checked={this.props.user.user.user_type === 'ta-coordinator'}
-                  onChange={this.setType}
-                  value='ta-coordinator' />
-              </FormField>
-              <FormField error={this.props.user.emailError}>
-                <TextInput placeHolder='Email'
-                           id='email'
-                           name='email'
-                           type='email'
-                           ref='email' 
-                           required />
-              </FormField>
-              <FormField error={this.props.user.passwordError} help='Your password must be at least 8 characters with 1 alphabet character and 1 number.'>
-                <TextInput placeHolder='Password'
-                           id='password'
-                           name='password' 
-                           type='password'
-                           ref='password'
-                           required />
-              </FormField>
-              <Link to='/sign-up'>Don't have an account? Sign up here.</Link>
-              <Footer pad={{"vertical": "medium"}}>
-                <Button label='Login'
-                  type='submit'
-                  primary={true}
-                  onClick={this.login} />
-              </Footer>
-            </Form>
-          </Card>
-        </Box>
-      </Box>
-    );
+                      </Jumbotron>
+                  </Col>
+                  <Col xs={12} sm="3">
+                      <Form horizontal className="card" >
+                          <Row>
+                              <Col xs={12} style={{marginBottom:24}}>
+                                  <h2 style={{teaxtAlign:"center", margin:0}}> Sign In</h2>
+                              </Col>
+                          </Row>
+                          <Row>
+                              <Col xs={12}>
+                                  <h6> EMAIL</h6>
+                              </Col>
+                          </Row>
+                          <Row>
+                              <Col xs={12}>
+                                  <FormControl type="text" placeholder="Password"/>
+                              </Col>
+                          </Row>
+                          <br />
+                          <Row>
+                              <Col xs={12}>
+                                  <h6> PASSWORD</h6>
+                              </Col>
+                          </Row>
+                          <Row>
+                              <Col xs={12}>
+                                  <FormControl type="password" placeholder="Password"/>
+                              </Col>
+                          </Row>
+                          <br />
+                          <Row>
+                              <Col xs={12}>
+                                  <Button block  bsStyle="primary"
+                                          bsSize="large" href="/app/profile">Sign In</Button>
+                              </Col>
+                          </Row>
+                          <br/>
+                          <Row>
+                              <Col xs={12}>
+                                  <a className="see-more centered"><h5>Create an Account</h5></a>
+                              </Col>
+                          </Row>
+                      </Form>
+                  </Col>
+              </Row>
+
+              {this.props.children}
+          </Grid>
+      );
+    // return (
+    //   <Box align='center' full={true}>
+    //     <Box align='center' pad='medium'>
+    //       <Card heading='Login' colorIndex='light-1'>
+    //         {SuccessLabel}
+    //         {ErrorLabel}
+    //         <Form onSubmit={this.login}>
+    //           <FormField>
+    //             <RadioButton id='is_student'
+    //               label='Student'
+    //               checked={this.props.user.user.user_type === 'student'}
+    //               onChange={this.setType}
+    //               value='student' />
+    //             <RadioButton id='is_coordinator'
+    //               label='Coordinator'
+    //               checked={this.props.user.user.user_type === 'ta-coordinator'}
+    //               onChange={this.setType}
+    //               value='ta-coordinator' />
+    //           </FormField>
+    //           <FormField error={this.props.user.emailError}>
+    //             <TextInput placeHolder='Email'
+    //                        id='email'
+    //                        name='email'
+    //                        type='email'
+    //                        ref='email'
+    //                        required />
+    //           </FormField>
+    //           <FormField error={this.props.user.passwordError} help='Your password must be at least 8 characters with 1 alphabet character and 1 number.'>
+    //             <TextInput placeHolder='Password'
+    //                        id='password'
+    //                        name='password'
+    //                        type='password'
+    //                        ref='password'
+    //                        required />
+    //           </FormField>
+    //           <Link to='/sign-up'>Don't have an account? Sign up here.</Link>
+    //           <Footer pad={{"vertical": "medium"}}>
+    //             <Button label='Login'
+    //               type='submit'
+    //               primary={true}
+    //               onClick={this.login} />
+    //           </Footer>
+    //         </Form>
+    //       </Card>
+    //     </Box>
+    //   </Box>
+    // );
   }
 }
 
