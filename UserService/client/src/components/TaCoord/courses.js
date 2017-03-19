@@ -1,25 +1,39 @@
 import React from "react";
-import { Table, ListGroupItem, ListGroup } from 'react-bootstrap';
+import { connect } from "react-redux";
+import { ListGroupItem, ListGroup } from 'react-bootstrap';
+import Listing from "./taCoordListing";
+import { fetchListings } from "../../actions/listingsActions";
 
+@connect((store) => {
+  return {
+    listings : store.listings.listings
+  };
+})
 
+export default class Courses extends React.Component {
+  componentWillMount(){
+    this.state = {...this.state, listings: this.props.dispatch(fetchListings).payload};
+  }
 
-export default class Inbox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      listings: []
+    }
+  }
 
-  	render() {
-  		function alertClicked() {
-		  alert('You clicked the third ListGroupItem');
-		}
-
-    	return (
-      	<div className="card">
-        	<ListGroup>
-			    <ListGroupItem href="#link1">Link 1</ListGroupItem>
-			    <ListGroupItem href="#link2">Link 2</ListGroupItem>
-			    <ListGroupItem onClick={alertClicked}>
-			      Trigger an alert
-			    </ListGroupItem>
-			</ListGroup>
-      	</div>
-    	);
-  	}
+	render() {
+  	return (
+    	<div className="card">
+      	<ListGroup>
+          {
+            this.state.listings.map(function(listing, i){
+              return <Listing title={listing.title} key={i}
+              deadline={listing.deadline}/>
+            })
+          }
+		    </ListGroup>
+    	</div>
+  	);
+	}
 }
