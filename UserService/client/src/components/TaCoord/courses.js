@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { ListGroupItem, ListGroup } from 'react-bootstrap';
+import { Button, ListGroupItem, ListGroup } from 'react-bootstrap';
 import Listing from "./taCoordListing";
 import { fetchListings } from "../../actions/listingsActions";
 import SearchBar from "./SearchBar";
@@ -27,12 +27,13 @@ export default class Courses extends React.Component {
   	return (
     	<div className="card">
         <SearchBar />
+        <Button type="submit" bsSize="small" block={true}>New Ad</Button>
       	<ListGroup>
 
           {
             this.state.listings.map(function(listing, i){
               return <Listing title={listing.title} key={i} description={listing.description}
-              deadline={listing.deadline}/>
+              deadline={listing.deadline} status={listing.status}/>
             })
           }
 		    </ListGroup>
