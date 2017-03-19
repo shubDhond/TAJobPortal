@@ -8,8 +8,6 @@ export default class Listing extends React.Component {
         super(props);
         this.state = {
             title: this.props.title,
-            description: this.props.description,
-            deadline: this.props.deadline
         }
     }
 

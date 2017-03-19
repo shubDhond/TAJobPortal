@@ -30,8 +30,7 @@ export default class Courses extends React.Component {
       	<ListGroup>
           {
             this.state.listings.map(function(listing, i){
-              return <Listing title={listing.title} key={i}
-              deadline={listing.deadline}/>
+              return <Listing title={listing.title}/>
             })
           }
 		    </ListGroup>
