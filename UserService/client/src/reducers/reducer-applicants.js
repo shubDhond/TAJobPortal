@@ -20,6 +20,27 @@ export default function() {
 			first_name: "Bill",
 			last_name: "James",
 			details: "bc def ghi jkl mno 111 222 333"
+		},
+		{
+			id: 4,
+			student_id: 1000345345,
+			first_name: "Will",
+			last_name: "James",
+			details: "bc def ghi jkl mno 111 222 333"
+		},
+		{
+			id: 5,
+			student_id: 1000345345,
+			first_name: "Ian",
+			last_name: "James",
+			details: "bc def ghi jkl mno 111 222 333"
+		},
+		{
+			id: 6,
+			student_id: 1000345345,
+			first_name: "Jason",
+			last_name: "James",
+			details: "bc def ghi jkl mno 111 222 333"
 		}
 	]
 }

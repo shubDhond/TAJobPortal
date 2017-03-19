@@ -6,10 +6,7 @@ import {PanelGroup, Panel, Accordion, Well, Image} from 'react-bootstrap';
 class PanelHeader extends Component{
 	render(){
 		return (
-			<div>
-				Name: {this.props.name}
-				Student Number: {this.props.student_number}
-        	</div>
+			<div>{this.props.name}, {this.props.student_id}</div>
 		);
 	}
 }
@@ -29,7 +26,16 @@ class ApplicantList extends Component{
 	getApplicants(){
 		return this.props.applicants.map((applicant) => {
 			return (
-				<Panel header={applicant.first_name} eventKey={applicant.id}>{<PanelContent content={applicant.details}/>}</Panel>
+				<Panel header=
+					{<div>
+						{applicant.first_name}, {applicant.student_id}
+					</div>} 
+					eventKey={applicant.id}>
+
+					{<PanelContent content={applicant.details} />}
+
+
+				</Panel>
 			);
 		});
 	}
