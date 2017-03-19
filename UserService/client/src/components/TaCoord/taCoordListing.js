@@ -17,7 +17,6 @@ export default class Listing extends React.Component {
     render() {
         return (
             <ListItem>
-
               <Row>
                 <Col xs={6}>
                   <h3>{this.state.title}</h3>
