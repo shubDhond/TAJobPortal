@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { ListGroupItem, ListGroup } from 'react-bootstrap';
 import Listing from "./taCoordListing";
 import { fetchListings } from "../../actions/listingsActions";
+import SearchBar from "./SearchBar";
 
 @connect((store) => {
   return {
@@ -25,6 +26,7 @@ export default class Courses extends React.Component {
 	render() {
   	return (
     	<div className="card">
+        <SearchBar />
       	<ListGroup>
           {
             this.state.listings.map(function(listing, i){
