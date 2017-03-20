@@ -1,0 +1,17 @@
+:global .panel>.panel-heading{
+    border-radius: 4px;
+    background: #fff;
+    border-bottom: none;
+    font-weight: 600;
+    font-size: 24px;
+}
+:global .card{
+    background: #fff;
+    border-radius: 4px;
+    padding:48px;
+    border: #E0E0E0 solid 1px;
+}
+
+:global .navbar{
+    background: #FFF;
+}

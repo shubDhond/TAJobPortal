@@ -1,19 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import { Provider } from 'react-redux';
-import { browserHistory } from 'react-router';
+import React from "react";
+import ReactDOM from "react-dom";
+import injectTapEventPlugin from "react-tap-event-plugin";
+import {Provider} from "react-redux";
+import {browserHistory} from "react-router";
+import Routes from "./routes";
+import store from "./store";
 
-import Routes from './routes';
-import store from './store';
-
-import './index.css';
+import "./index.css";
+import "./bootstrap-style.css";
 
 injectTapEventPlugin();
 
+store.subscribe(() =>{
+    console.log("store changed:", store.getState());
+}
+)
 ReactDOM.render(
-  <Provider store={store}>
-    <Routes history={browserHistory} />
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <Routes history={browserHistory}/>
+    </Provider>,
+    document.getElementById('root')
 );

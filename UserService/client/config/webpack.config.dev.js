@@ -159,12 +159,14 @@ module.exports = {
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
-      },
-      {  
-        test: /\.scss$/,
-        loader: 'style!css!sass?outputStyle=compressed'
       }
     ].concat(customConfig.loaders)
+  },
+
+  sassLoader: {
+    includePaths: [
+      './node_modules'
+    ]
   },
   
   // We use PostCSS for autoprefixing only.
