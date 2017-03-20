@@ -7,33 +7,43 @@ import { fetchListings } from "../../../actions/listingsActions";
 
 @connect((store) => {
   return {
-    listings : store.listings.listings
+    listings : store.listings
   };
 })
 
 export default class Listings extends React.Component {
-
+  
   componentWillMount(){
-    this.state = {...this.state, listings: this.props.dispatch(fetchListings).payload};
+    if(this.props.listings.listings.length === 0){
+          this.props.dispatch(fetchListings());
+    }
   }
-
+  
   constructor(props){
     super(props);
+    const {listings} = this.props.listings;
+
     this.state = {
-      listings: []
+      listings: listings
     }
   }
 
   render() {
 
+    var listings = [];
+
+    var object = this.state.listings
+    var count = 0;
+    for (var id in object) {
+        if (object.hasOwnProperty(id)) {
+          var listing = object[id];
+          listings.push(<JobItemView title={listing.title} ranking={listing.ranking} id={id} key={count++} description={listing.description} deadline={listing.deadline}/>)
+        }
+    }
+
     return (
       <div>
-        {
-          this.state.listings.map(function(listing, i){
-            return <JobItemView title={listing.title} key={i} description={listing.description}
-                                deadline={listing.deadline}/>
-          })
-        }
+        {listings}
         <Row>
           <Col xs={12}
                className="centered">

@@ -11,10 +11,6 @@ import "./bootstrap-style.css";
 
 injectTapEventPlugin();
 
-store.subscribe(() =>{
-    console.log("store changed:", store.getState());
-}
-)
 ReactDOM.render(
     <Provider store={store}>
         <Routes history={browserHistory}/>

@@ -1,40 +1,40 @@
 import React from "react";
 import { connect } from "react-redux";
 // import {Glyphicon} from "react-bootstrap";
-import { fetchListings } from "../../../actions/listingsActions";
 import RankingItemView from "./RankingItemView";
 
 @connect((store) => {
-  return {
-    listings : store.listings.listings
-  };
+    return {
+        rankings: store.rankings
+    };
 })
 
 export default class JobsRanking extends React.Component {
 
-  componentWillMount(){
-    this.state = {...this.state, listings: this.props.dispatch(fetchListings).payload};
-  }
-
   constructor(props){
     super(props);
     this.state = {
-      listings: []
+      topJobs: this.props.rankings.topJobs
     }
   }
 
   render() {
+    const {topJobs} = this.props.rankings;
+    var items = [];
+    for(let i = 1; i<= 5; i++){
+      if(topJobs.hasOwnProperty(i)){
+        items.push(<RankingItemView title={topJobs[i].title} key={i} id={topJobs[i].id} ranking={i}/>);
+      }
+
+      else{
+        items.push(<RankingItemView key={i} ranking={null}/>);
+      }
+    }
 
     return (
-      <div> <h3 style={{marginBottom:15}}>Preference Rankings</h3>
-        {
-          this.state.listings.map(function(listing, i){
-            return <RankingItemView title={listing.title} key={i} description={listing.description}
-                                deadline={listing.deadline}/>
-          })
-        }
-
-
+      <div>
+        <h3 style={{marginBottom:15}}>Preference Rankings</h3>
+        {items}
       </div>
     );
   }
