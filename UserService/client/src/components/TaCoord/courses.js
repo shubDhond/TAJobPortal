@@ -27,11 +27,11 @@ export default class Courses extends React.Component {
         return (
             <div>
                 <div style={{background: "#fff", padding: 15, borderBottom: " 1px solid #E0E0E0"}}>
-                    <h4 style={{margin: 8}}>Courses</h4>
+                    <h3 style={{margin: 8}}>Courses</h3>
                     <SearchBar  />
                     {/*<Col xs={2}>*/}
                         {/*<Button type="submit" bsStyle="primary" block={true}>New Ad+</Button>*/}
-                    {/*/!*</Col> THIS SHOULD BE IN THE SEARCHBAR FOR COURSES.}*/}
+                    {/*{</Col> THIS SHOULD BE IN THE SEARCHBAR FOR COURSES.}*/}
                 </div>
                 <div style={{padding: 15}}>
                     <ListGroup>
