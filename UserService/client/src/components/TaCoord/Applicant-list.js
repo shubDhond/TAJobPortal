@@ -1,14 +1,15 @@
 import React, {Component} from "react";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {PanelGroup, Panel, Accordion, Well, Image, Button} from 'react-bootstrap';
+import {PanelGroup, Panel, Accordion, Well, Glyphicon, Button} from 'react-bootstrap';
 
 class PanelHeader extends Component{
 	render(){
 		return (
 			<div>
-				<Image width="80" height="80" src="https://react-bootstrap.github.io/assets/thumbnail.png" circle />
+				<Glyphicon glyph="user"  style={{marginRight:8}}/>
 				{this.props.first_name} {this.props.last_name}, {this.props.student_id}
+
 			</div>
 		);
 	}
@@ -17,18 +18,18 @@ class PanelHeader extends Component{
 class AboutMe extends Component{
 	render(){
 		return (
-			<div>
-				About me: <Well>{this.props.content}</Well>
+			<div >
+                <h4>About me:</h4>
+                <p>{this.props.content}</p>
 			</div>
 		);
 	}
 }
-
 class Courses extends Component{
 	getCourses(){
 		return this.props.courses.map((course) => {
 			return (
-				<Button type="submit" >{course}</Button>
+                <h5 style={{display:"inline",marginRight:16}} key={course} type="submit" ><a>{course}</a></h5>
 			);
 		});
 	}
@@ -36,8 +37,7 @@ class Courses extends Component{
 	render(){
 		return (
 			<div>
-				Prefered Courses: 
-				<Well>{this.getCourses()}</Well>
+				{this.getCourses()}
 			</div>
 		);
 	}
@@ -54,15 +54,16 @@ class ApplicantList extends Component{
 	getApplicants(){
 		return this.props.applicants.map((applicant) => {
 			return (
-				<Panel header=
+				<Panel key={applicant.id} header=
 					{<div>
 						<PanelHeader first_name={applicant.first_name} last_name={applicant.last_name} student_id={applicant.student_id} profile_pic={applicant.profile_pic}/>
-					</div>} 
-					eventKey={applicant.id}>
-					{<div>
-						<AboutMe content={applicant.details} />
-						<Courses courses={applicant.courses}/>
 					</div>}
+                       footer={<div><Courses courses={applicant.courses}/></div>}
+					eventKey={applicant.id} style={{padding:0}}>
+					<div style={{padding:0}}>
+						<AboutMe content={applicant.details} />
+
+					</div>
 				</Panel>
 			);
 		});

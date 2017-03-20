@@ -4,6 +4,16 @@
     border-bottom: none;
     font-weight: 600;
     font-size: 24px;
+    padding:16px;
+    cursor:pointer;
+}
+:global .panel-body{
+    background: #EEEEEE;
+    padding:24px
+}
+:global .panel-footer{
+    background: #EEEEEE;
+    padding:16px
 }
 :global .card{
     background: #fff;
