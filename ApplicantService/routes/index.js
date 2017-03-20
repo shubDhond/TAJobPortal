@@ -75,4 +75,69 @@ router.get('/:id', (req, res)=>{
     });
 });
 
+
+router.put('/:id', (req, res)=>{
+    "use strict";
+    Application.findOne({
+        '_id' : req.params.id
+    }, (err, application)=>{
+
+        if (err) throw err;
+
+        if (!application){
+            res.status(404).json({
+                message: "Application not found"
+            });
+            return;
+        }
+
+        for (let key in req.body){
+            if (!req.body.hasOwnProperty(key) || !req.body.hasOwnProperty(key)){
+                continue;
+            }
+            if( key == 'course_taken'){
+                application.course_taken.push(req.body.course_taken);
+            }
+            else if (key == 'previous_assignments'){
+                application.previous_assignments.push(req.body.previous_assignments);
+            }
+            else {
+                application[key] = req.body[key];
+            }
+        }
+        application.save((err)=>{
+            if (err) {
+                res.status(400).json({
+                    message: err.message
+                });
+                return;
+            }
+
+            res.status(200).json({
+                message: "Application Updated",
+                application : application
+            });
+        });
+
+    });
+});
+
+router.delete('/:id', (req, res) =>{
+    "use strict";
+   Application.remove({
+       '_id' : id
+   }, (err) =>{
+       if (err){
+           res.status(400).json({
+               message: err.message
+           });
+           return;
+       }
+       // application.remove();
+       res.status(200).json({
+           message: 'Application successfully deleted'
+       });
+   });
+});
+
 module.exports = router;
