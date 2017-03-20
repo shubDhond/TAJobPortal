@@ -28,7 +28,7 @@ router.get('/',(req, res, next) => {
 
 router.post('/', (req, res, next) =>{
     "use strict";
-    Application.find({
+    Application.findOne({
         user_id: req.body.user_id,
         posting_id: req.body.posting_id
     }, (err, existingApplication)=>{
@@ -61,7 +61,12 @@ router.get('/:id', (req, res)=>{
     Application.findOne({
         '_id' : req.params.id
     }, (err, application)=>{
-        if (err) throw err;
+        if (err) {
+            res.status(404).json({
+                message: err.message
+            });
+            return;
+        }
 
         if (!application){
             res.status(404).json({
@@ -96,10 +101,22 @@ router.put('/:id', (req, res)=>{
                 continue;
             }
             if( key == 'course_taken'){
-                application.course_taken.push(req.body.course_taken);
+                for (let j = 0; j < req.body.course_taken.length; j++ ){
+                    if(!req.body.course_taken[j] in application.course_taken ){
+                        application.course_taken.push(req.body.course_taken[j]);
+                    }
+
+                }
+
             }
             else if (key == 'previous_assignments'){
-                application.previous_assignments.push(req.body.previous_assignments);
+                for (let i = 0; i< req.body.previous_assignments.length; i++){
+                    if (!req.body.previous_assignments[i] in application.previous_assignments ){
+                        application.previous_assignments.push(req.body.course_taken[i]);
+                    }
+
+                }
+
             }
             else {
                 application[key] = req.body[key];
@@ -124,16 +141,17 @@ router.put('/:id', (req, res)=>{
 
 router.delete('/:id', (req, res) =>{
     "use strict";
-   Application.remove({
-       '_id' : id
-   }, (err) =>{
+    console.log("wtf");
+   Application.findOne({
+       '_id' : req.params.id
+   }, (err, application) =>{
        if (err){
            res.status(400).json({
                message: err.message
            });
            return;
        }
-       // application.remove();
+       application.remove();
        res.status(200).json({
            message: 'Application successfully deleted'
        });

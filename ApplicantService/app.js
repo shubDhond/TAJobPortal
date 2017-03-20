@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', index);
+app.use('/application', index);
 
 
 // catch 404 and forward to error handler
@@ -35,7 +35,7 @@ app.use(function(err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.send('You got error: ' + err.status);
+    res.json({message: err.message});
 });
 
 module.exports = app;

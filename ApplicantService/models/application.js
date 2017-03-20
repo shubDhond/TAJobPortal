@@ -78,13 +78,15 @@ let applicationSchema = mongoose.Schema({
 
     course_taken:{
         type:[{
-            type: String
+            type: String,
+            unique: true
         }]
     },
 
     previous_assignments:{
         type: [{
-            type: String
+            type: String,
+            unique: true
         }]
     },
 
