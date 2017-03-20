@@ -1,7 +1,7 @@
 import React from "react";
 
 import ApplicantsFilterBar from "./ApplicantsFilterBar";
-import ApplicantList from "./Applicant-List";
+import ApplicantList from "./ApplicantListview";
 
 export default class Applicant extends React.Component {
 
