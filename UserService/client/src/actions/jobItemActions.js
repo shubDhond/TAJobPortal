@@ -4,8 +4,8 @@ export function setCourse(state) {
           payload: {
               title: state.title,
               description: state.description,
-              deadline: state.deadline
+              deadline: state.deadline,
+              status: state.status
           }
       }
 }
-
