@@ -108,6 +108,7 @@ router.delete('/:id', (req, res) =>{
                 message: 'Posting not found'
             });
         } else {
+            posting.remove();
             res.status(200).json({
                 message: 'Posting successfully deleted'
             });
