@@ -162,6 +162,12 @@ module.exports = {
       }
     ].concat(customConfig.loaders)
   },
+
+  sassLoader: {
+    includePaths: [
+      './node_modules'
+    ]
+  },
   
   // We use PostCSS for autoprefixing only.
   postcss: function() {
