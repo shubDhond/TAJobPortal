@@ -26,13 +26,13 @@ export default class Courses extends React.Component {
     render() {
         return (
             <Col xs={12} style={{padLeft:14,borderLeft:"1px solid #E0E0E0"}}>
-                <h3>Courses</h3>
+                <h2 style={{margin:32}}>Courses</h2>
                 <Row>
                     <Col xs={10}>
                         <SearchBar />
                     </Col>
                     <Col xs={2}>
-                        <Button type="submit" bsSize="small" block={true}>New Ad</Button>
+                        <Button type="submit" bsStyle="primary" block={true}>New Ad+</Button>
                     </Col>
                 </Row>
                 <ListGroup>
