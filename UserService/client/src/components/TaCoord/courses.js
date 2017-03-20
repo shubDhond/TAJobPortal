@@ -35,16 +35,9 @@ export default class Courses extends React.Component {
                         <Button type="submit" bsSize="small" block={true}>New Ad</Button>
                     </Col>
                 </Row>
-                <ListGroup>
-
-                    {
-                        this.state.listings.map(function (listing, i) {
-                            return <Listing title={listing.title} key={i}
-                                            description={listing.description}
-                                            deadline={listing.deadline} status={listing.status}/>
-                        })
-                    }
-                </ListGroup>
+            <ListGroup>
+                <TaCoordListing />
+		    </ListGroup>
             </Col>
         );
     }
