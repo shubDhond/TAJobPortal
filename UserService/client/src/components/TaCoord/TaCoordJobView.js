@@ -19,7 +19,7 @@ export default class TaCoordJobView extends React.Component {
       description: this.props.description,
       deadline: this.props.deadline,
       status: this.props.status,
-        showComponent: false
+        showComponent: true
     };
     this.buttonClick = this.buttonClick.bind(this);
   }
@@ -54,7 +54,7 @@ export default class TaCoordJobView extends React.Component {
         }
         </Row>
         <Row>
-        <Button onClick={this.buttonClick}>Button</Button>
+        {/*<Button onClick={this.buttonClick}>Button</Button>*/}
         </Row>
       </ListItem>
     );

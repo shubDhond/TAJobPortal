@@ -1,30 +1,30 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Button, Col, ListGroupItem, ListGroup, Row } from 'react-bootstrap';
+import {connect} from "react-redux";
+import {ListGroup} from "react-bootstrap";
 import TaCoordListing from "./TaCoordListing";
-import { fetchListings } from "../../actions/listingsActions";
-import SearchBar from "./SearchBar";
+import JobsFilterBar from "./JobsFilterBar";
 
 @connect((store) => {
     return {};
 })
 
 export default class Courses extends React.Component {
-	render() {
-  	return (
-    	<div className="card">
-        <Row>
-          <Col xs={10}>
-            <SearchBar />
-          </Col>
-          <Col xs={2}>
-            <Button type="submit" bsSize="small" block={true}>New Ad</Button>
-          </Col>
-        </Row>
-        <ListGroup>
-          <TaCoordListing />
-		    </ListGroup>
-    	</div>
-  	);
-	}
+    render() {
+        return (
+            <div>
+                <div style={{background: "#fff", padding: 15, borderBottom: " 1px solid #E0E0E0"}}>
+                    <h3 style={{margin: 8}}>Courses</h3>
+                    <JobsFilterBar  />
+
+                </div>
+                <div style={{padding: 15}}>
+                    <ListGroup>
+
+                        <TaCoordListing />
+                    </ListGroup>
+                </div>
+            </div>
+
+        );
+    }
 }

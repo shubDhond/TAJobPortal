@@ -1,5 +1,4 @@
 import React from "react";
-import {Link} from "react-router";
 import { Col, Row, Grid} from "react-bootstrap";
 import Header from "./NavBar"
 

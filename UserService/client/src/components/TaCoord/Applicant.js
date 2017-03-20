@@ -1,6 +1,6 @@
 import React from "react";
 
-import ApplicantSearchBar from "./ApplicantSearchBar";
+import ApplicantsFilterBar from "./ApplicantsFilterBar";
 import ApplicantList from "./Applicant-list";
 
 export default class Applicant extends React.Component {
@@ -11,7 +11,7 @@ export default class Applicant extends React.Component {
             <div style={{borderRight: "1px solid #E0E0E0"}}>
                 <div style={{background: "#fff",padding:15,  borderBottom:" 1px solid #E0E0E0"}}>
                     <h3 style={{margin: 8}}>Applicants</h3>
-                    <ApplicantSearchBar  />
+                    <ApplicantsFilterBar  />
                 </div>
                 <div style={{padding:15}}>
                     <ApplicantList />
