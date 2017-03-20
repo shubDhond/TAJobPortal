@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button, Col, ListGroupItem, ListGroup, Row } from 'react-bootstrap';
-import Listing from "./taCoordListing";
+import Listing from "./TaCoordListing";
 import { fetchListings } from "../../actions/listingsActions";
 import SearchBar from "./SearchBar";
 
