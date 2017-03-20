@@ -1,7 +1,7 @@
 import React from "react";
 
-import SearchBar from "./SearchBar";
-import ApplicantList from './applicant-list';
+import ApplicantSearchBar from "./ApplicantSearchBar";
+import ApplicantList from './Applicant-list';
 
 export default class Applicant extends React.Component {
 
@@ -9,7 +9,7 @@ export default class Applicant extends React.Component {
 
     	return (
       	<div className="card">
-      		<SearchBar />
+      		<ApplicantSearchBar />
         	<ApplicantList />
       	</div>
     	);
