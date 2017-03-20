@@ -1,7 +1,7 @@
 import React from "react";
 
 import SearchBar from "./SearchBar";
-import ApplicantList from './applicant-list';
+import ApplicantList from './Applicant-list';
 import {Col} from 'react-bootstrap'
 
 export default class Applicant extends React.Component {
