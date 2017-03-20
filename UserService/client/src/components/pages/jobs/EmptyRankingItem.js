@@ -12,7 +12,7 @@ export default class Empty extends React.Component {
         };
         return (
             <Button block style={styles}>
-                <h4 style={{color: "#9E9E9E", display: "inline-block"}}>Empty Slot</h4>
+                <h4 style={{color: "#9E9E9E", display: "inline-block"}}>Empty</h4>
             </Button>
         );
     }
