@@ -1,9 +1,20 @@
 :global .panel>.panel-heading{
-    border-radius: 4px;
+    border-radius: 4px 4px 0 0;
     background: #fff;
-    border-bottom: none;
     font-weight: 600;
     font-size: 24px;
+    padding:0;
+    cursor:pointer;
+}
+:global .panel-body{
+    padding:24px;
+
+}
+
+:global .panel-footer{
+    background: #EEEEEE;
+    padding:4px 16px;
+    border-top: 1px solid #E0E0E0;
 }
 :global .card{
     background: #fff;
