@@ -63,7 +63,10 @@ a:hover{
     background-color:#C51162 !important;
     border:none
 }
-
+:global .btn-primary.btn-block{
+    background-color:#C51162 !important;
+    border:none
+}
 :global .btn-primary:focus{
     background-color:#F50057 !important;
     border:none

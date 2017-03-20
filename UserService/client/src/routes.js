@@ -9,7 +9,6 @@ import Profile from "./components/pages/Profile";
 import JobsSingleView from "./components/pages/jobs/JobSingleView";
 import Listings from "./components/pages/jobs/Listings";
 import TaJobSingleView from "./components/TaCoord/TaCoordSingleView";
-
 import CoordLayout from "./components/TaCoord/CoordLayout";
 
 const Routes = (props) => (
