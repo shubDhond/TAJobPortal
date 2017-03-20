@@ -1,11 +1,10 @@
 {
-  "name": "proj-awol",
+  "name": "applicant-service",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha --recursive",
-    "initdb": "node ./scripts/fillcourses.js"
+    "test": "mocha --recursive"
   },
   "dependencies": {
     "async-foreach": "^0.1.3",

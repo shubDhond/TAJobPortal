@@ -1,7 +1,25 @@
 import React from "react";
+import {connect} from "react-redux";
 import {Header,Button, Col, Form, FormControl, Row} from "react-bootstrap";
+import {setHeading} from "../../actions/headingsActions"
+
+@connect((store) => {
+    
+    return {};
+})
+
 
 export default class Profile extends React.Component {
+
+    componentWillMount = () => {
+        var payload = {
+                title: "Profile",
+                caption: "Everything about you."
+            }
+
+        this.props.dispatch(setHeading(payload))
+    }
+
     render() {
         return (
             <div>
