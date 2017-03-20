@@ -6,11 +6,12 @@ import {PanelGroup, Panel, Accordion, Well, Glyphicon, Button} from 'react-boots
 class PanelHeader extends Component{
 	render(){
 		return (
-			<div>
+			<div style={{padding:"16px 16px 8px 16px"}}>
 				<Glyphicon glyph="user"  style={{marginRight:8}}/>
 				{this.props.first_name} {this.props.last_name}, {this.props.student_id}
 
 			</div>
+
 		);
 	}
 }
@@ -59,7 +60,7 @@ class ApplicantList extends Component{
 						<PanelHeader first_name={applicant.first_name} last_name={applicant.last_name} student_id={applicant.student_id} profile_pic={applicant.profile_pic}/>
 					</div>}
                        footer={<div><Courses courses={applicant.courses}/></div>}
-					eventKey={applicant.id} style={{padding:0}}>
+					eventKey={applicant.id}  style={{marginBottom:15}}>
 					<div style={{padding:0}}>
 						<AboutMe content={applicant.details} />
 
