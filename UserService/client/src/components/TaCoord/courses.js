@@ -5,6 +5,9 @@ import TaCoordListing from "./TaCoordListing";
 import { fetchListings } from "../../actions/listingsActions";
 import SearchBar from "./SearchBar";
 
+@connect((store) => {
+    return {};
+})
 
 export default class Courses extends React.Component {
 	render() {
