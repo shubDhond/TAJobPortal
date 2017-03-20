@@ -30,7 +30,7 @@ export default class Courses extends React.Component {
                     <h3 style={{margin: 8}}>Courses</h3>
                     <SearchBar  />
                     {/*<Col xs={2}>*/}
-                        {/*<Button type="submit" bsStyle="primary" block={true}>New Ad+</Button>*/}
+                    {/*<Button type="submit" bsStyle="primary" block={true}>New Ad+</Button>*/}
                     {/*{</Col> THIS SHOULD BE IN THE SEARCHBAR FOR COURSES.}*/}
                 </div>
                 <div style={{padding: 15}}>

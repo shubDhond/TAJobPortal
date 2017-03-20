@@ -11,7 +11,6 @@ export default combineReducers({
     listings,
     headings,
 	inbox: InboxReducer,
-	applicants: ApplicantReducer,
-    application
+	applicants: ApplicantReducer
 
 });
