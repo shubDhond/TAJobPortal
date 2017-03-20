@@ -22,12 +22,10 @@ export default class Layout extends React.Component {
                     <Row className="show-grid">
 
                       <Col style={{padding:0}} md={6}>
-                        <h3>Applicants</h3>
+
                         <ApplicantList />
                       </Col>
-
                       <Col style={{padding:0}} md={6}>
-                        <h3>Courses</h3>
                         <CourseList />
                       </Col>
 

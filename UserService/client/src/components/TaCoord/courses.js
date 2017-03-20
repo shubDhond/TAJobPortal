@@ -1,49 +1,51 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Button, Col, ListGroupItem, ListGroup, Row } from 'react-bootstrap';
+import {connect} from "react-redux";
+import {Button, Col, ListGroup, Row} from "react-bootstrap";
 import Listing from "./TaCoordListing";
-import { fetchListings } from "../../actions/listingsActions";
+import {fetchListings} from "../../actions/listingsActions";
 import SearchBar from "./SearchBar";
 
 @connect((store) => {
-  return {
-    listings : store.listings.listings
-  };
+    return {
+        listings: store.listings.listings
+    };
 })
 
 export default class Courses extends React.Component {
-  componentWillMount(){
-    this.state = {...this.state, listings: this.props.dispatch(fetchListings).payload};
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      listings: []
+    componentWillMount() {
+        this.state = {...this.state, listings: this.props.dispatch(fetchListings).payload};
     }
-  }
 
-	render() {
-  	return (
-    	<div className="card">
-        <Row>
-          <Col xs={10}>
-            <SearchBar />
-          </Col>
-          <Col xs={2}>
-            <Button type="submit" bsSize="small" block={true}>New Ad</Button>
-          </Col>
-        </Row>
-        <ListGroup>
+    constructor(props) {
+        super(props);
+        this.state = {
+            listings: []
+        }
+    }
 
-          {
-            this.state.listings.map(function(listing, i){
-              return <Listing title={listing.title} key={i} description={listing.description}
-              deadline={listing.deadline} status={listing.status}/>
-            })
-          }
-		    </ListGroup>
-    	</div>
-  	);
-	}
+    render() {
+        return (
+            <Col xs={12} style={{padLeft:14,borderLeft:"1px solid #E0E0E0"}}>
+                <h3>Courses</h3>
+                <Row>
+                    <Col xs={10}>
+                        <SearchBar />
+                    </Col>
+                    <Col xs={2}>
+                        <Button type="submit" bsSize="small" block={true}>New Ad</Button>
+                    </Col>
+                </Row>
+                <ListGroup>
+
+                    {
+                        this.state.listings.map(function (listing, i) {
+                            return <Listing title={listing.title} key={i}
+                                            description={listing.description}
+                                            deadline={listing.deadline} status={listing.status}/>
+                        })
+                    }
+                </ListGroup>
+            </Col>
+        );
+    }
 }
