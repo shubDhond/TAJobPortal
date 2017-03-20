@@ -15,7 +15,7 @@ router.post('/sign-up', (req, res) => {
         if (err) throw err;
 
         if (existingUser) {
-            rest.status(409).json({
+            res.status(409).json({
                 message: 'Sign Up Error: User with email '+req.body.email+' already exists.'
             });
         } else {
@@ -27,7 +27,7 @@ router.post('/sign-up', (req, res) => {
                      email: req.body.email,
                      password: hashed,
                      user_type: 'student'
-                 })
+                 });
 
                  user.save((err) => {
                     if (err) throw err;
