@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Button, Col, ListGroup, Row} from "react-bootstrap";
+import {Button, Col, ListGroup} from "react-bootstrap";
 import Listing from "./TaCoordListing";
 import {fetchListings} from "../../actions/listingsActions";
 import SearchBar from "./SearchBar";
@@ -25,27 +25,28 @@ export default class Courses extends React.Component {
 
     render() {
         return (
-            <Col xs={12} style={{padLeft:14,borderLeft:"1px solid #E0E0E0"}}>
-                <h2 style={{margin:32}}>Courses</h2>
-                <Row>
-                    <Col xs={10}>
-                        <SearchBar />
-                    </Col>
-                    <Col xs={2}>
-                        <Button type="submit" bsStyle="primary" block={true}>New Ad+</Button>
-                    </Col>
-                </Row>
-                <ListGroup>
+            <div>
+                <div style={{background: "#fff", padding: 15, borderBottom: " 1px solid #E0E0E0"}}>
+                    <h4 style={{margin: 8}}>Courses</h4>
+                    <SearchBar  />
+                    {/*<Col xs={2}>*/}
+                        {/*<Button type="submit" bsStyle="primary" block={true}>New Ad+</Button>*/}
+                    {/*/!*</Col> THIS SHOULD BE IN THE SEARCHBAR FOR COURSES.}*/}
+                </div>
+                <div style={{padding: 15}}>
+                    <ListGroup>
 
-                    {
-                        this.state.listings.map(function (listing, i) {
-                            return <Listing title={listing.title} key={i}
-                                            description={listing.description}
-                                            deadline={listing.deadline} status={listing.status}/>
-                        })
-                    }
-                </ListGroup>
-            </Col>
+                        {
+                            this.state.listings.map(function (listing, i) {
+                                return <Listing title={listing.title} key={i}
+                                                description={listing.description}
+                                                deadline={listing.deadline}
+                                                status={listing.status}/>
+                            })
+                        }
+                    </ListGroup>
+                </div>
+            </div>
         );
     }
 }

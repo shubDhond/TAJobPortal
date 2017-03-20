@@ -3,7 +3,7 @@ import {Button, Col, FormControl, FormGroup, Row, SplitButton, MenuItem} from "r
 export default class SearchBar extends React.Component {
     render() {
         return (
-            <FormGroup>
+            <FormGroup style={{margin: 0}}>
             <Row>
                 <Col xs={7}  style={{paddingRight:0}}>
                         <FormControl bsSize="large" type="text" placeholder="Search"/>
