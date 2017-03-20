@@ -8,9 +8,6 @@ import Inbox from "./components/pages/Inbox";
 import Profile from "./components/pages/Profile";
 import JobsSingleView from "./components/pages/jobs/JobSingleView";
 import Listings from "./components/pages/jobs/Listings";
-import TaJobSingleView from "./components/TaCoord/TaCoordSingleView";
-
-
 import CoordLayout from "./components/TaCoord/CoordLayout";
 
 const Routes = (props) => (
@@ -25,8 +22,8 @@ const Routes = (props) => (
       <Route path="/app/inbox" component={Inbox} pageTitle="Inbox"/>
     </Route>
     <Route path="/coord" component={CoordLayout}>
+
     </Route>
-      <Route path="/coord/taSingleJob" component={TaJobSingleView}/>
   </Router>
 );
 
