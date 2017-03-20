@@ -5,6 +5,7 @@ import Listing from "./Listing";
 import SearchBar from "./SearchBar";
 
 import { fetchListings } from "../../actions/listingsActions";
+
 @connect((store) => {
   return {
     listings : store.listings.listings
@@ -31,7 +32,7 @@ export default class Jobs extends React.Component {
         {
           this.state.listings.map(function(listing, i){
             return <Listing title={listing.title} key={i} description={listing.description}
-            deadline={listing.deadline}/>
+            deadline={listing.deadline} status={listing.status}/>
           })
         }
       </div>

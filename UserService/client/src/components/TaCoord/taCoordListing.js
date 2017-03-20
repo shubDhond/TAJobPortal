@@ -2,6 +2,7 @@ import React from "react";
 import {Button, Glyphicon, Col, Row} from "react-bootstrap";
 import ListItem from "../pages/views/ListItem";
 import {Link} from "react-router";
+import { setCourse } from "../../actions/jobItemActions";
 
 export default class Listing extends React.Component {
     constructor(props) {
@@ -30,7 +31,7 @@ export default class Listing extends React.Component {
                   {this.state.description}
                 </p>
                 {this.state.deadline}
-                <a className="see-more right-align"><Link>View<Glyphicon glyph="chevron-right" /></Link></a>
+                <a className="see-more right-align">onClick={this.dispatchThenRoute(setCourse, "/app/jobs/single")}View<Glyphicon glyph="chevron-right" /></a>
               </Row>
             </ListItem>
         );
