@@ -11,16 +11,16 @@ let Course = require('../models/course');
  * course_id,
  * */
 router.get('/', function(req, res) {
-    Assignment.find(req.query, (err, assignmnets) =>{
+    Assignment.find(req.query, (err, assignments) =>{
         "use strict";
         if (err) throw err;
 
-        if (assignmnets.length == 0){
+        if (assignments.length == 0){
             res.status(404).json({
                 message :"No Assignments found"
             });
         } else {
-            res.status(200).json(assignmnets);
+            res.status(200).json(assignments);
         }
     });
 });
@@ -55,7 +55,7 @@ router.post('/', (req, res)=>{
 
                         res.status(200).json({
                             message : 'Assignment created.',
-                            assignmnet : assignment
+                            assignment : assignment
                         });
                     });
                 } else {
