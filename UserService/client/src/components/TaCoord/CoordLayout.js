@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Row, Grid} from "react-bootstrap";
 import Header from "./NavBar"
 
-import ApplicantList from './Applicant';
+import ApplicantList from './ApplicantListview';
 import CourseList from './courses';
 
 export default class Layout extends React.Component {

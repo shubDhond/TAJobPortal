@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd client && npm run start && cd ../server && npm run start"
+    "start": "concurrently --kill-others \"cd client && npm run start\" \"cd server && npm run start\""
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^3.4.0"
+  }
 }
