@@ -9,6 +9,7 @@ module.exports = (req, res, next) => {
             if (err) {
                 return res.redirect(401, '/');
             } else {
+                console.log(decoded);
                 if (decoded.user_type !== 'student') {
                     res.redirect(401, '/');
                 } else {

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import Card from 'grommet/components/Card';
 import { connect } from 'react-redux';
-import Box from 'grommet/components/Box';
-import {Button, Col, Form, FormControl, Grid, Jumbotron, Row} from "react-bootstrap";
+import {Button, Col, Form, FormControl, Grid, Jumbotron, Row, FormGroup, Radio} from "react-bootstrap";
 import { 
   setUserType, 
   userEmailError, 
@@ -11,7 +9,6 @@ import {
   userPasswordValid,
   userAuthenticate
 } from '../../actions/userActions';
-import Label from 'grommet/components/Label';
 import { Link } from 'react-router';
 import axios from 'axios';
 
@@ -47,12 +44,12 @@ class Login extends Component {
   }
 
   validate() {
-    if (!this.validateEmail(this.refs.email.componentRef.value)) {
+    if (!this.validateEmail(this.email.value)) {
       this.props.dispatch(userEmailError('Invalid Email Address'));
     } else {
       this.props.dispatch(userEmailValid());
     }
-    if (!this.validatePassword(this.refs.password.componentRef.value)) {
+    if (!this.validatePassword(this.password.value)) {
       this.props.dispatch(userPasswordError('Invalid Password'));
     } else {
       this.props.dispatch(userPasswordValid());
@@ -76,15 +73,15 @@ class Login extends Component {
       if (this.props.user.user.user_type === 'ta-coordinator') {
         this.props.dispatch(userAuthenticate(
           coordinatorUserClient.post('/authenticate', {
-            email: this.refs.email.componentRef.value,
-            password: this.refs.password.componentRef.value
+            email: this.email.value,
+            password: this.password.value
           })
         ));
       } else {
         this.props.dispatch(userAuthenticate(
           studentUserClient.post('/authenticate', {
-            email: this.refs.email.componentRef.value,
-            password: this.refs.password.componentRef.value
+            email: this.email.value,
+            password: this.password.value
           })
         ));
       }
@@ -97,7 +94,7 @@ class Login extends Component {
       let successStyle = {
         color: '#228B22'
       }
-      SuccessLabel = <Label style={successStyle}>{'Welcome ' + this.props.user.user.email}</Label>
+      SuccessLabel = <h3 style={successStyle}>{'Welcome ' + this.props.user.user.email}</h3>
     }
 
     let ErrorLabel;
@@ -105,7 +102,7 @@ class Login extends Component {
       let errorStyles = {
         color: '#FF0000'
       }
-      ErrorLabel = <Label style={errorStyles}>{this.props.user.error}</Label>
+      ErrorLabel = <h3 style={errorStyles}>{this.props.user.error}</h3>
     }
 
     if (this.props.user.authenticating) {
@@ -114,22 +111,30 @@ class Login extends Component {
         <h1>AUTHENTICATING</h1>
       );
     }
+
+    let loginTitle = <div><h1 style={{marginBottom: 16, marginTop: 64}}>Apply to be a TA</h1>
+                      <h2 style={{marginBottom: 48}}>Log in to see your application portal.</h2></div>;
+    if (this.props.user.user.user_type === 'ta-coordinator') {
+      loginTitle = <div><h1 style={{marginBottom: 16, marginTop: 64}}>Manage TA posisition assignments</h1>
+                      <h2 style={{marginBottom: 48}}>Log in to see your position assignment portal.</h2></div>;
+    }
+        
       const jumboStyle = {
           height: "100%",
           background: "none"
       };
       return (
           <Grid fluid style={{height: "100%"}}>
-              <Row style={{padding:64}}>
-                  <Col xs={12} sm="9">
+              <Row style={{padding:"64px"}}>
+                  <Col xs={12} sm={6} smOffset={1}>
                       <Jumbotron style={jumboStyle}>
-                          <h1 style={{marginBottom: 16, marginTop: 64}}>Apply to be a TA</h1>
-                          <h2 style={{marginBottom: 48}}>Lorem Ipsum Lorem Ipsum</h2>
-
+                          {loginTitle}
+                          {SuccessLabel}
+                          {ErrorLabel}
                       </Jumbotron>
                   </Col>
-                  <Col xs={12} sm="3">
-                      <Form horizontal className="card" >
+                  <Col xs={12} sm={4}>
+                       <Form horizontal className="card" >
                           <Row>
                               <Col xs={12} style={{marginBottom:24}}>
                                   <h2 style={{teaxtAlign:"center", margin:0}}> Sign In</h2>
@@ -137,12 +142,21 @@ class Login extends Component {
                           </Row>
                           <Row>
                               <Col xs={12}>
+                                  <FormGroup>
+                                      <Radio value="student" checked={this.props.user.user.user_type === 'student'} onChange={this.setType}>Student</Radio>
+                                      <Radio value="ta-coordinator" checked={this.props.user.user.user_type === 'ta-coordinator'} onChange={this.setType}>Coordinator</Radio>
+                                  </FormGroup>
+                              </Col>
+                          </Row>
+                          <br />
+                          <Row>
+                              <Col xs={12}>
                                   <h6> EMAIL</h6>
                               </Col>
                           </Row>
                           <Row>
                               <Col xs={12}>
-                                  <FormControl type="text" placeholder="Password"/>
+                                  <FormControl type="text" placeholder="Email" inputRef={ref => {this.email = ref;}}/>
                               </Col>
                           </Row>
                           <br />
@@ -153,20 +167,20 @@ class Login extends Component {
                           </Row>
                           <Row>
                               <Col xs={12}>
-                                  <FormControl type="password" placeholder="Password"/>
+                                  <FormControl type="password" placeholder="Password" inputRef={ref => {this.password = ref;}}/>
                               </Col>
                           </Row>
                           <br />
                           <Row>
                               <Col xs={12}>
                                   <Button block  bsStyle="primary"
-                                          bsSize="large" href="/app/profile">Sign In</Button>
+                                          bsSize="large" onClick={this.login}>Sign In</Button>
                               </Col>
                           </Row>
                           <br/>
                           <Row>
                               <Col xs={12}>
-                                  <a className="see-more centered"><h5>Create an Account</h5></a>
+                                  <Link className="see-more centered" to="/sign-up"><h5>Create an Account</h5></Link>
                               </Col>
                           </Row>
                       </Form>
@@ -176,53 +190,6 @@ class Login extends Component {
               {this.props.children}
           </Grid>
       );
-    // return (
-    //   <Box align='center' full={true}>
-    //     <Box align='center' pad='medium'>
-    //       <Card heading='Login' colorIndex='light-1'>
-    //         {SuccessLabel}
-    //         {ErrorLabel}
-    //         <Form onSubmit={this.login}>
-    //           <FormField>
-    //             <RadioButton id='is_student'
-    //               label='Student'
-    //               checked={this.props.user.user.user_type === 'student'}
-    //               onChange={this.setType}
-    //               value='student' />
-    //             <RadioButton id='is_coordinator'
-    //               label='Coordinator'
-    //               checked={this.props.user.user.user_type === 'ta-coordinator'}
-    //               onChange={this.setType}
-    //               value='ta-coordinator' />
-    //           </FormField>
-    //           <FormField error={this.props.user.emailError}>
-    //             <TextInput placeHolder='Email'
-    //                        id='email'
-    //                        name='email'
-    //                        type='email'
-    //                        ref='email'
-    //                        required />
-    //           </FormField>
-    //           <FormField error={this.props.user.passwordError} help='Your password must be at least 8 characters with 1 alphabet character and 1 number.'>
-    //             <TextInput placeHolder='Password'
-    //                        id='password'
-    //                        name='password'
-    //                        type='password'
-    //                        ref='password'
-    //                        required />
-    //           </FormField>
-    //           <Link to='/sign-up'>Don't have an account? Sign up here.</Link>
-    //           <Footer pad={{"vertical": "medium"}}>
-    //             <Button label='Login'
-    //               type='submit'
-    //               primary={true}
-    //               onClick={this.login} />
-    //           </Footer>
-    //         </Form>
-    //       </Card>
-    //     </Box>
-    //   </Box>
-    // );
   }
 }
 

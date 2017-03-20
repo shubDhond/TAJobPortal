@@ -38,7 +38,11 @@ export default function reducer(state={
     case 'USER_EMAIL_VALID': {
       return {
         ...state,
-        emailError: null
+        emailError: null,
+        authenticating: false,
+        authenticated: false,
+        error: null,
+        status: null
       }
     }
     case 'USER_PASSWORD_ERROR': {
@@ -54,7 +58,11 @@ export default function reducer(state={
     case 'USER_PASSWORD_VALID': {
       return {
         ...state,
-        passwordError: null
+        passwordError: null,
+        authenticating: false,
+        authenticated: false,
+        error: null,
+        status: null
       }
     }
     case 'USER_ACCESS_KEY_ERROR': {
@@ -70,7 +78,11 @@ export default function reducer(state={
     case 'USER_ACCESS_KEY_VALID': {
       return {
         ...state,
-        accessKeyError: null
+        accessKeyError: null,
+        authenticating: false,
+        authenticated: false,
+        error: null,
+        status: null
       }
     }
     case 'USER_AUTHENTICATE_PENDING': {

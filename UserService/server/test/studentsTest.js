@@ -22,19 +22,19 @@ describe('students', function(){
       if (err) throw err;
 
       chai.request(app)
-          .post('/students/sign-up')
-          .send({
-              email: 'studenttest',
-              password: 'test'
-          })
-          .end(function (err, res) {
-              expect(res).to.have.status(201);
-              token = res.body.user.user_token;
-              user_email = res.body.user.email;
-              id = res.body.user.id;
-              done();
-            });
+        .post('/students/sign-up')
+        .send({
+            email: 'studenttest',
+            password: 'test'
+        })
+        .end(function (err, res) {
+            expect(res).to.have.status(201);
+            token = res.body.user.user_token;
+            user_email = res.body.user.email;
+            id = res.body.user.id;
+            done();
         });
+    });
   });
 
   it('should return 404 with non-existing email', function(done){

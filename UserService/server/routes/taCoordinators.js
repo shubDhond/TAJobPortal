@@ -43,7 +43,9 @@ router.post('/sign-up', (req, res) => {
                         user.save((err) => {
                             if (err) throw err;
 
-                            let token = jwt.sign(user, config.secret);
+                            let token = jwt.sign({
+                                user_type: user.user_type
+                            }, config.secret);
 
                             if (coordinatorAccessKey) {
                                 coordinatorAccessKey.remove();
@@ -86,7 +88,9 @@ router.post('/authenticate', (req, res) => {
                         message: 'Unsuccessful Authentication: Wrong password'
                     });
                 } else {
-                    let token = jwt.sign(user, config.secret);
+                    let token = jwt.sign({
+                        user_type: user.user_type
+                    }, config.secret);
 
                     res.status(200).json({
                         message: 'Authentication Successful',
