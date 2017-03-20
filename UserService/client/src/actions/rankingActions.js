@@ -1,11 +1,12 @@
-export function setCourse(state) {
+export function setRanking(state, newRanking) {
   return {
-          type: "SET_COURSE",
+          type: "SET_RANKING",
           payload: {
+              id: state.id,
               title: state.title,
               description: state.description,
               deadline: state.deadline,
-              status: state.status
+              ranking: newRanking
           }
       }
 }
