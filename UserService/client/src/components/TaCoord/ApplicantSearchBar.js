@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Col, FormControl, FormGroup, Row, SplitButton, MenuItem} from "react-bootstrap";
-export default class SearchBar extends React.Component {
+export default class ApplicantSearchBar extends React.Component {
     render() {
         return (
             <FormGroup>
@@ -12,7 +12,9 @@ export default class SearchBar extends React.Component {
                     <SplitButton title="Sort By" pullRight id="split-button-pull-right">
                         <MenuItem eventKey="1">Year</MenuItem>
                         <MenuItem eventKey="2">Program</MenuItem>
-
+                        <MenuItem eventKey="3">Grad Students</MenuItem>
+                        <MenuItem eventKey="4">Undergrads</MenuItem>
+                        <MenuItem eventKey="5">Unassigned</MenuItem>
 
                     </SplitButton>
                 </Col>
