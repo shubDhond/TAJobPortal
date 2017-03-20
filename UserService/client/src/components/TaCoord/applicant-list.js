@@ -28,7 +28,7 @@ class Courses extends Component{
 	getCourses(){
 		return this.props.courses.map((course) => {
 			return (
-				<Button type="submit" >{course}</Button>
+				<Button key={course} type="submit" >{course}</Button>
 			);
 		});
 	}
@@ -54,7 +54,7 @@ class ApplicantList extends Component{
 	getApplicants(){
 		return this.props.applicants.map((applicant) => {
 			return (
-				<Panel header=
+				<Panel key={applicant.id} header=
 					{<div>
 						<PanelHeader first_name={applicant.first_name} last_name={applicant.last_name} student_id={applicant.student_id} profile_pic={applicant.profile_pic}/>
 					</div>} 
