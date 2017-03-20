@@ -27,7 +27,7 @@ router.post('/sign-up', (req, res) => {
                      email: req.body.email,
                      password: hashed,
                      user_type: 'student'
-                 })
+                 });
 
                  user.save((err) => {
                     if (err) throw err;

@@ -1,10 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-
-import Listing from "./Listing";
-import SearchBar from "./SearchBar";
-
-import { fetchListings } from "../../actions/listingsActions";
+// import {Glyphicon} from "react-bootstrap";
+import { fetchListings } from "../../../actions/listingsActions";
+import RankingItemView from "./RankingItemView";
 
 @connect((store) => {
   return {
@@ -12,29 +10,31 @@ import { fetchListings } from "../../actions/listingsActions";
   };
 })
 
-export default class Jobs extends React.Component {
+export default class JobsRanking extends React.Component {
 
   componentWillMount(){
     this.state = {...this.state, listings: this.props.dispatch(fetchListings).payload};
   }
+
   constructor(props){
     super(props);
     this.state = {
       listings: []
     }
   }
+
   render() {
 
     return (
-      <div>
-
-        <SearchBar  />
+      <div> <h3 style={{marginBottom:15}}>Preference Rankings</h3>
         {
           this.state.listings.map(function(listing, i){
-            return <Listing title={listing.title} key={i} description={listing.description}
-            deadline={listing.deadline} status={listing.status}/>
+            return <RankingItemView title={listing.title} key={i} description={listing.description}
+                                deadline={listing.deadline}/>
           })
         }
+
+
       </div>
     );
   }
