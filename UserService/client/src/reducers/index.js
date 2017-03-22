@@ -5,12 +5,14 @@ import listings from "./listingsReducer";
 import headings from "./headingsReducer";
 import rankings from "./rankingReducer";
 import application from "./applicationReducer";
+import userReducer from './userReducer'
 
 export default combineReducers({
     rankings,
     listings,
     headings,
 	inbox: InboxReducer,
-	applicants: ApplicantReducer
-
+	applicants: ApplicantReducer,
+    application,
+    user: userReducer
 });

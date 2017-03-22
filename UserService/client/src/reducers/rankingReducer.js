@@ -18,8 +18,8 @@ export default function reducer(state={
               }
             }
         }
-        
-        var newRanking = 
+
+        var newRanking =
         {title: load.title,
           description: load.description,
           deadline: load.deadline,
@@ -28,9 +28,9 @@ export default function reducer(state={
         // if there is no job in rank, set it
         if(!topJobs.hasOwnProperty(load.ranking)){
           return {...newState,
-            jobsRanked: true, 
-            topJobs: 
-            {...newState.topJobs, 
+            jobsRanked: true,
+            topJobs:
+            {...newState.topJobs,
               [load.ranking]: newRanking}}
         }
         // else move the others around

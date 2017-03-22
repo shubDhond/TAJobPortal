@@ -32,7 +32,7 @@ export default class JobsRanking extends React.Component {
     }
 
     return (
-      <div> 
+      <div>
         <h3 style={{marginBottom:15}}>Preference Rankings</h3>
         {items}
       </div>
