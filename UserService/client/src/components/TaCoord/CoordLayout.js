@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Row, Grid} from "react-bootstrap";
 import Header from "./NavBar"
 
-import ApplicantList from './ApplicantListview';
+import Applicant from './Applicant';
 import CourseList from './courses';
 
 export default class Layout extends React.Component {
@@ -23,7 +23,7 @@ export default class Layout extends React.Component {
 
                       <Col style={{padding:0}} md={6}>
 
-                        <ApplicantList />
+                        <Applicant />
                       </Col>
                       <Col style={{padding:0}} md={6}>
                         <CourseList />

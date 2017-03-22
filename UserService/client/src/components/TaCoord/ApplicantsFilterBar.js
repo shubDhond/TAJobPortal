@@ -1,11 +1,11 @@
 import React from "react";
-import {Button, Col, FormControl, FormGroup, Row, DropdownButton, MenuItem} from "react-bootstrap";
+import {Col, FormControl, FormGroup, Row, DropdownButton, MenuItem} from "react-bootstrap";
 export default class ApplicantsFilterBar extends React.Component {
     render() {
         return (
             <FormGroup style={{marginBottom:0}}>
             <Row>
-                <Col xs={10}  style={{paddingRight:0}}>
+                <Col xs={9}  style={{paddingRight:0}}>
                         <FormControl bsSize="large" type="text" placeholder="Search"/>
                 </Col>
                 <Col xs={2}>
