@@ -96,10 +96,12 @@ router.put('/:course_id', (req, res)=>{
                 message: 'Assignment for the course not found.'
             });
         } else{
+            console.log(assignment.ta_assignments[0]);
+
             for (let i = 0; i< assignment.ta_assignments.length; i++){
                 if (assignment.ta_assignments[i]['student_id'] == req.body.student_id){
                     assignment.ta_assignments[i]['status'] = req.body.status;
-                    assignment.notes[i]['notes'] = req.body.notes;
+                    assignment.ta_assignments[i]['notes'] = req.body.notes;
                     assignment.save((err) => {
                         if (err) throw err;
 
