@@ -122,7 +122,7 @@ router.put('/:course_id', (req, res)=>{
 router.delete('/:course_id', (req, res) =>{
     "use strict";
     Assignment.findOne({
-        course_id : req.body.course_id
+        course_id : req.params.course_id
     }, (err, assignment)=>{
         if (err) throw err;
         if (!assignment){
