@@ -6,6 +6,8 @@ let path = require('path');
 let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
+let mongoose = require('mongoose');
+let config = require('./config');
 
 let index = require('./routes/index');
 
@@ -22,6 +24,12 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+
+/**
+ * Connect to the DB.
+ */
+
+mongoose.connect(config.MONGO_URL + config.MONGO_CLUSTER_NAME);
 
 app.use('/application', index);
 
