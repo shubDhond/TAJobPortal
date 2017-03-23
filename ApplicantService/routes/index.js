@@ -123,7 +123,6 @@ router.put('/:id', (req, res)=>{
 
 router.delete('/:id', (req, res) =>{
     "use strict";
-    console.log("wtf");
    Application.findOne({
        '_id' : req.params.id
    }, (err, application) =>{
