@@ -18,9 +18,7 @@ export default class Layout extends React.Component {
         if (!this.props.user.authenticated){
             browserHistory.push("/")
         }
-
     }
-
 
     render() {
 
