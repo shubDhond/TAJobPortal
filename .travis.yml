@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - "6.10.0"
-service: mongodb
+services: mongodb
 env:
   - TEST_DIR=ta-corrd-service
   - TEST_DIR=ApplicantService
