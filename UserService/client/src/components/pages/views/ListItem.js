@@ -4,7 +4,7 @@
  * Might be used for later. Extended now just in case.
  */
 import React from "react";
-import {Panel} from "react-bootstrap"
+
 export default class Listing extends React.Component {
     render() {
         const style={

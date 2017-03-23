@@ -1,12 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import ListItem from "../pages/views/ListItem";
-import {Button, Col, DropdownButton, Glyphicon, MenuItem, Row} from "react-bootstrap";
-import {browserHistory} from "react-router";
-import { setCourse } from "../../actions/jobItemActions";
+import { Col, Row} from "react-bootstrap";
 import { fetchListings } from "../../actions/listingsActions";
-
-import TaCoordListing from "./TaCoordListing";
 import TaCoordJobView from "./TaCoordJobView";
 
 @connect((store) => {

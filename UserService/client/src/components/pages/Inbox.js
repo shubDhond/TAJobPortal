@@ -1,5 +1,4 @@
 import React from "react";
-import { Table } from 'react-bootstrap';
 import {connect} from "react-redux";
 import InboxList from './inbox_list';
 import {setHeading} from "../../actions/headingsActions"

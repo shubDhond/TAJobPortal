@@ -1,6 +1,5 @@
 import React from "react";
-import {Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
-import {LinkContainer} from "react-router-bootstrap";
+import { Nav, Navbar, NavItem} from "react-bootstrap";
 
 export default class TopNav extends React.Component {
     render() {

@@ -1,8 +1,6 @@
 import React from "react";
-import {Button, Glyphicon, Col, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import ListItem from "../pages/views/ListItem";
-import { browserHistory, Link } from "react-router";
-import { setCourse } from "../../actions/jobItemActions";
 import {connect} from "react-redux";
 
 import TaCoordSingleView from "./TaCoordSingleView";

@@ -1,10 +1,6 @@
-/**
- * Created by shrey.mahendru on 2017-03-20.
- */
 import React, {Component} from "react";
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {PanelGroup, Panel, Accordion, Well, Glyphicon, Button} from 'react-bootstrap';
+import { Panel, Accordion, Glyphicon} from 'react-bootstrap';
 
 class PanelHeader extends Component{
     render(){

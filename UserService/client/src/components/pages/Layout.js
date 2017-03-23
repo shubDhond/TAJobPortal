@@ -15,9 +15,9 @@ import Header from "./TopNav"
 export default class Layout extends React.Component {
     componentWillMount(){
         console.log(this.props.user)
-        if (!this.props.user.authenticated){
-            browserHistory.push("/")
-        }
+        // if (!this.props.user.authenticated){
+        //     browserHistory.push("/")
+        // }
 
     }
 
