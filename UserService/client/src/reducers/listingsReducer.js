@@ -1,18 +1,5 @@
 export default function reducer(state={
-    listings: {
-      1: {title: "CSC301",
-      description: "This course is an introduction to the theory and practice of large-scale software system design, development, and deployment. Topics include project management; advanced UML; reverse engineering; requirements inspection; verification and validation software architecture; performance modeling and analysis.",
-      deadline: "2017-04-23",
-      status: "ASSIGNED"},
-      2: {title: "CSC302",
-      description: "This course is an introduction to the theory and practice of large-scale software system design, development, and deployment. Topics include project management; advanced UML; reverse engineering; requirements inspection; verification and validation software architecture; performance modeling and analysis.",
-      deadline: "2017-04-23",
-      status: "UNSASSIGNED"},
-      3: {title: "CSC303",
-      description: "This course is an introduction to the theory and practice of large-scale software system design, development, and deployment. Topics include project management; advanced UML; reverse engineering; requirements inspection; verification and validation software architecture; performance modeling and analysis.",
-      deadline: "2017-04-23",
-      status: "ASSIGNED"}
-    },
+    listings: {},
     fetching: false,
     fetched: false,
     error: null,
@@ -34,6 +21,32 @@ export default function reducer(state={
               {...state.listings[course.id],
                 ranking: course.ranking}}}
 
+      }
+      case 'FETCH_LISTINGS_PENDING': {
+        return {
+          ...state,
+          fetching: true,
+          fetched: false,
+        }
+      }
+      case 'FETCH_LISTINGS_REJECTED': {
+        return {
+          ...state,
+          fetching: false,
+          fetched: false,
+          error: action.payload.response.data.message,
+        }
+      }
+      case 'FETCH_LISTINGS_FULFILLED': {
+        return {
+          ...state,
+          listings: {
+            ...action.payload
+          },
+          fetching: false,
+          fetched: true,
+          error: null,
+        }
       }
       default:
         return state
