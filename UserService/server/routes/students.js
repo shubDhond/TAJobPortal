@@ -7,6 +7,13 @@ let jwt = require('jsonwebtoken');
 let config = require('../config');
 let checkStudentToken = require('./checkStudentToken');
 
+let createToken = (user) => {
+    jwt.sign({
+        user_type: user.user_type,
+        user_id: user.id
+    }, config.secret);
+};
+
 router.post('/sign-up', (req, res) => {
     User.findOne({
         email: req.body.email,
@@ -32,9 +39,7 @@ router.post('/sign-up', (req, res) => {
                  user.save((err) => {
                     if (err) throw err;
 
-                    let token = jwt.sign({
-                        user_type: user.user_type
-                    }, config.secret);
+                    let token = createToken(user);
 
                     res.status(201).json({
                         message: 'Sign Up Successful',
@@ -71,9 +76,7 @@ router.post('/authenticate', (req, res) => {
                         message: 'Unsuccessful Authentication: Wrong password'
                     });
                 } else {
-                    let token = jwt.sign({
-                        user_type: user.user_type
-                    }, config.secret);
+                    let token = createToken(user);
 
                     res.status(200).json({
                         message: 'Authentication Successful',
