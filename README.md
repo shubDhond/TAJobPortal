@@ -1,6 +1,8 @@
 ### Install all dependencies for all the services:
 
-```npm install_all```
+```sudo npm install -g concurrently```
+
+```npm run install_all```
 
 
 ### Start all Services:
