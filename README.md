@@ -1,9 +1,9 @@
-###Install all dependencies for all the services:
+### Install all dependencies for all the services:
 
 ```npm install_all```
 
 
-###Start all Services
+### Start all Services:
 
 ```npm start```
 
