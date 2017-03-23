@@ -3,7 +3,7 @@ node_js:
   - "6.10.0"
 services: mongodb
 env:
-  - TEST_DIR=ta-corrd-service
+  - TEST_DIR=UserService/server
   - TEST_DIR=ApplicantService
 before_script:
   - sleep 15
