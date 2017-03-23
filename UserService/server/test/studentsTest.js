@@ -106,15 +106,15 @@ describe('students', function(){
     });
   });
 
-  it('should return 200 if student found by id', function(done){
-    chai.request(app)
-    .post('/students/' + id)
-    .set('x-access-token', token)
-    .end(function(err,res){
-      expect(res).to.have.status(200);
-      done();
-    });
-  });
+  // it('should return 200 if student found by id', function(done){
+  //   chai.request(app)
+  //   .post('/students/' + id)
+  //   .set('x-access-token', token)
+  //   .end(function(err,res){
+  //     expect(res).to.have.status(200);
+  //     done();
+  //   });
+  // });
 
   it('should return 404 if student not found by id', function(done){
     chai.request(app)
