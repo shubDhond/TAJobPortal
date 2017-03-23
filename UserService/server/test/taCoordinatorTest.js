@@ -7,7 +7,7 @@ let chaiHttp = require('chai-http');
 let expect = chai.expect;
 let User = require('../models/User');
 let keygenerator = require('keygenerator');
-let uuid = require('uuid/V4');
+let uuid = require('uuid/v4');
 let CoordinatorAccessKey = require('../models/CoordinatorAccessKey');
 let app = require('../app');
 chai.use(chaiHttp);

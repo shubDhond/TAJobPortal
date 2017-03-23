@@ -17,23 +17,19 @@ let id;
 describe('students', function(){
   this.timeout(0);
 
-  beforeEach(function(done){
-    User.remove({}, function (err) {
-      if (err) throw err;
-
-      chai.request(app)
-        .post('/students/sign-up')
-        .send({
-            email: 'studenttest',
-            password: 'test'
-        })
-        .end(function (err, res) {
-            expect(res).to.have.status(201);
-            token = res.body.user.user_token;
-            user_email = res.body.user.email;
-            id = res.body.user.id;
-            done();
-        });
+  before(function(done){
+    chai.request(app)
+    .post('/students/sign-up')
+    .send({
+      email: 'studenttest',
+      password: 'test'
+    })
+    .end(function (err, res) {
+      expect(res).to.have.status(201);
+      token = res.body.user.user_token;
+      user_email = res.body.user.email;
+      id = res.body.user.id;
+      done();
     });
   });
 
@@ -108,7 +104,7 @@ describe('students', function(){
 
   it('should return 200 if student found by id', function(done){
     chai.request(app)
-    .post('/students/' + id)
+    .get('/students/' + id)
     .set('x-access-token', token)
     .end(function(err,res){
       expect(res).to.have.status(200);
@@ -126,4 +122,4 @@ describe('students', function(){
     })
   })
 
-})
+});

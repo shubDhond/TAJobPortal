@@ -92,6 +92,11 @@ let applicationSchema = mongoose.Schema({
 
     status:{
         type: String
+    },
+
+    ranking: {
+        type: Number,
+        default: 0
     }
 
 });

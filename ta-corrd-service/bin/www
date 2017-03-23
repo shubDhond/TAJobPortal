@@ -22,11 +22,7 @@ app.set('port', port);
 
 let server = http.createServer(app);
 
-/**
- * Connect to the DB.
- */
 
-mongoose.connect(config.MONGO_URL + config.MONGO_CLUSTER_NAME);
 /**
  * Listen on provided port, on all network interfaces.
  */
