@@ -24,7 +24,6 @@ const Routes = (props) => (
       <Route path="/app/inbox" component={Inbox} pageTitle="Inbox"/>
     </Route>
     <Route path="/coord" component={CoordLayout}>
-
     </Route>
   </Router>
 );
