@@ -1,8 +1,10 @@
 language: node_js
 node_js:
   - "6.10.0"
-  - "7.7.2"
-
+services: mongodb
 env:
-  - TEST_DIR=ta-corrd-service
+  - TEST_DIR=UserService/server
+  - TEST_DIR=ApplicantService
+before_script:
+  - sleep 15
 script: cd $TEST_DIR && npm install && npm test

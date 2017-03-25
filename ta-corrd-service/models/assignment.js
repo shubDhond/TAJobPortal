@@ -14,7 +14,7 @@ let assignmentSchema = mongoose.Schema({
 
     ta_assignments: [{
             student_id:{
-                type: mongoose.Schema.Types.ObjectId,
+                type: String,
                 required: true
             },
 
@@ -31,7 +31,7 @@ let assignmentSchema = mongoose.Schema({
             },
 
             application_id: {
-                type: mongoose.Schema.Types.ObjectId,
+                type: String,
                 required: true
             },
 
