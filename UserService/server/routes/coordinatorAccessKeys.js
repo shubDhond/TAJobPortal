@@ -3,7 +3,7 @@ let router = express.Router();
 let keygenerator = require('keygenerator');
 let CoordinatorAccessKey = require('../models/CoordinatorAccessKey');
 let checkCoordinatorToken = require('./checkCoordinatorToken');
-let uuid = require('uuid/V4');
+let uuid = require('uuid/v4');
 
 router.post('/', checkCoordinatorToken, (req, res) => {
     let accessKey = new CoordinatorAccessKey({

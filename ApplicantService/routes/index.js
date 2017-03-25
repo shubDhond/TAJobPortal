@@ -9,7 +9,7 @@ let Application = require('../models/application');
  * query_params could be
  * anything in defined in the Application model
  * */
-router.get('/',(req, res, next) => {
+router.get('/',(req, res) => {
     // let params =  req.query;
     Application.find(req.query, (err, applications)=>{
         "use strict";
@@ -26,7 +26,7 @@ router.get('/',(req, res, next) => {
 
 });
 
-router.post('/', (req, res, next) =>{
+router.post('/', (req, res) =>{
     "use strict";
     Application.findOne({
         user_id: req.body.user_id,
@@ -100,24 +100,6 @@ router.put('/:id', (req, res)=>{
             if (!req.body.hasOwnProperty(key) || !req.body.hasOwnProperty(key)){
                 continue;
             }
-            if( key == 'course_taken'){
-                for (let j = 0; j < req.body.course_taken.length; j++ ){
-                    if(!req.body.course_taken[j] in application.course_taken ){
-                        application.course_taken.push(req.body.course_taken[j]);
-                    }
-
-                }
-
-            }
-            else if (key == 'previous_assignments'){
-                for (let i = 0; i< req.body.previous_assignments.length; i++){
-                    if (!req.body.previous_assignments[i] in application.previous_assignments ){
-                        application.previous_assignments.push(req.body.course_taken[i]);
-                    }
-
-                }
-
-            }
             else {
                 application[key] = req.body[key];
             }
@@ -141,7 +123,6 @@ router.put('/:id', (req, res)=>{
 
 router.delete('/:id', (req, res) =>{
     "use strict";
-    console.log("wtf");
    Application.findOne({
        '_id' : req.params.id
    }, (err, application) =>{
