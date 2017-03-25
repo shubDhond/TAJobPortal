@@ -16,7 +16,7 @@ export default class Listings extends React.Component {
   componentWillMount(){
     if(!this.props.listings.fetched){
           this.props.dispatch(fetchListings(
-            taCoordClient.post("/postings")));
+            taCoordClient.get("/posting")));
     }
   }
   
