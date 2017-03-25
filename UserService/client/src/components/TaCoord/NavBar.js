@@ -26,7 +26,7 @@ export default class TopNav extends React.Component {
                 <Navbar.Collapse>
                     
                     <Nav pullRight>
-                        <NavItem eventKey={1} href="#">SIGN IN</NavItem>
+                        <NavItem eventKey={1} href="#">Logout</NavItem>
                     </Nav>
                 </Navbar.Collapse>
 
