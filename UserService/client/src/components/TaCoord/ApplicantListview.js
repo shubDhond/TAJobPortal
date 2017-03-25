@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux';
 import { Panel, Accordion, Glyphicon} from 'react-bootstrap';
+import LazyLoad from 'react-lazy-load';
 
 class PanelHeader extends Component{
     render(){
@@ -71,10 +72,14 @@ class ApplicantList extends Component{
 
     render(){
         return (
-            <div>
-                <Accordion>
-                    {this.getApplicants()}
-                </Accordion>
+            <div style={{overflow: 'auto', maxHeight: 500}}>
+                <div className="filler" />
+                <LazyLoad height={762} offsetVertical={300}>
+                    <Accordion>
+                        {this.getApplicants()}
+                    </Accordion>
+                </LazyLoad>
+                <div className="filler" />
             </div>
         );
     }

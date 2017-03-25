@@ -1,13 +1,12 @@
 import React from "react";
-
 import ApplicantsFilterBar from "./ApplicantsFilterBar";
 import ApplicantListview from './ApplicantListview';
-import {Col} from 'react-bootstrap'
+import {Col} from 'react-bootstrap';
+
 
 export default class Applicant extends React.Component {
-
+    
     render() {
-
         return (
             <Col xs={12} style={{padRight:14,borderRight:"1px solid #E0E0E0"}}>
                 <div style={{background: "#fff", padding: 15, borderBottom: " 1px solid #E0E0E0"}}>
@@ -18,6 +17,7 @@ export default class Applicant extends React.Component {
                 <div style={{padding: 15}}>
                     <ApplicantListview />
                 </div>
+
             </Col>
         );
     }
