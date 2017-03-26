@@ -16,7 +16,7 @@ router.get('/', function(req, res) {
        if (err) throw err;
 
        if (postings.length == 0) {
-           res.status(404).json({
+           res.status(200).json({
                message: "No posting found."
            });
        } else{

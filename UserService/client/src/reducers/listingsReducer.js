@@ -34,7 +34,7 @@ export default function reducer(state={
           ...state,
           fetching: false,
           fetched: false,
-          error: action.payload.response.data.message,
+          error: action.payload,
         }
       }
       case 'FETCH_LISTINGS_FULFILLED': {
