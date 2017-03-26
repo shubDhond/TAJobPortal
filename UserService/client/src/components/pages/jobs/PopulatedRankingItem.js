@@ -1,5 +1,5 @@
 import React from "react";
-import {Button} from "react-bootstrap";
+import {Glyphicon,Button} from "react-bootstrap";
 
 import {browserHistory} from "react-router";
 
@@ -31,6 +31,9 @@ export default class Populated extends React.Component {
                     borderRadius: 4,
                 }}>{this.props.ranking}</h4>
                 <h4 style={{color: "#9E9E9E", display: "inline-block"}}><a>{this.props.name}</a></h4>
+                <Button className="right-align invisible-button" style={{padding:8}} >
+                <Glyphicon glyph="remove"/>
+                </Button>
             </Button>
         );
     }
