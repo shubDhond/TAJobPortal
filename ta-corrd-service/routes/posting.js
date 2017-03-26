@@ -5,12 +5,15 @@ let express = require('express');
 let router = express.Router();
 let Posting = require('../models/posting');
 let Course = require('../models/course');
+let checkCoordinatorToken = require('./checkCoordinatorToken');
+let checkStudentToken = require('./checkStudentToken');
+let checkGenericToken = require('./checkGenericToken');
 
 /** GET all postings or search by query param.
  * query_params could be
  * course_id
  * */
-router.get('/', function(req, res) {
+router.get('/', checkGenericToken, function(req, res) {
     Posting.find(req.query, (err, postings) =>{
         "use strict";
        if (err) throw err;
@@ -25,7 +28,7 @@ router.get('/', function(req, res) {
     });
 });
 
-router.post('/', (req, res) =>{
+router.post('/', checkCoordinatorToken, (req, res) =>{
     "use strict";
 
     Course.findOne({
@@ -75,7 +78,7 @@ router.post('/', (req, res) =>{
 
 });
 
-router.get('/:id', (req, res) =>{
+router.get('/:id', checkGenericToken, (req, res) =>{
     "use strict";
     Posting.findOne({
         '_id' : req.params.id
@@ -94,7 +97,7 @@ router.get('/:id', (req, res) =>{
     });
 });
 
-router.delete('/:id', (req, res) =>{
+router.delete('/:id', checkCoordinatorToken, (req, res) =>{
     "use strict";
     Posting.findOne({
         '_id' : req.params.id

@@ -9,7 +9,7 @@ let checkCoordinatorToken = require('./checkCoordinatorToken');
 let CoordinatorAccessKey = require('../models/CoordinatorAccessKey');
 
 let createToken = (user) => {
-    jwt.sign({
+    return jwt.sign({
         user_type: user.user_type,
         user_id: user.id
     }, config.secret);
@@ -112,7 +112,8 @@ router.post('/authenticate', (req, res) => {
 
 router.post('/check-token', checkCoordinatorToken, (req, res) => {
     res.status(200).json({
-        message: 'Token Successfully Verified'
+        message: 'Token Successfully Verified',
+        decodedToken: res.decodedToken
     });
 });
 

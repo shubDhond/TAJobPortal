@@ -3,7 +3,7 @@ let rp = require('request-promise');
 module.exports = (req, res, next) => {
   let args = {
     method: 'POST',
-    uri: 'http://localhost:3002/ta-coordinators/check-token',
+    uri: 'http://localhost:3002/students/check-token',
     headers: {
       'x-access-token': req.body.token || req.query.token || req.headers['x-access-token']
     }
