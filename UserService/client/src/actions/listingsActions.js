@@ -31,3 +31,10 @@ export function fetchListings(requestPromise) {
   };
 }
 
+export function fetchListing(requestPromise) {
+  return {
+    type: 'FETCH_LISTING',
+    payload: requestPromise
+  };
+}
+

@@ -1,5 +1,11 @@
 export default function reducer(state={
     listings: {},
+    listing: {
+      course: {},
+      fetching: false,
+      fetched: false,
+      error: null,
+    },
     fetching: false,
     fetched: false,
     error: null,
@@ -22,6 +28,46 @@ export default function reducer(state={
                 ranking: course.ranking}}}
 
       }
+
+      // Get one listing for single view.
+      case 'FETCH_LISTING_PENDING': {
+        return {
+          ...state,
+          listing: {
+            ...state.listing,
+            fetching: true,
+            fetched: false,
+          }
+        }
+      }
+      case 'FETCH_LISTING_REJECTED': {
+        return {
+          ...state,
+          listing: {
+            ...state.listing,
+            fetching: false,
+            fetched: false,
+            error: action.payload,
+          }
+        }
+      }
+      case 'FETCH_LISTING_FULFILLED': {
+        var listing = action.payload.data;
+
+        return {
+          ...state,
+          listing : {
+            ...state.listing,
+            course: {
+              ...listing
+            },
+            fetching: false,
+            fetched: true,
+            error: null,
+          }
+        }
+      }
+      // Get all listings for Listings view
       case 'FETCH_LISTINGS_PENDING': {
         return {
           ...state,
@@ -38,10 +84,12 @@ export default function reducer(state={
         }
       }
       case 'FETCH_LISTINGS_FULFILLED': {
+        var listings = action.payload.data;
+
         return {
           ...state,
           listings: {
-            ...action.payload
+            ...listings
           },
           fetching: false,
           fetched: true,

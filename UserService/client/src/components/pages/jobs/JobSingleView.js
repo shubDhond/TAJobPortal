@@ -1,9 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 import {setRanking} from "../../../actions/rankingActions";
-
+import { fetchListing } from "../../../actions/listingsActions";
 import {Col, DropdownButton, Glyphicon, MenuItem, Row} from "react-bootstrap";
 import {browserHistory} from "react-router";
+import { taCoordClient } from "../../../axiosClient";
 
 @connect((store) => {
     
@@ -14,34 +15,53 @@ import {browserHistory} from "react-router";
 })
 
 export default class JobsSingleView extends React.Component {
+
+    componentWillMount(){
+        this.props.dispatch(fetchListing(
+            taCoordClient.get("/posting/" + this.props.location.query.id)
+        ));
+    }
+
     constructor(props) {
         
         super(props);
 
-        // where you would make the query for the information to display
-        var course = this.props.listings.listings[this.props.location.query.id]
-
         this.state = {
             id: this.props.location.query.id,
-            title: course.title,
-            description: course.description,
-            deadline: course.deadline,
-            rankings: this.props.rankings
+            title: null,
+            description: null,
+            deadline: null,
+            rankings: null,
         }
     }
     
     componentWillReceiveProps(nextProps){
-        if(this.state.id !== nextProps.location.query.id){
-            var course = this.props.listings.listings[nextProps.location.query.id]
+        const { listing } = nextProps.listings;
 
-            this.setState({
+        if(this.state.id !== nextProps.location.query.id){
+            this.props.dispatch(fetchListing(
+                taCoordClient.get("/posting/" + nextProps.location.query.id)
+            ));
+
+            this.setState({...this.state,
                 id: nextProps.location.query.id,
+                title: null,
+                description: null,
+                deadline: null,
+                rankings: null
+            });
+        }
+
+        else if(listing.fetched){
+            var course = this.props.listings.listing.course;
+
+            this.setState({...this.state,
+                id: course.id,
                 title: course.title,
                 description: course.description,
                 deadline: course.deadline,
-                rankings: this.props.rankings
+                rankings: nextProps.rankings
             });
-
         }
     }
 
@@ -58,6 +78,15 @@ export default class JobsSingleView extends React.Component {
     }
 
     render() {
+        const { listing } = this.props.listings;
+
+        if(listing.fetching){
+            return(<h2>Fetching...</h2>)
+        }
+        else if(!listing.fetched && !listing.fetching){
+            return(<h2>No posting found.</h2>)
+        }
+
         const {topJobs} = this.props.rankings;
 
         var ranking=null;

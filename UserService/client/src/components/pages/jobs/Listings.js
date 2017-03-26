@@ -16,7 +16,8 @@ export default class Listings extends React.Component {
   componentWillMount(){
     if(!this.props.listings.fetched){
           this.props.dispatch(fetchListings(
-            taCoordClient.get("/posting")));
+            taCoordClient.get("/posting")
+          ));
     }
   }
   
@@ -30,21 +31,35 @@ export default class Listings extends React.Component {
   }
 
   render() {
+    var data;
+    const { listings } = this.props;
 
-    var listings = [];
-
-    var object = this.state.listings
-    var count = 0;
-    for (var id in object) {
-        if (object.hasOwnProperty(id)) {
-          var listing = object[id];
-          listings.push(<JobItemView title={listing.title} ranking={listing.ranking} id={id} key={count++} description={listing.description} deadline={listing.deadline}/>)
+    if(listings.fetched){
+      if(listings.listings.hasOwnProperty("message")){
+        data = <h2>No Postings Found.</h2>
+      }
+      else{
+        data = [];
+        var object = this.state.listings
+        var count = 0;
+        for (var id in object) {
+            if (object.hasOwnProperty(id)) {
+              var listing = object[id];
+              data.push(<JobItemView title={listing.title} ranking={listing.ranking} id={id} key={count++} description={listing.description} deadline={listing.deadline}/>)
+            }
         }
+      }
+    }
+    else if(listings.fetching){
+      data = <h2>Fetching...</h2>
+    }
+    else if((!listings.fetched && !listings.fetching)){
+      data = <h2>No Postings Found.</h2>;
     }
 
     return (
       <div>
-        {listings}
+        {data}
         <Row>
           <Col xs={12}
                className="centered">
