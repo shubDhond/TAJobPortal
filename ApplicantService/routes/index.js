@@ -28,31 +28,14 @@ router.get('/',(req, res) => {
 
 router.post('/', (req, res) =>{
     "use strict";
-    Application.findOne({
-        user_id: req.body.user_id,
-        posting_id: req.body.posting_id
-    }, (err, existingApplication)=>{
-       if (err) throw err;
+    Application.findOneAndUpdate({
+        user_id: req.bodu.user_id
+    }, req.body, {upsert: true}, (err, application) => {
+        if (err) throw err;
 
-       if(existingApplication){
-           res.status(409).json({
-               message: 'Already applied to this posting.'
-           });
-           return;
-       }
-       let application = new Application(req.body);
-       application.save((err) => {
-           if (err){
-               res.status(400).json({
-                   message: err.message
-               });
-               return;
-           }
-           res.status(200).json({
-               message: "Application Submitted.",
-               application : application
-           })
-       })
+        res.status(200).json({
+            ...application
+        });
     });
 });
 
