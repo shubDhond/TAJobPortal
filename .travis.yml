@@ -8,7 +8,6 @@ env:
   - TEST_DIR=ta-corrd-service
 before_script:
   - sleep 15
-  -
 script:
   - cd ApplicantService/server && npm install && npm start&
   - sleep 10
