@@ -9,4 +9,4 @@ env:
 before_script:
   - sleep 15
 script:
-  - cd ApplicantService/server && npm install && npm start& cd $TEST_DIR && npm install && npm test
+  - cd UserService/server && npm install && npm start& cd $TEST_DIR && npm install && npm test
