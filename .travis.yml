@@ -5,6 +5,8 @@ services: mongodb
 env:
   - TEST_DIR=UserService/server
   - TEST_DIR=ApplicantService
+  - TEST_DIR=ta-corrd-service
 before_script:
   - sleep 15
+  - cd ApplicantService/server && npm install && npm start&
 script: cd $TEST_DIR && npm install && npm test
