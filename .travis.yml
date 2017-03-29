@@ -8,5 +8,6 @@ env:
   - TEST_DIR=ta-corrd-service
 before_script:
   - sleep 15
+  - cd UserService/server && npm install -g nodemon && npm install && npm start&
 script:
-  - cd UserService/server && npm install -g nodemon && npm install && npm start& cd $TEST_DIR && npm install && npm test
+  - cd $TEST_DIR && npm install && npm test
