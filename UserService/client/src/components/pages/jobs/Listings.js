@@ -30,6 +30,17 @@ export default class Listings extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    const { listings } = nextProps;
+
+    if(listings.fetched){
+            this.setState({...this.state,
+              listings: listings.listings
+            });
+    }
+
+  }
+
   render() {
     var data;
     const { listings } = this.props;
@@ -45,9 +56,11 @@ export default class Listings extends React.Component {
         for (var id in object) {
             if (object.hasOwnProperty(id)) {
               var listing = object[id];
-              data.push(<JobItemView title={listing.title} ranking={listing.ranking} id={id} key={count++} description={listing.description} deadline={listing.deadline}/>)
+              data.push(<JobItemView title={listing.course_name} ranking={listing.ranking} id={id} key={count++} description={listing.description} end_date={listing.end_date}/>)
             }
         }
+
+        console.log("data: ", data)
       }
     }
     else if(listings.fetching){

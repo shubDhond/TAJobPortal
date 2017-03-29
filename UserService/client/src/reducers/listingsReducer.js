@@ -84,7 +84,30 @@ export default function reducer(state={
         }
       }
       case 'FETCH_LISTINGS_FULFILLED': {
-        var listings = action.payload.data;
+        var data = action.payload.data;
+        var listings={};
+
+        for(let i = 0 ; i < data.length ; i++){
+          var id = data[i]._id;
+          var course_id = data[i].course_id;
+          var reqs = data[i].requirements;
+          var start_date = data[i].start_date;
+          var end_date = data[i].end_date;   
+
+          var obj = {
+            course_name : "",
+            description: "",
+            ranking: null,
+            course_id: course_id,
+            requirements: reqs,
+            start_date: start_date,
+            end_date: end_date
+          };
+
+          listings[id] = obj;
+
+
+        }
 
         return {
           ...state,

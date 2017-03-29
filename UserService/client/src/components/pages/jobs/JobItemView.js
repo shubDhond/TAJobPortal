@@ -14,9 +14,9 @@ export default class JobItemView extends React.Component {
         super(props);
         this.state = {
             id: this.props.id,
-            title: this.props.title,
+            course_name: this.props.course_name,
             description: this.props.description,
-            deadline: this.props.deadline,
+            end_date: this.props.end_date,
         }
     }
 
@@ -35,7 +35,7 @@ export default class JobItemView extends React.Component {
 
                         <h2 style={{margin: 0, fontWeight: 600}}><a
                             onClick={this.routeToView("/app/jobs/single/?id=" + this.props.id)}>
-                            {this.state.title}
+                            {this.state.course_name}
                         </a></h2>
                     </Col>
 
