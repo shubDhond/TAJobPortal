@@ -10,3 +10,12 @@ export function setRanking(state, newRanking) {
           }
       }
 }
+
+export function deleteRanking(id) {
+  return {
+          type: "DELETE_RANKING",
+          payload: {
+              id: id,
+          }
+      }
+}

@@ -5,6 +5,54 @@ export default function reducer(state={
   }, action) {
 
     switch (action.type) {
+      case "DELETE_RANKING": {
+        var load = action.payload;
+        let newState = Object.assign({}, state);
+
+        var object = newState.topJobs
+
+        // remove it from object
+        for (var rank in object) {
+            if (object.hasOwnProperty(rank) && object[rank] != null) {
+              if(object[rank].id === load.id){
+                  newState = {...newState,
+                            topJobs:
+                              {...newState.topJobs,
+                                [rank]: null}}
+                  break;
+              }
+            }
+        }
+        
+        var max = 0;
+        for (var rank in object) {
+            if (object.hasOwnProperty(rank)) {
+                if(object[rank] != null && rank > max) max=rank;
+            }
+        }  
+
+        //remove gap
+        var temp1 = {1:null,2:null,3:null,4: null ,5: null};
+        for (var rank in object) {
+            if (object.hasOwnProperty(rank) && rank<max && object[rank] == null) {
+              //this is a gap, all after this rank need to be moved up
+              var i;
+              for(i = 1; i <= 5; i++ ){
+                if(i > rank ){
+                  temp1[i-1] = object[i]
+                }
+                else{
+                  temp1[i] = object[i]
+                }
+              }
+              newState.topJobs = Object.assign({}, temp1);
+              break;
+            }
+        }
+        
+        return newState
+
+      }
       case "SET_RANKING": {
         var load = action.payload;
         let newState = Object.assign({}, state);
@@ -130,7 +178,6 @@ export default function reducer(state={
             return newState
           }
         }
-        return state
       }
       default:
         return state
