@@ -12,7 +12,7 @@ export default class RankingItemView extends React.Component {
         }
         else{
             return (
-                <Populated name={this.props.title} id={this.props.id} ranking={this.props.ranking}/>
+                <Populated name={this.props.course_name} id={this.props.id} ranking={this.props.ranking}/>
             );
         }
     }

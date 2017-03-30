@@ -52,7 +52,7 @@ export default function reducer(state={
         }
       }
       case 'FETCH_LISTING_FULFILLED': {
-        var listing = action.payload.data;
+        var listing = action.payload.data.posting;
 
         return {
           ...state,

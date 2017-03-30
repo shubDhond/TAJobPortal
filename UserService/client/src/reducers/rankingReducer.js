@@ -80,9 +80,7 @@ export default function reducer(state={
         }
         
         var newRanking =
-        {title: load.title,
-          description: load.description,
-          deadline: load.deadline,
+        {course_name: load.course_name,
           id: load.id
         };
 

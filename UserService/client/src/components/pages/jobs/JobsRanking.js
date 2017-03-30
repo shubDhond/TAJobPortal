@@ -23,7 +23,7 @@ export default class JobsRanking extends React.Component {
     var items = [];
     for(let i = 1; i<= 5; i++){
       if(topJobs.hasOwnProperty(i) && topJobs[i] != null){
-        items.push(<RankingItemView title={topJobs[i].title} key={i} id={topJobs[i].id} ranking={i}/>);
+        items.push(<RankingItemView course_name={topJobs[i].course_name} key={i} id={topJobs[i].id} ranking={i}/>);
       }
 
       else{

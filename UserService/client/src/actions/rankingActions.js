@@ -3,7 +3,7 @@ export function setRanking(state, newRanking) {
           type: "SET_RANKING",
           payload: {
               id: state.id,
-              title: state.title,
+              course_name: state.course_name,
               description: state.description,
               deadline: state.deadline,
               ranking: newRanking

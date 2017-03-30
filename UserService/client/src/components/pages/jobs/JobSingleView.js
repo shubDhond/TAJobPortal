@@ -28,9 +28,9 @@ export default class JobsSingleView extends React.Component {
 
         this.state = {
             id: this.props.location.query.id,
-            title: null,
+            course_name: null,
             description: null,
-            deadline: null,
+            end_date: null,
             rankings: null,
         }
     }
@@ -45,21 +45,22 @@ export default class JobsSingleView extends React.Component {
 
             this.setState({...this.state,
                 id: nextProps.location.query.id,
-                title: null,
+                course_name: null,
                 description: null,
-                deadline: null,
+                end_date: null,
                 rankings: null
             });
         }
 
         else if(listing.fetched){
-            var course = this.props.listings.listing.course;
+            var course = nextProps.listings.listing.course;
 
             this.setState({...this.state,
-                id: course.id,
-                title: course.title,
-                description: course.description,
-                deadline: course.deadline,
+                id: course._id,
+                course_name: "course.course_name",
+                description: "course.description",
+                requirements: course.requirements,
+                end_date: course.end_date,
                 rankings: nextProps.rankings
             });
         }
@@ -143,7 +144,7 @@ export default class JobsSingleView extends React.Component {
                         <Col xs={8}>
 
                             <h2 style={{margin: 0, fontWeight: 600}}>
-                                {this.state.title}
+                                {this.state.course_name}
                             </h2>
                         </Col>
                         <Col xs={4} >
@@ -165,12 +166,15 @@ export default class JobsSingleView extends React.Component {
                     </Row>
                     <Row>
                         <Col xs={12}>
-                            <p>
+                            <div>
+                                <h3>Description:</h3>
                                 {this.state.description}
-                            </p>
+                                <h3>Requirements:</h3>
+                                {this.state.requirements}
+                            </div>
                             <br/>
                             <p>
-                                Apply by 02-03-2017
+                                Apply by {this.state.end_date}
                             </p>
                         </Col>
                     </Row>
