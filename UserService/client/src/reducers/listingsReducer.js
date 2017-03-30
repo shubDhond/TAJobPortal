@@ -52,14 +52,33 @@ export default function reducer(state={
         }
       }
       case 'FETCH_LISTING_FULFILLED': {
-        var listing = action.payload.data.posting;
+        var data = action.payload.data.posting;
+        
+        var id = data._id;
+        var course_id = data.course_id;
+        var reqs = data.requirements;
+        var start_date = data.start_date;
+        var end_date = data.end_date;   
+        var course_name = "placeholder " + id.slice(-2);
+        var description = "placeholder";
+
+        var obj = {
+          id: id,
+          course_name : course_name,
+          description: description,
+          ranking: null,
+          course_id: course_id,
+          requirements: reqs,
+          start_date: start_date,
+          end_date: end_date
+        };
 
         return {
           ...state,
           listing : {
             ...state.listing,
             course: {
-              ...listing
+              ...obj
             },
             fetching: false,
             fetched: true,
@@ -93,10 +112,12 @@ export default function reducer(state={
           var reqs = data[i].requirements;
           var start_date = data[i].start_date;
           var end_date = data[i].end_date;   
+          var course_name = "placeholder " + id.slice(-2);
+          var description = "placeholder";
 
           var obj = {
-            course_name : "",
-            description: "",
+            course_name : course_name,
+            description: description,
             ranking: null,
             course_id: course_id,
             requirements: reqs,
@@ -105,8 +126,6 @@ export default function reducer(state={
           };
 
           listings[id] = obj;
-
-
         }
 
         return {

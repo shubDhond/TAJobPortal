@@ -56,9 +56,9 @@ export default class JobsSingleView extends React.Component {
             var course = nextProps.listings.listing.course;
 
             this.setState({...this.state,
-                id: course._id,
-                course_name: "course.course_name",
-                description: "course.description",
+                id: course.id,
+                course_name: course.course_name,
+                description: course.description,
                 requirements: course.requirements,
                 end_date: course.end_date,
                 rankings: nextProps.rankings

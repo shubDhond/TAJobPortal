@@ -31,7 +31,7 @@ export default function reducer(state={
             }
         }  
 
-        //remove gap
+        var object = newState.topJobs
         var temp1 = {1:null,2:null,3:null,4: null ,5: null};
         for (var rank in object) {
             if (object.hasOwnProperty(rank) && rank<max && object[rank] == null) {
@@ -49,7 +49,6 @@ export default function reducer(state={
               break;
             }
         }
-        
         return newState
 
       }
@@ -128,10 +127,10 @@ export default function reducer(state={
             var temp2 = {};
             for (rank in object) {
                 if (object.hasOwnProperty(rank)) {
-                  if(object[rank == null]){
+                  if(object[rank] == null){
                     temp2[rank] = null;
                   }else{
-                    if(rank >= load.ranking && rank < 5){
+                    if(rank >= load.ranking && parseInt(rank) <= 5){
                       //gotta move it
                       temp1[parseInt(rank)+1] = object[rank];
                     }
@@ -142,19 +141,51 @@ export default function reducer(state={
                 }
             }
 
-            temp2[load.ranking] = newRanking;
-            newState.topJobs = Object.assign({}, temp2, temp1);
-
+            // get max and min of temp1, and remove gap if neccesary
             var max = 0;
-            var object = newState.topJobs;
+            var min = 10;
+            var object = temp1;
             for (var rank in object) {
                 if (object.hasOwnProperty(rank)) {
-                    if(object[rank] != null && rank > max) max=rank;
+                    if(object[rank] != null && rank > max) max=parseInt(rank);
+                    if(object[rank] != null && rank < min) min=parseInt(rank);
                 }
-            }  
+            }
+ 
+            for(var j = min; j < max; j++){
+              if(!temp1.hasOwnProperty(j)){
+                temp1[j] = null;
+              }
+            }
+
+            var temp3 = {};
+            for (rank in temp1) {
+                if (temp1.hasOwnProperty(rank) && rank<max && temp1[rank] == null) {
+                  for(var i = min; i <= max; i++ ){
+                    if(i > rank ){
+                      temp3[i-1] = temp1[i]
+                    }
+                    else{
+                      temp3[i] = temp1[i]
+                    }
+                  }
+                  temp1 = Object.assign({}, temp3);
+                  break;
+                }
+            }
+
+            if(temp1[6] != null){
+              if(temp1[5] == null){
+                temp1[5] = temp1[6];
+              }
+              delete temp1[6];
+            }
+
+            temp2[load.ranking] = newRanking;
+            newState.topJobs = Object.assign({}, temp2, temp1); 
 
             // remove gaps
-            var object = newState.topJobs;
+/*            var object = newState.topJobs;
             var temp1 = {1:null,2:null,3:null,4: null ,5: null};
             for (rank in object) {
                 if (object.hasOwnProperty(rank) && rank<max && object[rank] == null) {
@@ -171,7 +202,7 @@ export default function reducer(state={
                   newState.topJobs = Object.assign({}, temp1);
                   break;
                 }
-            }
+            }*/
             
             return newState
           }

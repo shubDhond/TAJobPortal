@@ -56,11 +56,9 @@ export default class Listings extends React.Component {
         for (var id in object) {
             if (object.hasOwnProperty(id)) {
               var listing = object[id];
-              data.push(<JobItemView course_name="{listing.course_name}" ranking={listing.ranking} id={id} key={count++} description="{listing.description}" end_date={listing.end_date}/>)
+              data.push(<JobItemView course_name={listing.course_name} ranking={listing.ranking} id={id} key={count++} description={listing.description} end_date={listing.end_date}/>)
             }
         }
-
-        console.log("data: ", data)
       }
     }
     else if(listings.fetching){
