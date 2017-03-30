@@ -90,13 +90,15 @@ export default class JobsSingleView extends React.Component {
         const {topJobs} = this.props.rankings;
 
         var ranking=null;
+        var ranked = false;
 
         var object = topJobs;
 
         for (var rank in object) {
             if (object.hasOwnProperty(rank)) {
-              if(object[rank].id === this.state.id){
+              if(object[rank] != null && object[rank].id === this.state.id){
                 ranking = "Rank #" + rank;
+                ranked = true;
               }
             }
         }
@@ -111,19 +113,21 @@ export default class JobsSingleView extends React.Component {
         var max = 0;
         for (var rank in object) {
             if (object.hasOwnProperty(rank)) {
-                if(rank > max) max=rank;
+                if(object[rank] != null && rank > max) max=rank;
             }
         }   
 
-        if(!this.props.rankings.jobsRanked){
+        if(max === 0){
             preferences.push(<MenuItem key={1} onClick={this.dispatchRankingChange(1)} eventKey={1}>Preference #1</MenuItem>)
         }
         else{
             var i;
             for( i = 1; i <= max; i++){
-                preferences.push(<MenuItem key={i} onClick={this.dispatchRankingChange(i)} eventKey={i}>Preference #{i}</MenuItem>)
+                if(ranked && ranking === i){
+                    continue;
+                }else preferences.push(<MenuItem key={i} onClick={this.dispatchRankingChange(i)} eventKey={i}>Preference #{i}</MenuItem>)
             }
-            if(max < 5){
+            if(max < 5 && !ranked){
                 preferences.push(<MenuItem key={i} onClick={this.dispatchRankingChange(i)} eventKey={i}>Preference #{i}</MenuItem>)
             }
         }

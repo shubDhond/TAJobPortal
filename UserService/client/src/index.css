@@ -47,6 +47,7 @@ a:hover{
     text-decoration: none;
 }
 
+
 :global .btn-primary{
     font-weight: 600;
     font-size: 16px;
@@ -61,13 +62,22 @@ a:hover{
 
 :global .btn-primary:active{
     background-color:#C51162 !important;
-    border:none
+    border:none;
 }
+:global .invisible-button{
+    background: none;
+    border:none;
+}
+:global .invisible-button:active{
+    background-color:#EEEEEE !important;
+    border:none;
+}
+
 :global .btn-primary.btn-block{
     background-color:#C51162 !important;
-    border:none
+    border:none;
 }
 :global .btn-primary:focus{
     background-color:#F50057 !important;
-    border:none
+    border:none;
 }
