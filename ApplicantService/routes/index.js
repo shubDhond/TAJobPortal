@@ -4,12 +4,16 @@
 let express = require('express');
 let router = express.Router();
 let Application = require('../models/application');
+let checkCoordinatorToken = require('./checkCoordinatorToken');
+let checkCoordinatorTokenOrStudentById = require('./checkCoordinatorTokenOrStudentById');
+let checkStudentToken = require('./checkStudentToken');
+let checkGenericToken = require('./checkCoordinatorToken');
 
 /** GET all applications or search by query param.
  * query_params could be
  * anything in defined in the Application model
  * */
-router.get('/',(req, res) => {
+router.get('/', checkCoordinatorTokenOrStudentById, (req, res) => {
     // let params =  req.query;
     Application.find(req.query, (err, applications)=>{
         "use strict";
@@ -26,7 +30,7 @@ router.get('/',(req, res) => {
 
 });
 
-router.post('/', (req, res) =>{
+router.post('/', checkCoordinatorTokenOrStudentById, (req, res) =>{
     "use strict";
     Application.findOne({
         user_id: req.body.user_id,
@@ -56,7 +60,7 @@ router.post('/', (req, res) =>{
     });
 });
 
-router.get('/:id', (req, res)=>{
+router.get('/:id', checkCoordinatorTokenOrStudentById, (req, res)=>{
     "use strict";
     Application.findOne({
         '_id' : req.params.id
@@ -81,7 +85,7 @@ router.get('/:id', (req, res)=>{
 });
 
 
-router.put('/:id', (req, res)=>{
+router.put('/:id', checkCoordinatorTokenOrStudentById, (req, res)=>{
     "use strict";
     Application.findOne({
         '_id' : req.params.id
@@ -121,7 +125,7 @@ router.put('/:id', (req, res)=>{
     });
 });
 
-router.delete('/:id', (req, res) =>{
+router.delete('/:id', checkCoordinatorTokenOrStudentById, (req, res) =>{
     "use strict";
    Application.findOne({
        '_id' : req.params.id
