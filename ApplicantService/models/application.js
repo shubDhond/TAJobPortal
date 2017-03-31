@@ -11,11 +11,6 @@ let applicationSchema = mongoose.Schema({
         required : true
     },
 
-    posting_id:{
-        type : String,
-        required: true
-    },
-
     student_number: {
         type: String,
         required: true
