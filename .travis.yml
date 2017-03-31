@@ -11,4 +11,4 @@ before_script:
   - npm install -g nodemon
   - sleep 10
 script:
-  - cd UserSerivce/server && npm install && npm start& sleep 15 && cd $TEST_DIR && npm install && npm test
+  - cd UserService/server && npm install && npm start& sleep 15 && cd $TEST_DIR && npm install && npm test
