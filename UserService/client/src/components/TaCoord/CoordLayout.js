@@ -14,12 +14,12 @@ import CourseList from './courses';
 })
 export default class Layout extends React.Component {
 
-    // componentWillMount(){
-    //     if (!this.props.user.authenticated){
-    //         browserHistory.push("/")
-    //     }
-    //     console.log(this.props.user)
-    // }
+    componentWillMount(){
+        if (!this.props.user.authenticated){
+            browserHistory.push("/")
+        }
+        console.log(this.props.user)
+    }
 
     render() {
 
