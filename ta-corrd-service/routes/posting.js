@@ -22,11 +22,50 @@ router.get('/', checkGenericToken, function(req, res) {
            res.status(404).json({
                message: "No posting found."
            });
-       } else{
-           res.status(200).json(postings);
+       } else {
+           let new_post = convertMongoDoc(JSON.stringify(postings) );
+           get_course(new_post, (response) => {
+               res.send(response);
+           });
        }
     });
 });
+
+
+function convertMongoDoc(postings) {
+    let new_res = [];
+    postings = JSON.parse(postings);
+    for(let i=0; i < postings.length; i++){
+        let post = {};
+        let obj = postings[i];
+        for (let key in Object.keys(obj)){
+            post[Object.keys(obj)[key]] = obj[Object.keys(obj)[key]];
+        }
+        new_res.push(post);
+    }
+    return new_res;
+}
+
+function get_course(postings, callback) {
+    let index = 0;
+    for(let i = 0; i < postings.length; i ++) {
+        Course.find({"_id" : postings[i].course_id}, (err, course) => {
+            if (err) throw err;
+            course = convertMongoDoc(JSON.stringify(course));
+            if (course.length > 0){
+                postings[i]['course'] = course[0];
+            }
+            else{
+                postings[i]['course'] = {};
+            }
+            index += 1;
+            if (index == postings.length) {
+                callback(postings);
+            }
+        }).lean();
+    }
+}
+
 
 router.post('/', checkCoordinatorToken, (req, res) =>{
     "use strict";
@@ -80,18 +119,19 @@ router.post('/', checkCoordinatorToken, (req, res) =>{
 
 router.get('/:id', checkGenericToken, (req, res) =>{
     "use strict";
-    Posting.findOne({
+    Posting.find({
         '_id' : req.params.id
     }, (err, posting) =>{
        if (err) throw err;
 
-       if (!posting){
+       if (posting.length === 0){
            res.status(404).json({
                message: "Posting not found."
            });
        } else{
-           res.status(200).json({
-               posting: posting
+           let new_post = convertMongoDoc(JSON.stringify(posting));
+           get_course(new_post, (response) => {
+               res.send(response);
            });
        }
     });
