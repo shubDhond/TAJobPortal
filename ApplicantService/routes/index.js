@@ -38,7 +38,9 @@ router.post('/', checkCoordinatorTokenOrStudentById, (req, res) =>{
         if (err) throw err;
 
         res.status(200).json({
-            application : application
+            application : application,
+            message: "Application Created",
+
         });
     });
 });
