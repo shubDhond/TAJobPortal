@@ -79,7 +79,7 @@ describe('course', function(){
               coordinator_token = data.user.user_token;
               done();
             });
-        });
+          });
       });
     });
   });
