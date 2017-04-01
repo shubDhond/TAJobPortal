@@ -10,6 +10,7 @@ let mongoose = require('mongoose');
 let config = require('./config');
 
 let index = require('./routes/index');
+let rankings = require('./routes/index');
 
 let app = express();
 
@@ -37,6 +38,7 @@ app.use(function(req, res, next) {
 mongoose.connect(config.MONGO_URL + config.MONGO_CLUSTER_NAME);
 
 app.use('/application', index);
+app.use('/rankings', rankings);
 
 
 // catch 404 and forward to error handler
