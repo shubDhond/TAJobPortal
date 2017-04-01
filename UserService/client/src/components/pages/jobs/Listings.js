@@ -26,8 +26,38 @@ export default class Listings extends React.Component {
     const {listings} = this.props.listings;
 
     this.state = {
-      listings: listings
+      listings: listings,
+      pagination : {
+        data:[],
+        numPerPage:3,
+        activePage: 1
+      },
+      
     }
+  }
+
+  paginationSet(page, numPerPage, listings){
+      var object = listings;
+      var keys = Object.keys(object);
+      var size = keys.length;
+
+      var index = numPerPage * (page - 1 );
+      var keysUsed = keys.splice(index,numPerPage);
+
+      var count = 0;
+      var data = [];
+
+      for (var i = 0; i < keysUsed.length; i++) {
+        
+        var id = keysUsed[i];
+        
+        if (object.hasOwnProperty(id)) {
+          var listing = object[id];
+          data.push(<JobItemView course_name={listing.course_name} ranking={listing.ranking} id={id} key={count++} description={listing.description} end_date={listing.end_date}/>)
+        }
+      }
+      
+      return data;
   }
 
   componentWillReceiveProps(nextProps){
@@ -41,24 +71,34 @@ export default class Listings extends React.Component {
 
   }
 
+  handleSelect(eventKey) {
+    this.setState({...this.state,
+      pagination: {...this.state.pagination,
+        activePage: eventKey}
+    });
+  }
+
   render() {
+    var numOfPages = 0;
     var data;
+
     const { listings } = this.props;
+    const { numPerPage } = this.state.pagination;
 
     if(listings.fetched){
       if(listings.listings.hasOwnProperty("message")){
         data = <h2>No Postings Found.</h2>
       }
       else{
-        data = [];
+        // get size of listing
         var object = this.state.listings
-        var count = 0;
-        for (var id in object) {
-            if (object.hasOwnProperty(id)) {
-              var listing = object[id];
-              data.push(<JobItemView course_name={listing.course_name} ranking={listing.ranking} id={id} key={count++} description={listing.description} end_date={listing.end_date}/>)
-            }
-        }
+        
+        var size = Object.keys(object).length;
+
+        numOfPages = Math.ceil((size)/numPerPage);
+
+        data = this.paginationSet(this.state.pagination.activePage, numPerPage, object);
+        console.log(data)
       }
     }
     else if(listings.fetching){
@@ -67,7 +107,7 @@ export default class Listings extends React.Component {
     else if((!listings.fetched && !listings.fetching)){
       data = <h2>No Postings Found.</h2>;
     }
-
+    console.log(data)
     return (
       <div>
         {data}
@@ -75,9 +115,15 @@ export default class Listings extends React.Component {
           <Col xs={12}
                className="centered">
             <Pagination
-                items={10}
-                activePage={this.state.activePage}
-                onSelect={this.handleSelect} />
+                className={!listings.fetched? 'hidden':'shown'}
+                prev
+                next
+                first
+                last
+                ellipsis
+                items={numOfPages}
+                activePage={this.state.pagination.activePage}
+                onSelect={this.handleSelect.bind(this)} />
           </Col>
         </Row>
 
