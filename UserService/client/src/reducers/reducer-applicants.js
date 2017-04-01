@@ -117,12 +117,14 @@ export default function reducer(state={
                 var student_number = data[i].student_number;
                 var first_name = data[i].first_name;
                 var last_name = data[i].last_name;
+                var courses = data[i].course_taken;
 
                 var obj = {
                     user_id : user_id,
                     student_number: student_number,
                     first_name: first_name,
-                    last_name: last_name
+                    last_name: last_name,
+                    courses : [courses]
                 };
 
                 applicants[id] = obj;
