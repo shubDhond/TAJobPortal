@@ -4,7 +4,7 @@ import {Header,Button, Col, Form, FormControl, Row} from "react-bootstrap";
 import {setHeading} from "../../actions/headingsActions"
 
 @connect((store) => {
-    
+
     return {};
 })
 
@@ -46,7 +46,7 @@ export default class Profile extends React.Component {
                             <FormControl type="text" placeholder="Last Name"/>
                         </Col>
                         <Col xs={4} >
-                            <FormControl type="text" pattern="[0-9]" placeholder="Student Number"/>
+                            <FormControl type="number" pattern="[0-9]" placeholder="Student Number"/>
                         </Col>
                     </Row>
 
@@ -60,7 +60,17 @@ export default class Profile extends React.Component {
 
                     <Row>
                         <Col xs={12} >
-                            <FormControl type="text" pattern="[0-9]" placeholder="blahblah"/>
+                            <FormControl type="text" placeholder="courses"/>
+                            <FormControl type="text" placeholder="date of application"/>
+                            <FormControl type="text" placeholder="eamil"/>
+                            <FormControl type="text" placeholder="phone number"/>
+                            <FormControl type="text" placeholder="program"/>
+                            <FormControl type="text" placeholder="student department"/>
+                            <FormControl type="text" placeholder="student department explain"/>
+                            <FormControl type="text" placeholder="ta courses"/>
+                            <FormControl type="text" placeholder="work status"/>
+                            <FormControl type="text" placeholder="work status explain"/>
+                            <FormControl type="number" pattern="[0-9]" placeholder="year"/>
                         </Col>
                     </Row>
 

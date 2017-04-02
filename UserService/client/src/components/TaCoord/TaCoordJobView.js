@@ -17,7 +17,7 @@ export default class TaCoordJobView extends React.Component {
       description: this.props.description,
       deadline: this.props.deadline,
       status: this.props.status,
-        showComponent: true
+      showComponent: true
     };
     this.buttonClick = this.buttonClick.bind(this);
   }
@@ -27,7 +27,7 @@ export default class TaCoordJobView extends React.Component {
       this.setState({
         showComponent: false
       });
-    }else{
+    } else {
       this.setState({
         showComponent: true
       });
