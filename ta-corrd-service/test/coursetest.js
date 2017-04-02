@@ -46,6 +46,7 @@ describe('course', function() {
             if (err) throw err;
             _idFull = doc._id
         });
+<<<<<<< HEAD
 
         let ta_coord_signin_args = {
             headers: {
@@ -60,26 +61,44 @@ describe('course', function() {
             },
         };
 
+=======
 
-    let student_signin_args = {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      data: {
-        email: 'test2',
-        password: 'test2'
-      },
-    }
-    //student signin/authenticate
-    client.post('http://localhost:3002/students/sign-up', student_signin_args, function(data, res){
-        client.post('http://localhost:3002/students/authenticate', student_signin_args, function(data,res){
-          student_token = data.user.user_token;
-          //ta_coordinator sign in/authenticate
-          client.post('http://localhost:3002/ta-coordinators/sign-up', ta_coord_signin_args, function(data,res){
-            client.post('http://localhost:3002/ta-coordinators/authenticate', ta_coord_signin_args, function(data,res){
-              coordinator_token = data.user.user_token;
-              done();
+        let ta_coord_signin_args = {
+            headers: {
+                'x-coordinator-account-key': "PROJAWOLCOORDINATORACCOUNTKEY",
+                "Content-Type": "application/json"
+            },
+            data: {
+                email: 'test',
+                id: 'test',
+                password: 'test',
+                user_type: 'ta-coordinator'
+            },
+        };
+>>>>>>> posting tests
+
+        let student_signin_args = {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            data: {
+                email: 'test2',
+                password: 'test2'
+            },
+        }
+        //student signin/authenticate
+        client.post('http://localhost:3002/students/sign-up', student_signin_args, function(data, res) {
+            client.post('http://localhost:3002/students/authenticate', student_signin_args, function(data, res) {
+                student_token = data.user.user_token;
+                //ta_coordinator sign in/authenticate
+                client.post('http://localhost:3002/ta-coordinators/sign-up', ta_coord_signin_args, function(data, res) {
+                    client.post('http://localhost:3002/ta-coordinators/authenticate', ta_coord_signin_args, function(data, res) {
+                        coordinator_token = data.user.user_token;
+                        done();
+                    });
+                });
             });
+<<<<<<< HEAD
           });
         });
       });
@@ -96,6 +115,23 @@ describe('course', function() {
             });
         });
     });
+=======
+        });
+    });
+    after(function(done) {
+        Course.remove({
+            course_code: "CSC500H1S"
+        }, (err) => {
+            if (err) throw err;
+            Course.remove({
+                course_code: "CSC600H1S"
+            }, (err) => {
+                if (err) throw err;
+                done();
+            });
+        });
+    });
+>>>>>>> posting tests
 
     it('should return 401 if no token', function(done) {
         chai.request(app)
@@ -318,5 +354,4 @@ describe('course', function() {
                 done();
             });
     });
-  });
 });
