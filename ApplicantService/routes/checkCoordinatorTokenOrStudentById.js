@@ -30,7 +30,9 @@ module.exports = (req, res, next) => {
               next();
             }
           } else {
-            next();
+            res.status(401).json({
+              message: 'Invalid Token: This endpoint is not accessible by you.'
+            });
           }
         })
         .catch((err) => {
