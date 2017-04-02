@@ -60,24 +60,26 @@ describe('course', function() {
             },
         };
 
-    let student_signin_args = {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      data: {
-        email: 'test2',
-        password: 'test2'
-      },
-    }
-    //student signin/authenticate
-    client.post('http://localhost:3002/students/sign-up', student_signin_args, function(data, res){
-        client.post('http://localhost:3002/students/authenticate', student_signin_args, function(data,res){
-          student_token = data.user.user_token;
-          //ta_coordinator sign in/authenticate
-          client.post('http://localhost:3002/ta-coordinators/sign-up', ta_coord_signin_args, function(data,res){
-            client.post('http://localhost:3002/ta-coordinators/authenticate', ta_coord_signin_args, function(data,res){
-              coordinator_token = data.user.user_token;
-              done();
+        let student_signin_args = {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            data: {
+                email: 'test2',
+                password: 'test2'
+            },
+        }
+        //student signin/authenticate
+        client.post('http://localhost:3002/students/sign-up', student_signin_args, function(data, res) {
+            client.post('http://localhost:3002/students/authenticate', student_signin_args, function(data, res) {
+                student_token = data.user.user_token;
+                //ta_coordinator sign in/authenticate
+                client.post('http://localhost:3002/ta-coordinators/sign-up', ta_coord_signin_args, function(data, res) {
+                    client.post('http://localhost:3002/ta-coordinators/authenticate', ta_coord_signin_args, function(data, res) {
+                        coordinator_token = data.user.user_token;
+                        done();
+                    });
+                });
             });
         });
     });
