@@ -2,6 +2,8 @@ import React from "react";
 import {Button, Col, FormControl, FormGroup, Row, DropdownButton, MenuItem} from "react-bootstrap";
 import { Modal } from "react-bootstrap";
 
+import NewAd from "./NewAd";
+
 export default class JobsFilterBar extends React.Component {
   constructor(props) {
     super(props);
@@ -42,11 +44,7 @@ export default class JobsFilterBar extends React.Component {
                     <Button type="submit" style={{padding:12}} bsStyle="primary" block={true} onClick={this.open}>New Ad+</Button>
 
                     <Modal show={this.state.showModal} onHide={this.close}>
-                      <Modal.Header closeButton>
-                        <Modal.Title>
-                          Hello
-                        </Modal.Title>
-                      </Modal.Header>
+                      <NewAd />
                     </Modal>
 
                 </Col>
