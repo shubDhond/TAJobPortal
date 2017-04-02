@@ -60,7 +60,7 @@ describe('course', function(){
       },
     };
 
-    let student_coord_signin_args = {
+    let student_signin_args = {
       headers: {
         "Content-Type": "application/json"
       },
@@ -70,8 +70,8 @@ describe('course', function(){
       },
     }
     //student signin/authenticate
-    client.post('http://localhost:3002/students/sign-up', student_coord_signin_args, function(data, res){
-        client.post('http://localhost:3002/students/authenticate', student_coord_signin_args, function(data,res){
+    client.post('http://localhost:3002/students/sign-up', student_signin_args, function(data, res){
+        client.post('http://localhost:3002/students/authenticate', student_signin_args, function(data,res){
           student_token = data.user.user_token;
           //ta_coordinator sign in/authenticate
           client.post('http://localhost:3002/ta-coordinators/sign-up', ta_coord_signin_args, function(data,res){
