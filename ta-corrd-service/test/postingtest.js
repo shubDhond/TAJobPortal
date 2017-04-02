@@ -145,6 +145,7 @@ describe('posting', function() {
                 done();
             });
     });
+    
     it('should return 200 if there is no postings', (done) => {
         chai.request(app)
             .get('/posting')
