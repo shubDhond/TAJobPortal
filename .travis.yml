@@ -5,6 +5,10 @@ services: mongodb
 env:
   - TEST_DIR=UserService/server
   - TEST_DIR=ApplicantService
+  - TEST_DIR=ta-corrd-service
 before_script:
   - sleep 15
-script: cd $TEST_DIR && npm install && npm test
+  - npm install -g nodemon
+  - sleep 10
+script:
+  - cd UserService/server && npm install && npm start& sleep 15 && cd $TEST_DIR && npm install && npm test

@@ -4,6 +4,9 @@
 let express = require('express');
 let router = express.Router();
 let Course = require('../models/course');
+let checkCoordinatorToken = require('./checkCoordinatorToken');
+let checkStudentToken = require('./checkStudentToken');
+let checkGenericToken = require('./checkGenericToken');
 
 /** GET all courses or search by query param.
  * query_params could be
@@ -11,7 +14,7 @@ let Course = require('../models/course');
  *term,
  * year
  * */
-router.get('/', (req, res, next) => {
+router.get('/', checkGenericToken, (req, res, next) => {
     Course.find(req.query, (err, courses)=>{
         "use strict";
         if (err) throw err;
@@ -35,7 +38,7 @@ router.get('/', (req, res, next) => {
  * ta_needed: number
  * tas : [list of user ids] // not required
  * }*/
-router.post('/', (req, res, next) => {
+router.post('/', checkCoordinatorToken, (req, res, next) => {
     "use strict";
     //Validations
     if(!Course.schema.path('term').enumValues.includes(req.body.term)){
@@ -100,7 +103,7 @@ router.post('/', (req, res, next) => {
  * student_id //required
  * }
  */
-router.post('/ta', (req, res, next) =>{
+router.post('/ta', checkCoordinatorToken, (req, res, next) =>{
     "use strict";
     Course.findOne({
         _id : req.body.course_id
@@ -144,7 +147,7 @@ router.post('/ta', (req, res, next) =>{
 /**
  * Get course by Id
  */
-router.get('/:id', (req, res) =>{
+router.get('/:id', checkGenericToken, (req, res) =>{
     "use strict";
     Course.findOne({
         _id: req.params.id
