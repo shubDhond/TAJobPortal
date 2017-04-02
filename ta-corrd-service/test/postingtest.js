@@ -286,6 +286,4 @@ describe('posting', function() {
             });
     });
 
-
-
 });
