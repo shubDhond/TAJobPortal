@@ -11,14 +11,15 @@ module.exports = (req, res, next) => {
             } else {
                 console.log(decoded);
                 if (decoded.user_type !== 'student') {
-                    res.redirect(401, '/');
+                    res.status(401).send();
                 } else {
+                    res.decodedToken = decoded;
                     next();
                 }
             }
         });
 
     } else {
-        return res.redirect(403, '/');
+        return res.status(403).send();
     }
 }
