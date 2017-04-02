@@ -1,8 +1,9 @@
 let express = require('express');
 let router = express.Router();
 let Ranking = require('../models/ranking');
+let checkCoordinatorTokenOrStudentById = require('./checkCoordinatorTokenOrStudentById');
 
-router.post('/', (req, res) => {
+router.post('/', checkCoordinatorTokenOrStudentById, (req, res) => {
   req.body.rankings.forEach(ranking => {
     Ranking.findOneAndUpdate({
       user_id: req.body.user_id,
@@ -15,7 +16,7 @@ router.post('/', (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', checkCoordinatorTokenOrStudentById, (req, res) => {
   Ranking.find({
     user_id: req.params.id
   }, (err, rankings) => {
@@ -33,7 +34,7 @@ router.get('/:id', (req, res) => {
   });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', checkCoordinatorTokenOrStudentById, (req, res) => {
   Ranking.findOneAndRemove({
     user_id: req.params.id,
     posting_id: req.query.posting_id
