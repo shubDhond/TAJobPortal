@@ -145,7 +145,7 @@ describe('posting', function() {
                 done();
             });
     });
-    it('should return 404 if there is no postings', (done) => {
+    it('should return 200 if there is no postings', (done) => {
         chai.request(app)
             .get('/posting')
             .set('x-access-token', student_token)
@@ -153,7 +153,7 @@ describe('posting', function() {
                 "requirements": "everything"
             })
             .end((err, res) => {
-                expect(res).to.have.status(404);
+                expect(res).to.have.status(200);
                 done();
             });
     });
@@ -285,7 +285,5 @@ describe('posting', function() {
                 done();
             });
     });
-
-
 
 });
