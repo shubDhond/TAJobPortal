@@ -30,7 +30,8 @@ let _id;
 let coordinator_token;
 let student_token;
 let student_token2;
-
+let student_id;
+let student_id2;
 describe('ApplicantService', function() {
     this.timeout(0);
     before(function(done) {
@@ -71,6 +72,7 @@ describe('ApplicantService', function() {
             client.post('http://localhost:3002/students/authenticate', student_signin_args, function(data, res) {
                 student_token = data.user.user_token;
                 newAppBody.user_id = data.user.id;
+                student_id = data.user.id;
                 //ta_coordinator sign in/authenticate
                 client.post('http://localhost:3002/ta-coordinators/sign-up', ta_coord_signin_args, function(data, res) {
                     client.post('http://localhost:3002/ta-coordinators/authenticate', ta_coord_signin_args, function(data, res) {
@@ -94,12 +96,10 @@ describe('ApplicantService', function() {
     });
 
     after(function(done) {
-        // runs after each test in this block
         Application.remove({
             _id: _id
         }, function(err) {
             if (err) throw err;
-            console.log("deleting " + _id);
         });
         done();
     });
@@ -114,15 +114,19 @@ describe('ApplicantService', function() {
             });
     });
 
-    it('should return status 401 when finding an application as a student', function(done) {
+    it('should return status 401 when getting all applications as a student', function(done) {
         chai.request(app)
             .get('/application')
             .set('x-access-token', student_token2)
             .end(function(err, res) {
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(401);
                 done();
             });
     });
+
+    // comment up to here
+
+
     // it('should return status 404 if no application found', function(done) {
     //     chai.request(app)
     //         .get('/application')
