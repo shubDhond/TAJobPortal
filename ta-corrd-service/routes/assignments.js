@@ -5,12 +5,14 @@ let express = require('express');
 let router = express.Router();
 let Assignment = require('../models/assignment');
 let Course = require('../models/course');
+let checkCoordinatorToken = require('./checkCoordinatorToken');
+let checkGenericToken = require('./checkGenericToken');
 
 /** GET all assignments or search by query param.
  * query_params could be
  * course_id,
  * */
-router.get('/', function(req, res) {
+router.get('/', checkGenericToken, function(req, res) {
     Assignment.find(req.query, (err, assignments) =>{
         "use strict";
         if (err) throw err;
@@ -25,7 +27,7 @@ router.get('/', function(req, res) {
     });
 });
 
-router.post('/', (req, res)=>{
+router.post('/', checkCoordinatorToken, (req, res)=>{
     "use strict";
 
     Course.findOne({
@@ -84,7 +86,7 @@ router.post('/', (req, res)=>{
 });
 
 
-router.put('/:course_id', (req, res)=>{
+router.put('/:course_id', checkCoordinatorToken, (req, res)=>{
     "use strict";
     Assignment.findOne({
         'course_id' : req.params.course_id
@@ -121,7 +123,7 @@ router.put('/:course_id', (req, res)=>{
     });
 });
 
-router.delete('/:course_id', (req, res) =>{
+router.delete('/:course_id', checkCoordinatorToken, (req, res) =>{
     "use strict";
     Assignment.findOne({
         course_id : req.params.course_id
