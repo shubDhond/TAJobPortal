@@ -91,7 +91,7 @@ class ApplicantList extends Component{
 
     getApplicants(){
         //console.log(this.props.applicants.applicants);
-        var obj = [this.props.applicants.applicants][0];
+        var obj = [this.props.applicants.applicants_copy][0];
         if (this.props.applicants.fetched){
 
             return Object.keys(obj).map((applicant) => {

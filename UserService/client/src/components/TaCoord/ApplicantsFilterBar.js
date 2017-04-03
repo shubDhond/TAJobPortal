@@ -5,53 +5,71 @@ import {setApplicants} from "../../actions/applicantsActions";
 import sortBy from 'lodash/sortBy';
 import orderBy from 'lodash/orderBy';
 import filter from 'lodash/filter';
+import includes from 'lodash/includes';
 
 @connect((store) => {
     return {
-        applicants : store.applicants,
-        applicants_copy: store.applicants.applicants
+        applicants : store.applicants.applicants
     };
 })
 export default class ApplicantsFilterBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: ''
+        };
+
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+
+        var sorted_applicants = filter(this.props.applicants, function(n) {
+            return includes(n.first_name.toLowerCase() + ' '.concat(n.last_name).toLowerCase()+' '.concat(n.student_number), event.target.value.toLowerCase());
+        });
+        this.props.dispatch(setApplicants(sorted_applicants));
+
+    }
+
 
     YearInc(e) {
         e.preventDefault();
-        console.log(this.props.applicants_copy);
-        var sorted_applicants = sortBy(this.props.applicants_copy, [function(n) {
+        var sorted_applicants = sortBy(this.props.applicants, [function(n) {
             return n.year_of_study;
         }]);
-        console.log(sorted_applicants);
         this.props.dispatch(setApplicants(sorted_applicants));
     }
     YearDes(e) {
         e.preventDefault();
-        var sorted_applicants = orderBy(this.props.applicants_copy, [function(n) {return n.year_of_study;}], ['desc']);
+        var sorted_applicants = orderBy(this.props.applicants, [function(n) {return n.year_of_study;}], ['desc']);
         this.props.dispatch(setApplicants(sorted_applicants));
     }
     UG(e) {
         e.preventDefault();
-        var sorted_applicants = filter(this.props.applicants_copy, function(n) {
+        var sorted_applicants = filter(this.props.applicants, function(n) {
             return n.program === "UG";
         });
         this.props.dispatch(setApplicants(sorted_applicants));
     }
     MSC(e) {
         e.preventDefault();
-        var sorted_applicants = filter(this.props.applicants_copy, function(n) {
+        var sorted_applicants = filter(this.props.applicants, function(n) {
             return n.program === "MSC";
         });
         this.props.dispatch(setApplicants(sorted_applicants));
     }
     MSAC(e) {
         e.preventDefault();
-        var sorted_applicants = filter(this.props.applicants_copy, function(n) {
+        var sorted_applicants = filter(this.props.applicants, function(n) {
             return n.program === "MSAC";
         });
         this.props.dispatch(setApplicants(sorted_applicants));
     }
     PHD(e) {
         e.preventDefault();
-        var sorted_applicants = filter(this.props.applicants_copy, function(n) {
+        var sorted_applicants = filter(this.props.applicants, function(n) {
             return n.program === "PHD";
         });
         this.props.dispatch(setApplicants(sorted_applicants));
@@ -59,12 +77,23 @@ export default class ApplicantsFilterBar extends React.Component {
 
 
     render() {
+        var header = null;
+        if (this.state.value != ""){
+            header = <h4>Searching for {this.state.value}</h4>
+        }
 
         return (
+
             <FormGroup style={{marginBottom:0}}>
             <Row>
                 <Col xs={9}  style={{paddingRight:0}}>
-                        <FormControl bsSize="large" type="text" placeholder="Search"/>
+                        <FormControl
+                            bsSize="large"
+                            type="text"
+                            placeholder="Search Applicant"
+                            value={this.state.value}
+                            onChange={this.handleChange}
+                        />
                 </Col>
                 <Col xs={2}>
                     <DropdownButton bsSize="large" title=" Sort By" pullRight id="split-button-pull-right">
@@ -79,7 +108,9 @@ export default class ApplicantsFilterBar extends React.Component {
                     </DropdownButton>
                 </Col>
             </Row>
+                {header}
             </FormGroup>
+
         );
     }
 }
