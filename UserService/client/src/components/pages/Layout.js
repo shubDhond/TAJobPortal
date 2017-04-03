@@ -5,7 +5,7 @@ import { Col, Row, Grid} from "react-bootstrap";
 import Header from "./TopNav"
 
 @connect((store) => {
-    
+
     return {
         headings: store.headings,
         user: store.user
