@@ -9,7 +9,9 @@ router.post('/', checkCoordinatorTokenOrStudentById, (req, res) => {
     Ranking.findOneAndUpdate({
       user_id: req.body.user_id,
       posting_id: ranking.posting_id
-    }, ranking, {upsert: true});
+    }, ranking, {upsert: true}, (err, ranking) => {
+      if (err) throw err;
+    });
   });
   res.status(201).json({
     user_id: req.body.user_id,
@@ -22,6 +24,12 @@ router.get('/:id', checkCoordinatorTokenOrStudentById, (req, res) => {
     user_id: req.params.id
   }, (err, rankings) => {
     if (err) throw err;
+
+    if (!rankings) {
+      res.status(404).json({
+        message: 'No rankings found.'
+      });
+    }
 
     res.status(200).json({
       user_id: req.params.id,
