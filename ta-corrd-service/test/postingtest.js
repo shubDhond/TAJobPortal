@@ -286,9 +286,4 @@ describe('posting', function() {
             });
     });
 
-
-<<<<<<< HEAD
-=======
-
->>>>>>> posting tests
 });
