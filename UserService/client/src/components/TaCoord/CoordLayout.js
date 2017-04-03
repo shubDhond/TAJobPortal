@@ -15,10 +15,10 @@ import CourseList from './courses';
 export default class Layout extends React.Component {
 
     componentWillMount(){
-        if (!this.props.user.authenticated){
+        if (!this.props.user.user.id){
             browserHistory.push("/")
         }
-        console.log(this.props.user)
+        console.log(this.props.user.user.id)
     }
 
     render() {
