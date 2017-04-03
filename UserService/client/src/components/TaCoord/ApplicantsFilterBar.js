@@ -15,7 +15,10 @@ import includes from 'lodash/includes';
 export default class ApplicantsFilterBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: ''};
+        this.state = {
+            value: ''
+        };
+
 
         this.handleChange = this.handleChange.bind(this);
     }
@@ -24,8 +27,7 @@ export default class ApplicantsFilterBar extends React.Component {
         this.setState({value: event.target.value});
 
         var sorted_applicants = filter(this.props.applicants, function(n) {
-            console.log(n.first_name + ' '.concat(n.last_name).toLowerCase());
-            return includes(n.first_name.toLowerCase() + ' '.concat(n.last_name).toLowerCase(), event.target.value.toLowerCase());
+            return includes(n.first_name.toLowerCase() + ' '.concat(n.last_name).toLowerCase()+' '.concat(n.student_number), event.target.value.toLowerCase());
         });
         this.props.dispatch(setApplicants(sorted_applicants));
 
@@ -75,8 +77,13 @@ export default class ApplicantsFilterBar extends React.Component {
 
 
     render() {
+        var header = null;
+        if (this.state.value != ""){
+            header = <h4>Searching for {this.state.value}</h4>
+        }
 
         return (
+
             <FormGroup style={{marginBottom:0}}>
             <Row>
                 <Col xs={9}  style={{paddingRight:0}}>
@@ -101,7 +108,9 @@ export default class ApplicantsFilterBar extends React.Component {
                     </DropdownButton>
                 </Col>
             </Row>
+                {header}
             </FormGroup>
+
         );
     }
 }
