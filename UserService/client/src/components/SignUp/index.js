@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import {
     setUserType,
     userAccessKeyError,
@@ -106,6 +106,13 @@ class SignUp extends Component {
   }
 
   render() {
+    if (this.props.user.user.id) {
+      browserHistory.push(
+        this.props.user.user.user_type === 'student' ? '/app/profile' :
+                                                       '/coord'
+      );
+    }
+
       let AccessKeyField;
       if (this.props.user.user.user_type === 'ta-coordinator') {
           AccessKeyField = (<div><Row>
