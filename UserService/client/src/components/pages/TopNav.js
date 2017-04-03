@@ -45,7 +45,7 @@ export default class TopNav extends React.Component {
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>
-                        <NavItem eventKey={1} onClick={this.routeToView('/')} href="#">SIGN IN</NavItem>
+                        <NavItem eventKey={1} onClick={this.routeToView('/')} href="#">Logout</NavItem>
                     </Nav>
                 </Navbar.Collapse>
 

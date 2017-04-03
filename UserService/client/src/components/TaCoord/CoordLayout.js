@@ -1,20 +1,28 @@
 import React from "react";
+import {browserHistory} from "react-router";
+import {connect} from "react-redux";
 import { Col, Row, Grid} from "react-bootstrap";
 import Header from "./NavBar"
 
 import Applicant from './Applicant';
 import CourseList from './courses';
 
+@connect((store) => {
+    return {
+        user: store.user
+    };
+})
 export default class Layout extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            title: "Welcome",
-        };
 
+    componentWillMount(){
+        if (!this.props.user.user.id){
+            browserHistory.push("/")
+        }
+        console.log(this.props.user.user.id)
     }
 
     render() {
+
         return (
             <div >
                 <Header/>
