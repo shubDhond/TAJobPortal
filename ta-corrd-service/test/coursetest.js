@@ -46,7 +46,6 @@ describe('course', function() {
             if (err) throw err;
             _idFull = doc._id
         });
-<<<<<<< HEAD
 
         let ta_coord_signin_args = {
             headers: {
@@ -60,22 +59,6 @@ describe('course', function() {
                 user_type: 'ta-coordinator'
             },
         };
-
-=======
-
-        let ta_coord_signin_args = {
-            headers: {
-                'x-coordinator-account-key': "PROJAWOLCOORDINATORACCOUNTKEY",
-                "Content-Type": "application/json"
-            },
-            data: {
-                email: 'test',
-                id: 'test',
-                password: 'test',
-                user_type: 'ta-coordinator'
-            },
-        };
->>>>>>> posting tests
 
         let student_signin_args = {
             headers: {
@@ -98,24 +81,6 @@ describe('course', function() {
                     });
                 });
             });
-<<<<<<< HEAD
-          });
-        });
-      });
-    after(function(done) {
-        Course.remove({
-            course_code: "CSC500H1S"
-        }, (err) => {
-            if (err) throw err;
-            Course.remove({
-                course_code: "CSC600H1S"
-            }, (err) => {
-                if (err) throw err;
-                done();
-            });
-        });
-    });
-=======
         });
     });
     after(function(done) {
@@ -131,7 +96,6 @@ describe('course', function() {
             });
         });
     });
->>>>>>> posting tests
 
     it('should return 401 if no token', function(done) {
         chai.request(app)
