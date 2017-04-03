@@ -4,6 +4,7 @@ let Ranking = require('../models/ranking');
 let checkCoordinatorTokenOrStudentById = require('./checkCoordinatorTokenOrStudentById');
 
 router.post('/', checkCoordinatorTokenOrStudentById, (req, res) => {
+  req.body.rankings = req.body.rankings || [];
   req.body.rankings.forEach(ranking => {
     Ranking.findOneAndUpdate({
       user_id: req.body.user_id,
