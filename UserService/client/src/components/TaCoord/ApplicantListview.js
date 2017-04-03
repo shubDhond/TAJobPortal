@@ -42,9 +42,7 @@ class Courses extends Component{
 
     getCourses(){
         var courses = [this.props.courses][0][0];
-        console.log(courses);
         return Object.keys(courses).map((course) => {
-            console.log(courses[course]);
             return (
                 <h5 style={{display:"inline",marginRight:16}} key={course} type="submit" ><a>{courses[course]}</a></h5>
             );
@@ -54,7 +52,7 @@ class Courses extends Component{
     render(){
         return (
             <div>
-                {this.getCourses()}
+                Course Rank: {this.getCourses()}
             </div>
         );
     }
@@ -94,11 +92,9 @@ class ApplicantList extends Component{
     getApplicants(){
         //console.log(this.props.applicants.applicants);
         var obj = [this.props.applicants.applicants][0];
-
         if (this.props.applicants.fetched){
 
             return Object.keys(obj).map((applicant) => {
-                console.log(obj[applicant]);
                 return (
 
                     <Panel key={obj[applicant].user_id} header=
@@ -137,7 +133,6 @@ class ApplicantList extends Component{
 
 
     render(){
-
 
         return (
             <div style={{overflow: 'auto', maxHeight: 500}}>

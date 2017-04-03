@@ -6,3 +6,10 @@ export function fetchApplicants(requestPromise) {
         payload: requestPromise
     };
 }
+
+export function setApplicants(applicants) {
+    return {
+        type: 'SET_APPLICANTS',
+        payload: applicants
+    };
+}

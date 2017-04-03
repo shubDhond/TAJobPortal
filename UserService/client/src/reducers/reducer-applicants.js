@@ -1,11 +1,17 @@
 export default function reducer(state={
-	applicants: {},
+	applicants: [],
 	fetching: false,
 	fetched: false,
 	error: null,
 	}, action) {
 
     switch (action.type) {
+        case "SET_APPLICANTS": {
+            return {
+                ...state,
+                applicants: action.payload,
+            }
+        }
 
         case 'FETCH_APPLICANTS_PENDING': {
             return {
@@ -24,7 +30,7 @@ export default function reducer(state={
         }
         case 'FETCH_APPLICANTS_FULFILLED': {
             var data = action.payload.data;
-            var applicants={};
+            var applicants = [];
 
             for(let i = 0 ; i < data.length ; i++){
                 var id = data[i]._id;
@@ -46,6 +52,7 @@ export default function reducer(state={
                 var courses = data[i].course_taken;
 
                 var obj = {
+                    id: id,
                     user_id : user_id,
                     student_number: student_number,
                     first_name: first_name,
@@ -64,14 +71,14 @@ export default function reducer(state={
                     courses : [courses]
                 };
 
-                applicants[id] = obj;
+                applicants.push(obj);
 
             }
             return {
                 ...state,
-                applicants: {
+                applicants: [
                     ...applicants
-                },
+                ],
                 fetching: false,
                 fetched: true,
                 error: null,
