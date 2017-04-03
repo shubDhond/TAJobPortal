@@ -9,7 +9,7 @@ import {
   userPasswordValid,
   userAuthenticate
 } from '../../actions/userActions';
-import { Link } from 'react-router';
+import { Link,browserHistory } from 'react-router';
 import axios from 'axios';
 
 let studentUserClient = axios.create({
@@ -85,6 +85,13 @@ class Login extends Component {
           })
         ));
       }
+    }
+  }
+
+  //REMOVE THIS LATER
+  componentWillReceiveProps(nextProps){
+    if (nextProps.user.status === 200) {
+      browserHistory.push("/app");
     }
   }
 

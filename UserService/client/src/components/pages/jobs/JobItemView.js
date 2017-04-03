@@ -26,6 +26,15 @@ export default class JobItemView extends React.Component {
         }
     };
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            ...this.state,
+            id: nextProps.id,
+            course_name: nextProps.course_name,
+            description: nextProps.description,
+            end_date: nextProps.end_date
+        });
+    }
 
     render() {
         return (

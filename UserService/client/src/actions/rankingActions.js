@@ -11,6 +11,20 @@ export function setRanking(state, newRanking) {
       }
 }
 
+export function fetchRankings(requestPromise) {
+  return {
+    type: 'FETCH_RANKINGS',
+    payload: requestPromise
+  };
+}
+
+export function updateRankings(requestPromise) {
+  return {
+    type: 'UPDATE_RANKINGS',
+    payload: requestPromise
+  };
+}
+
 export function deleteRanking(id) {
   return {
           type: "DELETE_RANKING",

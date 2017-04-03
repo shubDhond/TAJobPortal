@@ -10,15 +10,19 @@ import { taCoordClient } from "../../../axiosClient";
     
     return {
         listings: store.listings,
-        rankings: store.rankings
+        rankings: store.rankings,
+        user: store.user
     };
 })
 
 export default class JobsSingleView extends React.Component {
 
     componentWillMount(){
+        var config = {
+            headers: {'x-access-token': this.props.user.user.user_token}
+        };
         this.props.dispatch(fetchListing(
-            taCoordClient.get("/posting/" + this.props.location.query.id)
+            taCoordClient.get("/posting/" + this.props.location.query.id, config)
         ));
     }
 

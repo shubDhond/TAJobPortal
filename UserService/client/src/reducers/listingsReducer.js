@@ -52,14 +52,16 @@ export default function reducer(state={
         }
       }
       case 'FETCH_LISTING_FULFILLED': {
-        var data = action.payload.data.posting;
+        var data = action.payload.data[0];
+
+        console.log(data)
         
         var id = data._id;
         var course_id = data.course_id;
         var reqs = data.requirements;
         var start_date = data.start_date;
         var end_date = data.end_date;   
-        var course_name = "placeholder " + id.slice(-2);
+        var course_name = data.course.course_code;
         var description = "placeholder";
 
         var obj = {
@@ -107,12 +109,14 @@ export default function reducer(state={
         var listings={};
 
         for(let i = 0 ; i < data.length ; i++){
+          var course = data[i].course;
+
           var id = data[i]._id;
           var course_id = data[i].course_id;
           var reqs = data[i].requirements;
           var start_date = data[i].start_date;
           var end_date = data[i].end_date;   
-          var course_name = "placeholder " + id.slice(-2);
+          var course_name = course.course_code
           var description = "placeholder";
 
           var obj = {

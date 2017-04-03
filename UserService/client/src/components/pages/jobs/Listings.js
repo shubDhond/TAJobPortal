@@ -7,7 +7,8 @@ import { fetchListings } from "../../../actions/listingsActions";
 
 @connect((store) => {
   return {
-    listings : store.listings
+    listings : store.listings,
+    user: store.user
   };
 })
 
@@ -15,9 +16,13 @@ export default class Listings extends React.Component {
   
   componentWillMount(){
     if(!this.props.listings.fetched){
-          this.props.dispatch(fetchListings(
-            taCoordClient.get("/posting")
-          ));
+      console.log(this.props.user.user.user_token)
+      var config = {
+        headers: {'x-access-token': this.props.user.user.user_token}
+      };
+      this.props.dispatch(fetchListings(
+        taCoordClient.get("/posting", config)
+      ));
     }
   }
   
@@ -98,7 +103,7 @@ export default class Listings extends React.Component {
         numOfPages = Math.ceil((size)/numPerPage);
 
         data = this.paginationSet(this.state.pagination.activePage, numPerPage, object);
-        console.log(data)
+
       }
     }
     else if(listings.fetching){
@@ -107,7 +112,7 @@ export default class Listings extends React.Component {
     else if((!listings.fetched && !listings.fetching)){
       data = <h2>No Postings Found.</h2>;
     }
-    console.log(data)
+
     return (
       <div>
         {data}
