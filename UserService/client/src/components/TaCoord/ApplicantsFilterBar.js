@@ -24,7 +24,8 @@ export default class ApplicantsFilterBar extends React.Component {
         this.setState({value: event.target.value});
 
         var sorted_applicants = filter(this.props.applicants, function(n) {
-            return includes(n.first_name.toLowerCase(), event.target.value.toLowerCase());
+            console.log(n.first_name + ' '.concat(n.last_name).toLowerCase());
+            return includes(n.first_name.toLowerCase() + ' '.concat(n.last_name).toLowerCase(), event.target.value.toLowerCase());
         });
         this.props.dispatch(setApplicants(sorted_applicants));
 
@@ -82,7 +83,7 @@ export default class ApplicantsFilterBar extends React.Component {
                         <FormControl
                             bsSize="large"
                             type="text"
-                            placeholder="Search"
+                            placeholder="Search Applicant"
                             value={this.state.value}
                             onChange={this.handleChange}
                         />
