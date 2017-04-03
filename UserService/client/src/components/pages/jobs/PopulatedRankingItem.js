@@ -2,10 +2,13 @@ import React from "react";
 import {Glyphicon,Button} from "react-bootstrap";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
-import {deleteRanking} from "../../../actions/rankingActions";
+import { applicantClient } from "../../../axiosClient";
+import {deleteRanking,updateRankings} from "../../../actions/rankingActions";
 
 @connect((store) => {
-    return {};
+    return {
+        user: store.user
+    };
 })
 
 export default class Populated extends React.Component {
@@ -17,6 +20,14 @@ export default class Populated extends React.Component {
     };
 
     handleRemoveClick = () => {
+        var config = {
+            headers: {'x-access-token': this.props.user.user.user_token
+            }
+        };
+        this.props.dispatch(updateRankings(
+            applicantClient.delete("/rankings/"+ this.props.user.user.id 
+            +"?posting_id=" + this.props.id, config)
+        ));
         this.props.dispatch(deleteRanking(this.props.id));
     }
 

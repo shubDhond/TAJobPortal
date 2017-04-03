@@ -16,7 +16,6 @@ export default class Listings extends React.Component {
   
   componentWillMount(){
     if(!this.props.listings.fetched){
-      console.log(this.props.user.user.user_token)
       var config = {
         headers: {'x-access-token': this.props.user.user.user_token}
       };
@@ -97,11 +96,8 @@ export default class Listings extends React.Component {
       else{
         // get size of listing
         var object = this.state.listings
-        
         var size = Object.keys(object).length;
-
         numOfPages = Math.ceil((size)/numPerPage);
-
         data = this.paginationSet(this.state.pagination.activePage, numPerPage, object);
 
       }

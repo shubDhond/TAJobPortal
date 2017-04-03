@@ -43,8 +43,11 @@ export default class JobsSingleView extends React.Component {
         const { listing } = nextProps.listings;
 
         if(this.state.id !== nextProps.location.query.id){
+            var config = {
+                headers: {'x-access-token': this.props.user.user.user_token}
+            };
             this.props.dispatch(fetchListing(
-                taCoordClient.get("/posting/" + nextProps.location.query.id)
+                taCoordClient.get("/posting/" + nextProps.location.query.id, config)
             ));
 
             this.setState({...this.state,

@@ -9,7 +9,7 @@ import {
   userPasswordValid,
   userAuthenticate
 } from '../../actions/userActions';
-import { Link,browserHistory } from 'react-router';
+import { Link } from 'react-router';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 
@@ -86,13 +86,6 @@ class Login extends Component {
           })
         ));
       }
-    }
-  }
-
-  //REMOVE THIS LATER
-  componentWillReceiveProps(nextProps){
-    if (nextProps.user.status === 200) {
-      browserHistory.push("/app");
     }
   }
 

@@ -117,7 +117,6 @@ export default function reducer(state={
               break;
             }
         }
-        newState.change = true;
         return newState
 
       }

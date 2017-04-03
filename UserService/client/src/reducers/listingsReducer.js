@@ -54,13 +54,15 @@ export default function reducer(state={
       case 'FETCH_LISTING_FULFILLED': {
         var data = action.payload.data[0];
 
-        console.log(data)
-        
+        var date = new Date(data.end_date)
+
+        var deadline = date.getDate() +"-"+ (parseInt(date.getMonth()) + 1) +"-"+ date.getFullYear()
+
         var id = data._id;
         var course_id = data.course_id;
         var reqs = data.requirements;
         var start_date = data.start_date;
-        var end_date = data.end_date;   
+        var end_date = deadline;   
         var course_name = data.course.course_code;
         var description = "placeholder";
 
@@ -111,11 +113,15 @@ export default function reducer(state={
         for(let i = 0 ; i < data.length ; i++){
           var course = data[i].course;
 
+          var date = new Date(data[i].end_date)
+
+          var deadline = date.getDate() +"-"+ (parseInt(date.getMonth()) + 1) +"-"+ date.getFullYear()
+
           var id = data[i]._id;
           var course_id = data[i].course_id;
           var reqs = data[i].requirements;
           var start_date = data[i].start_date;
-          var end_date = data[i].end_date;   
+          var end_date = deadline;   
           var course_name = course.course_code
           var description = "placeholder";
 

@@ -56,7 +56,7 @@ export default class JobItemView extends React.Component {
                         </p>
                         <br/>
                         <p>
-                            Apply by 02-03-2017
+                            Apply by {this.state.end_date}
                         </p>
                     </Col>
                 </Row>
