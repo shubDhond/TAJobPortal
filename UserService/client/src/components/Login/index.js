@@ -90,11 +90,20 @@ class Login extends Component {
   }
 
   render() {
-    if (this.props.user.user.id) {
-      browserHistory.push(
-        this.props.user.user.user_type === 'student' ? '/app/profile' :
-                                                       '/coord'
-      );
+    // if (this.props.user.user.id) {
+    //   browserHistory.push(
+    //     this.props.user.user.user_type === 'student' ? '/app/profile' :
+    //                                                    '/coord'
+    //   );
+    // }
+
+    if (this.props.user.authenticated){
+      if(this.props.user.user.user_type === "student"){
+          browserHistory.push("/app/jobs")
+      }else if (this.props.user.user.user_type === "ta-coordinator") {
+          browserHistory.push("/coord")
+      }
+
     }
 
     let SuccessLabel;

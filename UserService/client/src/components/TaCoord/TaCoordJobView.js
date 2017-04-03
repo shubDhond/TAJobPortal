@@ -1,8 +1,6 @@
 import React from "react";
-import {Button, Glyphicon, Col, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import ListItem from "../pages/views/ListItem";
-import { browserHistory, Link } from "react-router";
-import { setCourse } from "../../actions/jobItemActions";
 import {connect} from "react-redux";
 
 import TaCoordSingleView from "./TaCoordSingleView";
@@ -19,7 +17,7 @@ export default class TaCoordJobView extends React.Component {
       description: this.props.description,
       deadline: this.props.deadline,
       status: this.props.status,
-        showComponent: true
+      showComponent: true
     };
     this.buttonClick = this.buttonClick.bind(this);
   }
@@ -29,7 +27,7 @@ export default class TaCoordJobView extends React.Component {
       this.setState({
         showComponent: false
       });
-    }else{
+    } else {
       this.setState({
         showComponent: true
       });

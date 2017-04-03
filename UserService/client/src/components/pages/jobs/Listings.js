@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import {Pagination, Row,Col} from "react-bootstrap";
 import JobItemView from "./JobItemView";
-
+import { taCoordClient } from "../../../axiosClient";
 import { fetchListings } from "../../../actions/listingsActions";
 
 @connect((store) => {
@@ -14,8 +14,9 @@ import { fetchListings } from "../../../actions/listingsActions";
 export default class Listings extends React.Component {
   
   componentWillMount(){
-    if(this.props.listings.listings.length === 0){
-          this.props.dispatch(fetchListings());
+    if(!this.props.listings.fetched){
+          this.props.dispatch(fetchListings(
+            taCoordClient.get("/posting")));
     }
   }
   

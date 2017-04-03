@@ -1,3 +1,5 @@
+import axios from "axios";
+
 function setListings() {
   return {
     type: "SET_LISTINGS",
@@ -22,9 +24,10 @@ function setListings() {
   }
 }
 
-export function fetchListings() {
-  return function (dispatch) {
-
-    dispatch(setListings())
-  }
+export function fetchListings(requestPromise) {
+  return {
+    type: 'FETCH_LISTINGS',
+    payload: requestPromise
+  };
 }
+
