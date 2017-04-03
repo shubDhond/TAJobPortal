@@ -10,7 +10,7 @@ let mongoose = require('mongoose');
 let config = require('./config');
 
 let index = require('./routes/index');
-let rankings = require('./routes/index');
+let rankings = require('./routes/rankings');
 
 let app = express();
 
