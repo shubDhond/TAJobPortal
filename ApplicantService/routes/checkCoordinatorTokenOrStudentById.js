@@ -20,9 +20,10 @@ module.exports = (req, res, next) => {
        rp(args)
         .then((data) => {
           if (req.params.id || req.query.user_id || req.body.user_id) {
-            if(!(data.user_id === req.params.id ||
-              data.user_id === req.query.student_id ||
-              data.user_id === req.body.user_id)) {
+            data = JSON.parse(data);
+            if(!(data.decodedToken.user_id === req.params.id ||
+              data.decodedToken.user_id === req.query.student_id ||
+              data.decodedToken.user_id === req.body.user_id)) {
               res.status(401).json({
                 message: 'Invalid Token: This token does not belong to you.'
               });
@@ -36,6 +37,7 @@ module.exports = (req, res, next) => {
           }
         })
         .catch((err) => {
+          console.log(err);
           res.status(401).json({
             message: 'Authentication Failed: Invalid token provided'
           });
