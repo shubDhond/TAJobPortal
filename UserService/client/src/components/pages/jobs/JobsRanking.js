@@ -40,7 +40,7 @@ export default class JobsRanking extends React.Component {
         rankings: rankings.topJobs
       });
     }
-    else if(rankings.error !== null && rankings.error.response.status === 404){
+    else if(rankings.error != null && rankings.error.response.status === 404){
 
       var data = {
         user_id: this.props.user.user.id,

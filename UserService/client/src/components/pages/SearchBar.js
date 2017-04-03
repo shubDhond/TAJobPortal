@@ -13,15 +13,16 @@ export default class SearchBar extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            query: null
+            query: ""
         }
     }
+
 
     query(){
         this.props.dispatch(queryListings(this.state.query))
         this.setState({
             ...this.state,
-            query: null
+            query: ""
         })
     }
 
@@ -33,6 +34,11 @@ export default class SearchBar extends React.Component {
     }
 
     render() {
+        var header = null
+        if(this.state.query != ""){
+            header = <h4>Showing results for {this.state.query}</h4>
+        }
+
         return (
             <FormGroup>
             <Row>
@@ -42,6 +48,9 @@ export default class SearchBar extends React.Component {
                 <Col xs={2}>
                 <Button onClick={this.query.bind(this)} bsSize="large" block={true}>Search</Button>
                 </Col>
+            </Row>
+            <Row>
+                {header}
             </Row>
             </FormGroup>
         );

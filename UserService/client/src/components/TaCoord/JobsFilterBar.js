@@ -33,6 +33,8 @@ export default class JobsFilterBar extends React.Component {
                 <Col xs={8}  style={{paddingRight:0}}>
                         <FormControl bsSize="large" type="text" placeholder="Search"/>
                 </Col>
+
+
                 <Col xs={2}>
                     <DropdownButton title="Sort By" bsSize="large"  pullRight id="split-button-pull-right">
                         <MenuItem eventKey="1">Year</MenuItem>

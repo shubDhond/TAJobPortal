@@ -58,23 +58,27 @@ export default function reducer(state={
 
         var deadline = date.getDate() +"-"+ (parseInt(date.getMonth()) + 1) +"-"+ date.getFullYear()
 
-        var id = data._id;
-        var course_id = data.course_id;
-        var reqs = data.requirements;
-        var start_date = data.start_date;
-        var end_date = deadline;   
-        var course_name = data.course.course_code;
-        var description = "placeholder";
+        var id = data._id
+        var course_id = data.course_id
+        var reqs = data.requirements
+        var start_date = data.start_date
+        var end_date = deadline
+        var course_name = data.course.course_code
+        var instructors = data.course.instructor
+          var tas_needed = data.course.ta_needed
+          var term = data.course.term
 
         var obj = {
-          id: id,
-          course_name : course_name,
-          description: description,
-          ranking: null,
-          course_id: course_id,
-          requirements: reqs,
-          start_date: start_date,
-          end_date: end_date
+            id: id,
+            course_name : course_name,
+            ranking: null,
+            course_id: course_id,
+            requirements: reqs,
+            instructors: instructors,
+            start_date: start_date,
+            end_date: end_date,
+            tas_needed: tas_needed,
+            term: term
         };
 
         return {
@@ -123,11 +127,9 @@ export default function reducer(state={
           var start_date = data[i].start_date;
           var end_date = deadline;   
           var course_name = course.course_code
-          var description = "placeholder";
 
           var obj = {
             course_name : course_name,
-            description: description,
             ranking: null,
             course_id: course_id,
             requirements: reqs,

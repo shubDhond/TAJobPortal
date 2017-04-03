@@ -6,9 +6,9 @@ import { taCoordClient } from "../../../axiosClient";
 import { fetchListings } from "../../../actions/listingsActions";
 
 @connect((store) => {
-  return {
-    listings : store.listings,
-    user: store.user
+    return {
+      listings : store.listings,
+      user: store.user
   };
 })
 
@@ -33,45 +33,44 @@ export default class Listings extends React.Component {
       listings: listings,
       pagination : {
         data:[],
-        numPerPage:3,
-        activePage: 1
+        numPerPage:5,
+        activePage:1
       },
       
     }
   }
 
   paginationSet(page, numPerPage, listings){
-      var object = listings;
-      var keys = Object.keys(object);
+    var object = listings;
+    var keys = Object.keys(object);
 
-      var index = numPerPage * (page - 1 );
-      var keysUsed = keys.splice(index,numPerPage);
+    var index = numPerPage * (page - 1 );
+    var keysUsed = keys.splice(index,numPerPage);
 
-      var count = 0;
-      var data = [];
+    var count = 0;
+    var data = [];
 
-      for (var i = 0; i < keysUsed.length; i++) {
-        
-        var id = keysUsed[i];
-        
-        if (object.hasOwnProperty(id)) {
-          var listing = object[id];
-          data.push(<JobItemView course_name={listing.course_name} ranking={listing.ranking} id={id} key={count++} description={listing.description} end_date={listing.end_date}/>)
-        }
+    for (var i = 0; i < keysUsed.length; i++) {
+
+      var id = keysUsed[i];
+
+      if (object.hasOwnProperty(id)) {
+        var listing = object[id];
+        data.push(<JobItemView course_name={listing.course_name} ranking={listing.ranking} id={id} key={count++} requirements={listing.requirements} end_date={listing.end_date}/>)
       }
-      
-      return data;
+    }
+
+    return data;
   }
 
   componentWillReceiveProps(nextProps){
     const { listings } = nextProps;
 
     if(listings.fetched){
-            this.setState({...this.state,
-              listings: listings.listings
-            });
+      this.setState({...this.state,
+        listings: listings.listings
+      });
     }
-
   }
 
   handleSelect(eventKey) {

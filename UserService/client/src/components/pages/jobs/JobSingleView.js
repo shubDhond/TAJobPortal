@@ -36,6 +36,9 @@ export default class JobsSingleView extends React.Component {
             description: null,
             end_date: null,
             rankings: null,
+            tas_needed: null,
+            term: null,
+            instructors: null,
         }
     }
     
@@ -65,10 +68,12 @@ export default class JobsSingleView extends React.Component {
             this.setState({...this.state,
                 id: course.id,
                 course_name: course.course_name,
-                description: course.description,
                 requirements: course.requirements,
                 end_date: course.end_date,
-                rankings: nextProps.rankings
+                rankings: nextProps.rankings,
+                tas_needed: course.tas_needed,
+                term: course.term,
+                instructors: course.instructors,
             });
         }
     }
@@ -174,10 +179,14 @@ export default class JobsSingleView extends React.Component {
                     <Row>
                         <Col xs={12}>
                             <div>
-                                <h3>Description:</h3>
-                                {this.state.description}
                                 <h3>Requirements:</h3>
                                 {this.state.requirements}
+                                <h3>Term:</h3>
+                                {this.state.term}
+                                <h3>TAs Needed:</h3>
+                                {this.state.tas_needed}
+                                <h3>Instructors:</h3>
+                                {this.state.instructors}
                             </div>
                             <br/>
                             <p>
