@@ -148,6 +148,9 @@ export default function reducer(state={
           error: null,
         }
       }
+        case 'QUERY_LISTINGS': {
+            return state
+        }
       default:
         return state
     }

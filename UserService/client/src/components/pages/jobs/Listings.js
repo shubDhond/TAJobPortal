@@ -43,7 +43,6 @@ export default class Listings extends React.Component {
   paginationSet(page, numPerPage, listings){
       var object = listings;
       var keys = Object.keys(object);
-      var size = keys.length;
 
       var index = numPerPage * (page - 1 );
       var keysUsed = keys.splice(index,numPerPage);

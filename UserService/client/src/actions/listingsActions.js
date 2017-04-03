@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export function fetchListings(requestPromise) {
   return {
     type: 'FETCH_LISTINGS',
@@ -12,5 +10,12 @@ export function fetchListing(requestPromise) {
     type: 'FETCH_LISTING',
     payload: requestPromise
   };
+}
+
+export function queryListings(query) {
+    return {
+        type: 'QUERY_LISTINGS',
+        query: query
+    };
 }
 

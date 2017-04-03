@@ -44,7 +44,7 @@ export default class JobsFilterBar extends React.Component {
                     <Button type="submit" style={{padding:12}} bsStyle="primary" block={true} onClick={this.open}>New Ad+</Button>
 
                     <Modal show={this.state.showModal} onHide={this.close}>
-                      <NewAd />
+                        <NewAd/>
                     </Modal>
 
                 </Col>

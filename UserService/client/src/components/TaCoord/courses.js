@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {ListGroup} from "react-bootstrap";
 import TaCoordListing from "./TaCoordListing";
-import JobsFilterBar from "../Login/JobsFilterBar";
+import JobsFilterBar from "./JobsFilterBar";
 
 @connect((store) => {
     return {};
