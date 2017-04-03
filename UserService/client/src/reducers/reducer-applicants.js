@@ -1,5 +1,6 @@
 export default function reducer(state={
 	applicants: [],
+	applicants_copy: [],
 	fetching: false,
 	fetched: false,
 	error: null,
@@ -9,7 +10,7 @@ export default function reducer(state={
         case "SET_APPLICANTS": {
             return {
                 ...state,
-                applicants: action.payload,
+                applicants_copy: action.payload,
             }
         }
 
@@ -77,6 +78,9 @@ export default function reducer(state={
             return {
                 ...state,
                 applicants: [
+                    ...applicants
+                ],
+                applicants_copy: [
                     ...applicants
                 ],
                 fetching: false,

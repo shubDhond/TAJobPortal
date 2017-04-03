@@ -8,50 +8,47 @@ import filter from 'lodash/filter';
 
 @connect((store) => {
     return {
-        applicants : store.applicants,
-        applicants_copy: store.applicants.applicants
+        applicants : store.applicants.applicants
     };
 })
 export default class ApplicantsFilterBar extends React.Component {
 
     YearInc(e) {
         e.preventDefault();
-        console.log(this.props.applicants_copy);
-        var sorted_applicants = sortBy(this.props.applicants_copy, [function(n) {
+        var sorted_applicants = sortBy(this.props.applicants, [function(n) {
             return n.year_of_study;
         }]);
-        console.log(sorted_applicants);
         this.props.dispatch(setApplicants(sorted_applicants));
     }
     YearDes(e) {
         e.preventDefault();
-        var sorted_applicants = orderBy(this.props.applicants_copy, [function(n) {return n.year_of_study;}], ['desc']);
+        var sorted_applicants = orderBy(this.props.applicants, [function(n) {return n.year_of_study;}], ['desc']);
         this.props.dispatch(setApplicants(sorted_applicants));
     }
     UG(e) {
         e.preventDefault();
-        var sorted_applicants = filter(this.props.applicants_copy, function(n) {
+        var sorted_applicants = filter(this.props.applicants, function(n) {
             return n.program === "UG";
         });
         this.props.dispatch(setApplicants(sorted_applicants));
     }
     MSC(e) {
         e.preventDefault();
-        var sorted_applicants = filter(this.props.applicants_copy, function(n) {
+        var sorted_applicants = filter(this.props.applicants, function(n) {
             return n.program === "MSC";
         });
         this.props.dispatch(setApplicants(sorted_applicants));
     }
     MSAC(e) {
         e.preventDefault();
-        var sorted_applicants = filter(this.props.applicants_copy, function(n) {
+        var sorted_applicants = filter(this.props.applicants, function(n) {
             return n.program === "MSAC";
         });
         this.props.dispatch(setApplicants(sorted_applicants));
     }
     PHD(e) {
         e.preventDefault();
-        var sorted_applicants = filter(this.props.applicants_copy, function(n) {
+        var sorted_applicants = filter(this.props.applicants, function(n) {
             return n.program === "PHD";
         });
         this.props.dispatch(setApplicants(sorted_applicants));
