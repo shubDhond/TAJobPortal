@@ -5,7 +5,7 @@ import { fetchListing } from "../../../actions/listingsActions";
 import {Col, DropdownButton, Glyphicon, MenuItem, Row} from "react-bootstrap";
 import {browserHistory} from "react-router";
 import { taCoordClient } from "../../../axiosClient";
-
+import FetchingView from "./FetchingView"
 @connect((store) => {
     
     return {
@@ -94,7 +94,7 @@ export default class JobsSingleView extends React.Component {
         const { listing } = this.props.listings;
 
         if(listing.fetching){
-            return(<h2>Fetching...</h2>)
+            return(<FetchingView/>)
         }
         else if(!listing.fetched && !listing.fetching){
             return(<h2>No posting found.</h2>)
@@ -144,7 +144,10 @@ export default class JobsSingleView extends React.Component {
                 preferences.push(<MenuItem key={i} onClick={this.dispatchRankingChange(i)} eventKey={i}>Preference #{i}</MenuItem>)
             }
         }
-
+        const headingstyle = {
+            marginTop:8,
+            marginBottom:4
+        }
         return (
             <div>
                 <h4 style={{marginTop: 22, marginBottom: 15}}>
@@ -179,23 +182,26 @@ export default class JobsSingleView extends React.Component {
                     <Row>
                         <Col xs={12}>
                             <div>
-                                <h3>Requirements:</h3>
+                                <h6 style={headingstyle}>Requirements:</h6>
                                 {this.state.requirements}
-                                <h3>Term:</h3>
+                                <div style={{marginTop:32}}/>
+                                <h6 style={headingstyle}>Term:</h6>
                                 {this.state.term}
-                                <h3>TAs Needed:</h3>
+                                <h6 style={headingstyle}>TAs Needed:</h6>
                                 {this.state.tas_needed}
-                                <h3>Instructors:</h3>
+                                <h6 style={headingstyle}>Instructors:</h6>
                                 {this.state.instructors}
                             </div>
-                            <br/>
-                            <p>
-                                Apply by {this.state.end_date}
-                            </p>
+
                         </Col>
                     </Row>
-                    <Row>
-                        <Col xs={12}>
+                    <Row style={{margintop:16}}>
+                        <Col xs={4}>
+                            <h6>
+                                Deadline: {this.state.end_date}
+                            </h6>
+                        </Col>
+                        <Col xs={8}>
                             <div className="right-align">
                             <DropdownButton id="1" bsStyle="primary" title="I'm interested!">
                                 {preferences}

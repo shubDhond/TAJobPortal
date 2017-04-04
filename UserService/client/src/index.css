@@ -17,8 +17,13 @@ h1{
     font-weight: 600;
     font-size: 4em;
 }
-h2,h3,h4,h5{
+h2,h3,h4{
     font-weight: 600;
+}
+h5{
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
 }
 h6{
     font-weight: 600;

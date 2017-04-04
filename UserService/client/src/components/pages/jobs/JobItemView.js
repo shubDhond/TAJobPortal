@@ -16,8 +16,8 @@ export default class JobItemView extends React.Component {
         super(props);
         let reqs;
 
-        if(this.props.requirements.length > 140){
-            reqs = this.props.requirements.substr(0,140).concat( "...")
+        if(this.props.requirements.length > 250){
+            reqs = this.props.requirements.substr(0,250).concat( "...")
         }else reqs = this.props.requirements
 
         this.state = {
@@ -37,8 +37,8 @@ export default class JobItemView extends React.Component {
     componentWillReceiveProps(nextProps) {
         let reqs;
 
-        if(this.props.requirements.length > 140){
-            reqs = nextProps.requirements.substr(0,140).concat( "...")
+        if(this.props.requirements.length > 250){
+            reqs = nextProps.requirements.substr(0,250).concat( "...")
         }else reqs = nextProps.requirements
 
         this.setState({
@@ -91,14 +91,16 @@ export default class JobItemView extends React.Component {
                         <p>
                             {this.state.requirements}
                         </p>
-                        <br/>
-                        <p>
-                            Apply by {this.state.end_date}
-                        </p>
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={2} xsOffset={10}>
+
+                    <Col xs={4}>
+                        <h6>
+                            Deadline: {this.state.end_date}
+                        </h6>
+                    </Col>
+                    <Col xs={2} xsOffset={6}>
                         <a className="see-more right-align" onClick={this.routeToView("/app/jobs/single/?id=" + this.props.id)}>View<Glyphicon glyph="chevron-right"/></a>
                     </Col>
                 </Row>

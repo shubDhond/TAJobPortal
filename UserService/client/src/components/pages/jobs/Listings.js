@@ -4,7 +4,7 @@ import {Pagination, Row,Col} from "react-bootstrap";
 import JobItemView from "./JobItemView";
 import { taCoordClient } from "../../../axiosClient";
 import { fetchListings } from "../../../actions/listingsActions";
-
+import FetchingView from "./FetchingView"
 @connect((store) => {
     return {
       listings : store.listings,
@@ -113,7 +113,7 @@ export default class Listings extends React.Component {
       }
     }
     else if(listings.fetching){
-      data = <h2>Fetching...</h2>
+        data = <FetchingView/>
     }
     else if((!listings.fetched && !listings.fetching)){
       data = <h2>No Postings Found.</h2>;
