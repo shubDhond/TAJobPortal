@@ -18,10 +18,7 @@ export default class Courses extends React.Component {
 
                 </div>
                 <div style={{padding: 15}}>
-                    <ListGroup>
-
-                        <TaCoordListing />
-                    </ListGroup>
+                    <TaCoordListing />
                 </div>
             </div>
 
