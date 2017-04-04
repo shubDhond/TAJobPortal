@@ -60,7 +60,7 @@ export default class SearchBar extends React.Component {
         return (
             <FormGroup>
                 <Row>
-                    <Col xs={11} style={{paddingRight: 0}}>
+                    <Col xs={10} style={{paddingRight: 0}}>
                         <FormControl style={{ fontSize:16,height:55}}
                                      onKeyPress={this.handleKeyPress.bind(this)}
                                      onChange={this.queryChange.bind(this)}
