@@ -34,7 +34,7 @@ router.post('/', checkCoordinatorTokenOrStudentById, (req, res) =>{
     "use strict";
     Application.findOneAndUpdate({
         user_id: req.body.user_id
-    }, req.body, {upsert: true}, (err, application) => {
+    }, req.body, {new: true, upsert: true}, (err, application) => {
         if (err) throw err;
 
         res.status(200).json({

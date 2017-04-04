@@ -17,8 +17,13 @@ h1{
     font-weight: 600;
     font-size: 4em;
 }
-h2,h3,h4,h5{
+h2,h3,h4{
     font-weight: 600;
+}
+h5{
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
 }
 h6{
     font-weight: 600;
@@ -47,6 +52,7 @@ a:hover{
     text-decoration: none;
 }
 
+
 :global .btn-primary{
     font-weight: 600;
     font-size: 16px;
@@ -61,13 +67,28 @@ a:hover{
 
 :global .btn-primary:active{
     background-color:#C51162 !important;
-    border:none
+    border:none;
 }
+:global .invisible-button{
+    background: none;
+    border:none;
+}
+:global .invisible-button:active{
+    background-color:#EEEEEE !important;
+    border:none;
+}
+
 :global .btn-primary.btn-block{
     background-color:#C51162 !important;
-    border:none
+    border:none;
 }
 :global .btn-primary:focus{
     background-color:#F50057 !important;
-    border:none
+    border:none;
+}
+
+:global .btn-default{
+    font-weight: 600 ;
+    font-size: 16px;
+    padding:16px;
 }
