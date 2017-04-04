@@ -1,5 +1,6 @@
 import React from "react";
-import { setCourses } from "../../actions/courseListingsActions";
+import { taCoordClient } from "../../axiosClient";
+import { fetchListings } from "../../actions/listingsActions";
 import {connect} from "react-redux";
 import TaCoordJob from "./TaCoordJob";
 import LazyLoad from 'react-lazy-load';
@@ -7,16 +8,16 @@ import {Accordion} from 'react-bootstrap';
 
 @connect((store) => {
   return {
-    courses : store.courses,
+    listings : store.listings,
+    user: store.user
   };
 })
 
 export default class TaCoordJobView extends React.Component {
   constructor(props) {
     super(props);
-    const {courses} = this.props.courses;
+    const {listings} = this.props.listings;
     this.state = {
-      courses: courses,
       title: this.props.title,
       description: this.props.description,
       deadline: this.props.deadline,
@@ -26,7 +27,14 @@ export default class TaCoordJobView extends React.Component {
   }
 
   componentWillMount(){
-    this.props.dispatch(setCourses())
+    if(!this.props.listings.fetched){
+      var config = {
+        headers: {'x-access-token': this.props.user.user.user_token}
+      };
+      this.props.dispatch(fetchListings(
+        taCoordClient.get("/posting", config)
+      ));
+    }
   }
 
   buttonClick() {
@@ -43,12 +51,10 @@ export default class TaCoordJobView extends React.Component {
 
     getCourses(){
 
-
-
-        if (this.props.courses.courses){
+        if (this.props.listings.listings){
             console.log("here")
             var courses = [];
-            var object = this.props.courses.courses
+            var object = this.props.listings.listings
             var count = 0;
 
             for (var id in object) {
@@ -64,26 +70,18 @@ export default class TaCoordJobView extends React.Component {
                 count++
                 return (
                     <div>
-                      <TaCoordJob showComponent={courses[course].showComponent} id={count} key={count} title={courses[course].title} status={courses[course].status} description={courses[course].description} deadline={courses[course].deadline}/>
+                      <TaCoordJob showComponent={courses[course].showComponent} key={count} title={courses[course].course_name} status={courses[course].status} description={courses[course].requirements} deadline={courses[course].end_date}/>
                     </div>
                 );
             });
-
         }else {
             return null
-
         }
-
     }
 
   render() {
-
-
-
     return (
-
         <div style={{overflow: 'auto', maxHeight: 500}}>
-
           <div className="filler" />
           <LazyLoad height={762} offsetVertical={300}>
             <Accordion>
@@ -91,8 +89,6 @@ export default class TaCoordJobView extends React.Component {
             </Accordion>
           </LazyLoad>
           <div className="filler" />
-
-
         </div>
 
     );
