@@ -46,6 +46,11 @@ let applicationSchema = mongoose.Schema({
         required: true
     },
 
+    department:{
+        type: String,
+        required: true
+    },
+
     department_explain:{
         type: String,
         required: true
@@ -87,11 +92,6 @@ let applicationSchema = mongoose.Schema({
 
     status:{
         type: String
-    },
-
-    ranking: {
-        type: Number,
-        default: 0
     }
 
 });
