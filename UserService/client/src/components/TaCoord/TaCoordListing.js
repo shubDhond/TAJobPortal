@@ -1,4 +1,5 @@
 import React from "react";
+import LazyLoad from 'react-lazy-load';
 import {connect} from "react-redux";
 import TaCoordJobView from "./TaCoordJobView";
 import TaCoordSingleView from "./TaCoordSingleView";
