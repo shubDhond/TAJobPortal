@@ -39,6 +39,8 @@ export default class Profile extends React.Component {
             studentstatusexplain:"",
             year:"",
         }
+
+        this.baseState = this.state
     }
 
     componentWillMount = () => {
@@ -137,7 +139,12 @@ export default class Profile extends React.Component {
         this.props.dispatch(submitProfile(
             applicantClient.post("/application", data, config)
         ));
+    }
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.application.submitted){
+            this.setState(this.baseState)
+        }
     }
 
     render() {
