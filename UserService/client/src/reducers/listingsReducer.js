@@ -1,5 +1,8 @@
+import includes from 'lodash/includes';
+
 export default function reducer(state={
     listings: {},
+    queryResults: null,
     listing: {
       course: {},
       fetching: false,
@@ -151,7 +154,37 @@ export default function reducer(state={
         }
       }
         case 'QUERY_LISTINGS': {
-            return state
+
+            if(action.query == ""){
+                return{
+                    ...state,
+                    queryResults: null
+                }
+            }
+
+            let newState = Object.assign({}, state);
+            var listings = newState.listings
+
+            var queryResults = {};
+            for(var id in listings){
+                if(listings.hasOwnProperty(id) && includes(listings[id].course_name.toLowerCase() +
+                        listings[id].requirements.toLowerCase() +
+                        listings[id].end_date.toLowerCase(),
+                        action.query.toLowerCase())){
+                    queryResults[id] = listings[id]
+                }
+            }
+            console.log(queryResults)
+            return {
+                ...state,
+                queryResults: queryResults
+            }
+        }
+        case 'QUERY_RESET': {
+            return{
+                ...state,
+                queryResults: null
+            }
         }
       default:
         return state

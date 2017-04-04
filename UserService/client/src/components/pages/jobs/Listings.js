@@ -67,8 +67,20 @@ export default class Listings extends React.Component {
     const { listings } = nextProps;
 
     if(listings.fetched){
+      if(listings.queryResults != null){
+          this.setState({...this.state,
+              listings: listings.queryResults,
+              pagination: {...this.state.pagination,
+                  activePage: 1
+              }
+          });
+      }
+      else
       this.setState({...this.state,
-        listings: listings.listings
+          listings: listings.listings,
+          pagination: {...this.state.pagination,
+              activePage: 1
+          }
       });
     }
   }
@@ -107,6 +119,10 @@ export default class Listings extends React.Component {
       data = <h2>No Postings Found.</h2>;
     }
 
+    if(Object.keys(this.state.listings).length==0){
+      data = <h2>No Postings Found.</h2>;
+    }
+
     return (
       <div>
         {data}
@@ -114,7 +130,7 @@ export default class Listings extends React.Component {
           <Col xs={12}
                className="centered">
             <Pagination
-                className={!listings.fetched? 'hidden':'shown'}
+                className={Object.keys(this.state.listings).length==0? 'hidden':'shown'}
                 prev
                 next
                 first

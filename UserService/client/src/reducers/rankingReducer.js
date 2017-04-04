@@ -27,7 +27,6 @@ export default function reducer(state={
       }
       case 'FETCH_RANKINGS_FULFILLED': {
         var data = action.payload.data.rankings;
-        console.log(data);
 
         var rankings = {1:null,2:null,3:null,4: null ,5: null}
 

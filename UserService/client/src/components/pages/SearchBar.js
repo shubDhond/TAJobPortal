@@ -1,7 +1,7 @@
 import React from "react";
 import {Button, Col, FormControl, FormGroup, Row} from "react-bootstrap";
 import { connect } from "react-redux";
-import { queryListings } from "../../actions/listingsActions"
+import { queryListings,queryReset } from "../../actions/listingsActions"
 
 @connect((store) => {
     return {
@@ -13,17 +13,18 @@ export default class SearchBar extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            query: ""
+            query: "",
+            sentQuery: ""
         }
     }
 
 
     query(){
-        this.props.dispatch(queryListings(this.state.query))
         this.setState({
             ...this.state,
-            query: ""
+            sentQuery: this.state.query
         })
+        this.props.dispatch(queryListings(this.state.query))
     }
 
     queryChange(event){
@@ -33,24 +34,41 @@ export default class SearchBar extends React.Component {
         })
     }
 
+    handleKeyPress(event) {
+        if (event.key === 'Enter') {
+            this.query()
+        }
+    }
+
+    resetQuery(){
+        this.props.dispatch(queryReset())
+        this.setState({
+            ...this.state,
+            query: ""
+        })
+    }
+
+
     render() {
-        var header = null
-        if(this.state.query != ""){
-            header = <h4>Showing results for {this.state.query}</h4>
+        var showing = null;
+        if(this.props.listings.queryResults != null){ // The reset anchor should standout David
+            showing = <h4>Showing results for "{this.state.sentQuery}". <a onClick={this.resetQuery.bind(this)}>Reset</a> search.
+            </h4>
         }
 
         return (
             <FormGroup>
             <Row>
                 <Col xs={10}  style={{paddingRight:0}}>
-                        <FormControl onChange={this.queryChange.bind(this)} bsSize="large" type="text" placeholder="Search"/>
+                        <FormControl onKeyPress={this.handleKeyPress.bind(this)} onChange={this.queryChange.bind(this)}
+                                     value={this.state.query} bsSize="large" type="text" placeholder="Search"/>
                 </Col>
                 <Col xs={2}>
                 <Button onClick={this.query.bind(this)} bsSize="large" block={true}>Search</Button>
                 </Col>
             </Row>
             <Row>
-                {header}
+                {showing}
             </Row>
             </FormGroup>
         );

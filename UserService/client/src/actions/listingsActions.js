@@ -19,3 +19,8 @@ export function queryListings(query) {
     };
 }
 
+export function queryReset() {
+    return {
+        type: 'QUERY_RESET'
+    };
+}
