@@ -11,3 +11,10 @@ export function setApplicants(applicants) {
         payload: applicants
     };
 }
+
+export function submitProfile(requestPromise) {
+    return {
+        type: 'SUBMIT_APPLICANT',
+        payload: requestPromise
+    };
+}
