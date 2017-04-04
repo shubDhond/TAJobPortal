@@ -40,11 +40,16 @@ class AboutMe extends Component{
 }
 class Courses extends Component{
 
+    link_course(e) {
+        e.preventDefault();
+        console.log("here")
+    }
+
     getCourses(){
         var courses = [this.props.courses][0][0];
         return Object.keys(courses).map((course) => {
             return (
-                <h5 style={{display:"inline",marginRight:16}} key={course} type="submit" ><a>{courses[course]}</a></h5>
+                <h5 style={{display:"inline",marginRight:16}} key={course} type="submit" ><a onClick={this.link_course.bind(this)}>{courses[course]}</a></h5>
             );
         });
     }
