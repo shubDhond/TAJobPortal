@@ -13,7 +13,7 @@ import FetchingView from "./FetchingView"
 })
 
 export default class Listings extends React.Component {
-  
+
   componentWillMount(){
     if(!this.props.listings.fetched){
       var config = {
@@ -24,7 +24,7 @@ export default class Listings extends React.Component {
       ));
     }
   }
-  
+
   constructor(props){
     super(props);
     const {listings} = this.props.listings;
@@ -36,7 +36,7 @@ export default class Listings extends React.Component {
         numPerPage:5,
         activePage:1
       },
-      
+
     }
   }
 

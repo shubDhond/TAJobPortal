@@ -4,6 +4,7 @@ import ListItem from "../pages/views/ListItem";
 import { toggleComponent } from "../../actions/courseListingsActions";
 import { setSingleCourse } from "../../actions/courseListingsActions";
 import { connect } from "react-redux";
+import { LazyLoad } from "react-lazy-load";
 
 @connect((store) => {
   return {
