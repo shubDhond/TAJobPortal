@@ -1,14 +1,9 @@
 import React from "react";
-import {Button, Glyphicon, Col, Row} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import ListItem from "../pages/views/ListItem";
-import { browserHistory, Link } from "react-router";
-import { setCourse } from "../../actions/courseActions";
 import { toggleComponent } from "../../actions/courseListingsActions";
 import { setSingleCourse } from "../../actions/courseListingsActions";
-import { fetchSingleCourse } from "../../actions/courseListingsActions";
-import {connect} from "react-redux";
-
-import TaCoordSingleView from "./TaCoordSingleView";
+import { connect } from "react-redux";
 
 @connect((store) => {
   return {

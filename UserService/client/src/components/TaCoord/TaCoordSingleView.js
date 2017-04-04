@@ -1,16 +1,7 @@
 import React from "react";
-import {connect} from "react-redux";
-import ListItem from "../pages/views/ListItem";
-import {Button, Col, DropdownButton, Glyphicon, MenuItem, Row} from "react-bootstrap";
-import {browserHistory} from "react-router";
-import { setCourse } from "../../actions/courseActions";
-import { fetchCourses } from "../../actions/courseListingsActions";
+import { connect } from "react-redux";
+import { Button, Row } from "react-bootstrap";
 import { toggleComponent } from "../../actions/courseListingsActions";
-import { setSingleCourse } from "../../actions/courseListingsActions";
-import { fetchSingleCourse } from "../../actions/courseListingsActions";
-
-import TaCoordListing from "./TaCoordListing";
-import TaCoordJobView from "./TaCoordJobView";
 
 @connect((store) => {
   return {
@@ -30,7 +21,6 @@ export default class TaCoordSingleView extends React.Component {
   }
 
   render() {
-    console.log(this.props.courses.title);
     return (
       <div>
         <Row>
