@@ -9,6 +9,7 @@ let expect = chai.expect;
 let Posting = require('../models/posting');
 let Course = require('../models/course');
 let Assignment = require('../models/assignment');
+
 let app = require('../app');
 
 
@@ -23,6 +24,7 @@ let coordinator_token;
 
 //===================================================
 //student and TA login information
+
 let ta_coord_signin_args = {
     headers: {
         'x-coordinator-account-key': "PROJAWOLCOORDINATORACCOUNTKEY",
@@ -307,5 +309,4 @@ describe('assignments', function(){
           done();
         });
       });
-
 })
