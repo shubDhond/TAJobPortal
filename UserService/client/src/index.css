@@ -86,3 +86,9 @@ a:hover{
     background-color:#F50057 !important;
     border:none;
 }
+
+:global .btn-default{
+    font-weight: 600 ;
+    font-size: 16px;
+    padding:16px;
+}
