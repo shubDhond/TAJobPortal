@@ -1,17 +1,24 @@
 import React from "react";
-import {Link} from "react-router";
+import {browserHistory} from "react-router";
 import {connect} from "react-redux";
 import { Col, Row, Grid} from "react-bootstrap";
 import Header from "./TopNav"
 
 @connect((store) => {
-    
+
     return {
-        headings: store.headings
+        headings: store.headings,
+        user: store.user
     };
 })
 
 export default class Layout extends React.Component {
+    componentWillMount(){
+        if (!this.props.user.user.id){
+            browserHistory.push("/")
+        }
+    }
+
     render() {
 
         const {headings} = this.props.headings;

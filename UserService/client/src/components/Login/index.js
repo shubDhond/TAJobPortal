@@ -11,6 +11,7 @@ import {
 } from '../../actions/userActions';
 import { Link } from 'react-router';
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 let studentUserClient = axios.create({
   baseURL: 'http://localhost:3002/students',
@@ -89,6 +90,22 @@ class Login extends Component {
   }
 
   render() {
+    // if (this.props.user.user.id) {
+    //   browserHistory.push(
+    //     this.props.user.user.user_type === 'student' ? '/app/profile' :
+    //                                                    '/coord'
+    //   );
+    // }
+
+    if (this.props.user.authenticated){
+      if(this.props.user.user.user_type === "student"){
+          browserHistory.push("/app/jobs")
+      }else if (this.props.user.user.user_type === "ta-coordinator") {
+          browserHistory.push("/coord")
+      }
+
+    }
+
     let SuccessLabel;
     if (this.props.user.status === 200) {
       let successStyle = {

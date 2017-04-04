@@ -1,6 +1,5 @@
 import React from "react";
-import {Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
-import {LinkContainer} from "react-router-bootstrap";
+import { Nav, Navbar, NavItem} from "react-bootstrap";
 
 export default class TopNav extends React.Component {
     render() {
@@ -27,7 +26,7 @@ export default class TopNav extends React.Component {
                 <Navbar.Collapse>
                     
                     <Nav pullRight>
-                        <NavItem eventKey={1} href="#">SIGN IN</NavItem>
+                        <NavItem eventKey={1} href="#">Logout</NavItem>
                     </Nav>
                 </Navbar.Collapse>
 

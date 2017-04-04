@@ -1,47 +1,80 @@
 import React from "react";
 import {connect} from "react-redux";
 import {setRanking} from "../../../actions/rankingActions";
-
+import { fetchListing } from "../../../actions/listingsActions";
 import {Col, DropdownButton, Glyphicon, MenuItem, Row} from "react-bootstrap";
 import {browserHistory} from "react-router";
-
+import { taCoordClient } from "../../../axiosClient";
+import FetchingView from "./FetchingView"
 @connect((store) => {
     
     return {
         listings: store.listings,
-        rankings: store.rankings
+        rankings: store.rankings,
+        user: store.user
     };
 })
 
 export default class JobsSingleView extends React.Component {
+
+    componentWillMount(){
+        var config = {
+            headers: {'x-access-token': this.props.user.user.user_token}
+        };
+        this.props.dispatch(fetchListing(
+            taCoordClient.get("/posting/" + this.props.location.query.id, config)
+        ));
+    }
+
     constructor(props) {
         
         super(props);
 
-        // where you would make the query for the information to display
-        var course = this.props.listings.listings[this.props.location.query.id]
-
         this.state = {
             id: this.props.location.query.id,
-            title: course.title,
-            description: course.description,
-            deadline: course.deadline,
-            rankings: this.props.rankings
+            course_name: null,
+            description: null,
+            end_date: null,
+            rankings: null,
+            tas_needed: null,
+            term: null,
+            instructors: null,
         }
     }
     
     componentWillReceiveProps(nextProps){
+        const { listing } = nextProps.listings;
+
         if(this.state.id !== nextProps.location.query.id){
-            var course = this.props.listings.listings[nextProps.location.query.id]
+            var config = {
+                headers: {'x-access-token': this.props.user.user.user_token}
+            };
+            this.props.dispatch(fetchListing(
+                taCoordClient.get("/posting/" + nextProps.location.query.id, config)
+            ));
 
-            this.setState({
+            this.setState({...this.state,
                 id: nextProps.location.query.id,
-                title: course.title,
-                description: course.description,
-                deadline: course.deadline,
-                rankings: this.props.rankings
+                course_name: null,
+                description: null,
+                end_date: null,
+                rankings: null
             });
+        }
 
+        else if(listing.fetched){
+            var course = nextProps.listings.listing.course;
+
+            this.setState({...this.state,
+                id: course.id,
+                course_name: course.course_name,
+                requirements: course.requirements,
+                end_date: course.end_date,
+                rankings: nextProps.rankings,
+                tas_needed: course.tas_needed,
+                term: course.term,
+                instructors: course.instructors,
+            });
         }
     }
 
@@ -58,16 +91,27 @@ export default class JobsSingleView extends React.Component {
     }
 
     render() {
+        const { listing } = this.props.listings;
+
+        if(listing.fetching){
+            return(<FetchingView/>)
+        }
+        else if(!listing.fetched && !listing.fetching){
+            return(<h2>No posting found.</h2>)
+        }
+
         const {topJobs} = this.props.rankings;
 
         var ranking=null;
+        var ranked = false;
 
         var object = topJobs;
 
         for (var rank in object) {
             if (object.hasOwnProperty(rank)) {
-              if(object[rank].id === this.state.id){
+              if(object[rank] != null && object[rank].id === this.state.id){
                 ranking = "Rank #" + rank;
+                ranked = true;
               }
             }
         }
@@ -82,23 +126,28 @@ export default class JobsSingleView extends React.Component {
         var max = 0;
         for (var rank in object) {
             if (object.hasOwnProperty(rank)) {
-                if(rank > max) max=rank;
+                if(object[rank] != null && rank > max) max=rank;
             }
         }   
 
-        if(!this.props.rankings.jobsRanked){
+        if(max === 0){
             preferences.push(<MenuItem key={1} onClick={this.dispatchRankingChange(1)} eventKey={1}>Preference #1</MenuItem>)
         }
         else{
             var i;
             for( i = 1; i <= max; i++){
-                preferences.push(<MenuItem key={i} onClick={this.dispatchRankingChange(i)} eventKey={i}>Preference #{i}</MenuItem>)
+                if(ranked && ranking === i){
+                    continue;
+                }else preferences.push(<MenuItem key={i} onClick={this.dispatchRankingChange(i)} eventKey={i}>Preference #{i}</MenuItem>)
             }
-            if(max < 5){
+            if(max < 5 && !ranked){
                 preferences.push(<MenuItem key={i} onClick={this.dispatchRankingChange(i)} eventKey={i}>Preference #{i}</MenuItem>)
             }
         }
-
+        const headingstyle = {
+            marginTop:8,
+            marginBottom:4
+        }
         return (
             <div>
                 <h4 style={{marginTop: 22, marginBottom: 15}}>
@@ -110,7 +159,7 @@ export default class JobsSingleView extends React.Component {
                         <Col xs={8}>
 
                             <h2 style={{margin: 0, fontWeight: 600}}>
-                                {this.state.title}
+                                {this.state.course_name}
                             </h2>
                         </Col>
                         <Col xs={4} >
@@ -132,17 +181,27 @@ export default class JobsSingleView extends React.Component {
                     </Row>
                     <Row>
                         <Col xs={12}>
-                            <p>
-                                {this.state.description}
-                            </p>
-                            <br/>
-                            <p>
-                                Apply by 02-03-2017
-                            </p>
+                            <div>
+                                <h6 style={headingstyle}>Requirements:</h6>
+                                {this.state.requirements}
+                                <div style={{marginTop:32}}/>
+                                <h6 style={headingstyle}>Term:</h6>
+                                {this.state.term}
+                                <h6 style={headingstyle}>TAs Needed:</h6>
+                                {this.state.tas_needed}
+                                <h6 style={headingstyle}>Instructors:</h6>
+                                {this.state.instructors}
+                            </div>
+
                         </Col>
                     </Row>
-                    <Row>
-                        <Col xs={12}>
+                    <Row style={{margintop:16}}>
+                        <Col xs={4}>
+                            <h6>
+                                Deadline: {this.state.end_date}
+                            </h6>
+                        </Col>
+                        <Col xs={8}>
                             <div className="right-align">
                             <DropdownButton id="1" bsStyle="primary" title="I'm interested!">
                                 {preferences}

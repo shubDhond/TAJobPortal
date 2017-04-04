@@ -93,6 +93,7 @@ export default function reducer(state={
         emailError: null,
         passwordError: null,
         accessKeyError: null,
+        error: null,
         status: null
       }
     }

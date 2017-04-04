@@ -1,7 +1,15 @@
 import React from "react";
-import {Button} from "react-bootstrap";
-
+import {Glyphicon,Button} from "react-bootstrap";
+import {connect} from "react-redux";
 import {browserHistory} from "react-router";
+import { applicantClient } from "../../../axiosClient";
+import {deleteRanking,updateRankings} from "../../../actions/rankingActions";
+
+@connect((store) => {
+    return {
+        user: store.user
+    };
+})
 
 export default class Populated extends React.Component {
     
@@ -10,6 +18,18 @@ export default class Populated extends React.Component {
             browserHistory.push(path);
         }
     };
+
+    handleRemoveClick = () => {
+        var config = {
+            headers: {'x-access-token': this.props.user.user.user_token
+            }
+        };
+        this.props.dispatch(updateRankings(
+            applicantClient.delete("/rankings/"+ this.props.user.user.id 
+            +"?posting_id=" + this.props.id, config)
+        ));
+        this.props.dispatch(deleteRanking(this.props.id));
+    }
 
     render() {
         const styles = {
@@ -21,7 +41,7 @@ export default class Populated extends React.Component {
             marginBottom: 15
         };
         return (
-            <Button onClick={this.routeToView("/app/jobs/single/?id=" + this.props.id)} block style={styles}>
+            <div style={styles}>
                 <h4 style={{
                     display: "inline-block",
                     padding:8,
@@ -30,8 +50,11 @@ export default class Populated extends React.Component {
                     marginRight:16,
                     borderRadius: 4,
                 }}>{this.props.ranking}</h4>
-                <h4 style={{color: "#9E9E9E", display: "inline-block"}}><a>{this.props.name}</a></h4>
-            </Button>
+                <h4 style={{color: "#9E9E9E", display: "inline-block"}}><a onClick={this.routeToView("/app/jobs/single/?id=" + this.props.id)}>{this.props.name}</a></h4>
+                <Button onClick={this.handleRemoveClick.bind(this)} className="right-align invisible-button" style={{padding:8}} >
+                <Glyphicon glyph="remove"/>
+                </Button>
+            </div>
         );
     }
 }

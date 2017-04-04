@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Glyphicon, Col, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import ListItem from "../pages/views/ListItem";
 import { browserHistory, Link } from "react-router";
 import { setCourses } from "../../actions/courseListingsActions";
@@ -20,12 +20,33 @@ export default class TaCoordJobView extends React.Component {
     super(props);
     const {courses} = this.props.courses;
     this.state = {
+<<<<<<< HEAD
       courses: courses,
+=======
+      title: this.props.title,
+      description: this.props.description,
+      deadline: this.props.deadline,
+      status: this.props.status,
+      showComponent: true
+>>>>>>> origin/master
     };
   }
 
+<<<<<<< HEAD
   componentWillMount(){
     this.props.dispatch(setCourses())
+=======
+  buttonClick() {
+    if (this.state.showComponent) {
+      this.setState({
+        showComponent: false
+      });
+    } else {
+      this.setState({
+        showComponent: true
+      });
+    }
+>>>>>>> origin/master
   }
 
   render() {

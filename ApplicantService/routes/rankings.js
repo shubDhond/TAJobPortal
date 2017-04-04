@@ -1,13 +1,17 @@
 let express = require('express');
 let router = express.Router();
 let Ranking = require('../models/ranking');
+let checkCoordinatorTokenOrStudentById = require('./checkCoordinatorTokenOrStudentById');
 
-router.post('/', (req, res) => {
+router.post('/', checkCoordinatorTokenOrStudentById, (req, res) => {
+  req.body.rankings = req.body.rankings || [];
   req.body.rankings.forEach(ranking => {
     Ranking.findOneAndUpdate({
       user_id: req.body.user_id,
       posting_id: ranking.posting_id
-    }, ranking, {upsert: true});
+    }, ranking, {upsert: true}, (err, ranking) => {
+      if (err) throw err;
+    });
   });
   res.status(201).json({
     user_id: req.body.user_id,
@@ -15,11 +19,17 @@ router.post('/', (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', checkCoordinatorTokenOrStudentById, (req, res) => {
   Ranking.find({
     user_id: req.params.id
   }, (err, rankings) => {
     if (err) throw err;
+
+    if (!rankings) {
+      res.status(404).json({
+        message: 'No rankings found.'
+      });
+    }
 
     res.status(200).json({
       user_id: req.params.id,
@@ -33,7 +43,7 @@ router.get('/:id', (req, res) => {
   });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', checkCoordinatorTokenOrStudentById, (req, res) => {
   Ranking.findOneAndRemove({
     user_id: req.params.id,
     posting_id: req.query.posting_id

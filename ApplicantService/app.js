@@ -10,7 +10,7 @@ let mongoose = require('mongoose');
 let config = require('./config');
 
 let index = require('./routes/index');
-let rankings = require('./routes/index');
+let rankings = require('./routes/rankings');
 
 let app = express();
 
@@ -27,7 +27,9 @@ app.use(function(req, res, next) {
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token");
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD');
     next();
 });
 
