@@ -36,11 +36,10 @@ export function toggleComponent() {
   }
 }
 
-export function setSingleCourse(title, description, status) {
+export function setSingleCourse(state) {
   return {
      type: "SET_SINGLE_COURSE",
-     title,
-     description,
-     status
+     course_id: state.id,
+     posting_id: state.posting_id
   }
 }

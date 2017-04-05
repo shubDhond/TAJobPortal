@@ -4,3 +4,10 @@ export function createAssignment(promise) {
     payload: promise
   }
 }
+
+export function getAssignments(promise) {
+  return {
+    type: 'GET_ASSIGNMENTS',
+    payload: promise
+  }
+}

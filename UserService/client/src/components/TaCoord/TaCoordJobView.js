@@ -21,10 +21,6 @@ export default class TaCoordJobView extends React.Component {
     super(props);
     const {listings} = this.props.listings;
     this.state = {
-      title: this.props.title,
-      description: this.props.description,
-      deadline: this.props.deadline,
-      status: this.props.status,
       showComponent: true
     };
   }
@@ -54,20 +50,18 @@ export default class TaCoordJobView extends React.Component {
 
   getCourses(){
     if (this.props.listings.listings){
-        var courses = [];
+        var listings = [];
         var object = this.props.listings.listings
         var count = 0;
 
         for (var id in object) {
             if (object.hasOwnProperty(id)) {
                 var course = object[id];
-                courses.push(course)
+                listings.push(course)
             }
         }
-        console.log(courses
-        )
 
-        return Object.keys(courses).map((course) => {
+        return Object.keys(listings).map((course) => {
           let dragOverStyle = {};
 
           if (this.state.dragOver === course) {
@@ -82,10 +76,10 @@ export default class TaCoordJobView extends React.Component {
                           style={dragOverStyle}
                           onDrop={(data) => this.assignApplicant({
                             ...JSON.parse(data.applicant),
-                            posting_id: courses[course].posting_id,
-                            course_id: courses[course].course_id
+                            posting_id: listings[course].posting_id,
+                            course_id: listings[course].course_id
                           })}>
-                <TaCoordJob showComponent={courses[course].showComponent} title={courses[course].course_name} status={courses[course].status} description={courses[course].requirements} deadline={courses[course].end_date}/>
+                <TaCoordJob showComponent={listings[course].showComponent} course_name={listings[course].course_name} requirements={listings[course].requirements} course_id={listings[course].course_id} posting_id={listings[course].posting_id} end_date={listings[course].end_date}/>
               </Droppable>
           );
         });
