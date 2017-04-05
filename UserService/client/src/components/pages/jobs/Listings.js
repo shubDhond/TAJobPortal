@@ -15,13 +15,28 @@ import FetchingView from "./FetchingView"
 export default class Listings extends React.Component {
 
   componentWillMount(){
-    if(!this.props.listings.fetched){
+    const { listings } = this.props.listings;
+
+    if(!listings.fetched){
       var config = {
         headers: {'x-access-token': this.props.user.user.user_token}
       };
       this.props.dispatch(fetchListings(
         taCoordClient.get("/posting", config)
       ));
+    }
+    else {
+        if (listings.queryResults != null) {
+          console.log(listings.queryResults)
+            this.setState({
+                ...this.state,
+                listings: listings.queryResults,
+                pagination: {
+                    ...this.state.pagination,
+                    activePage: 1
+                }
+            });
+        }
     }
   }
 

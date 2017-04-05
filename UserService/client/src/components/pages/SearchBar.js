@@ -2,6 +2,7 @@ import React from "react";
 import {Button, Col, FormControl, FormGroup, Row} from "react-bootstrap";
 import {connect} from "react-redux";
 import {queryListings, queryReset} from "../../actions/listingsActions";
+import {browserHistory} from "react-router"
 
 @connect((store) => {
     return {
@@ -18,13 +19,13 @@ export default class SearchBar extends React.Component {
         }
     }
 
-
     query() {
         this.setState({
             ...this.state,
             sentQuery: this.state.query
         })
         this.props.dispatch(queryListings(this.state.query))
+        browserHistory.replace("/app/jobs");
     }
 
     queryChange(event) {
@@ -48,7 +49,6 @@ export default class SearchBar extends React.Component {
         })
     }
 
-
     render() {
         var showing = null;
         if (this.props.listings.queryResults != null) { // The reset anchor should standout David
@@ -58,6 +58,17 @@ export default class SearchBar extends React.Component {
         }
 
         return (
+
+
+
+
+
+
+
+
+
+
+            
             <FormGroup>
                 <Row>
                     <Col xs={10} style={{paddingRight: 0}}>
