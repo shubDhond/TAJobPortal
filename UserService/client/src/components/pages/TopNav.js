@@ -1,15 +1,21 @@
 import React from "react";
+import {connect} from "react-redux";
 import {Glyphicon, Nav, Navbar, NavItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 import {browserHistory} from "react-router";
+import {logout} from "../../actions/userActions"
+
+@connect((store) => {
+    return {};
+})
 
 export default class TopNav extends React.Component {
-    
-    routeToView = (path) => {
-        return (dispatch) => {
-            browserHistory.push(path);
-        }
-    };
+
+    logout(){
+        browserHistory.push("/");
+        this.props.dispatch(logout())
+    }
+
     render() {
         const navStyle = {
             paddingTop: "16px",
@@ -45,7 +51,7 @@ export default class TopNav extends React.Component {
                         </LinkContainer>
                     </Nav>
                     <Nav pullRight>
-                        <NavItem eventKey={1} onClick={this.routeToView('/')} href="#">Logout</NavItem>
+                        <NavItem eventKey={1} onClick={this.logout.bind(this)} href="#">Logout</NavItem>
                     </Nav>
                 </Navbar.Collapse>
 
