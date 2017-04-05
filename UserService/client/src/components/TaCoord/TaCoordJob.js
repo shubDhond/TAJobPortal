@@ -40,7 +40,7 @@ export default class TaCoordJob extends React.Component {
           <h7>{this.state.description}</h7>
           <h5>{this.state.deadline}</h5>
 
-          <Button onClick={this.buttonClick}>Button</Button>
+          <Button onClick={this.buttonClick}>View</Button>
         </ListItem>
       </div>
     );

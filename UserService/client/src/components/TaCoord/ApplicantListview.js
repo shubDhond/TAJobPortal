@@ -1,9 +1,11 @@
 import React, {Component} from "react";
+import {bindActionCreators} from "redux";
 import {connect} from 'react-redux';
 import { Panel, Accordion, Glyphicon} from 'react-bootstrap';
 import LazyLoad from 'react-lazy-load';
 import { applicantClient } from "../../axiosClient";
 import {fetchApplicants} from "../../actions/applicantsActions";
+import { setSingleCourse, toggleComponent } from "../../actions/courseListingsActions";
 
 class PanelHeader extends Component{
     render(){
@@ -39,17 +41,31 @@ class AboutMe extends Component{
     }
 }
 class Courses extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: "123",
+            description: "456",
+            status: "789"
+        };
+        console.log(this.props)
+
+        this.link_course = this.link_course.bind(this);
+    }
 
     link_course(e) {
         e.preventDefault();
-        console.log("here")
+        this.props.dispatch(setSingleCourse(this.state.title, this.state.description, this.state.status));
+        if(!this.props.show){
+            this.props.dispatch(toggleComponent());
+        }
     }
 
     getCourses(){
         var courses = [this.props.courses][0][0];
         return Object.keys(courses).map((course) => {
             return (
-                <h5 style={{display:"inline",marginRight:16}} key={course} type="submit" ><a onClick={this.link_course.bind(this)}>{courses[course]}</a></h5>
+                <h5 style={{display:"inline",marginRight:16}} key={course} type="submit" ><a onClick={this.link_course}>{courses[course]}</a></h5>
             );
         });
     }
@@ -106,7 +122,7 @@ class ApplicantList extends Component{
                         {<div>
                             <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}/>
                         </div>}
-                           footer={<div><Courses courses={obj[applicant].courses}/></div>}
+                           footer={<div><Courses dispatch={this.props.dispatch} courses={obj[applicant].courses} show={this.props.courses.showComponent}/></div>}
                            eventKey={obj[applicant].user_id}  style={{marginBottom:15}}>
                         <div style={{padding:0}}>
                             <AboutMe
@@ -159,9 +175,20 @@ class ApplicantList extends Component{
 function mapStateToProps(state) {
     return {
         applicants: state.applicants,
-        user: state.user
+        user: state.user,
+        courses: state.courses
     }
 
 }
+
+// function matchDispatchToProps(dispatch) {
+//     return bindActionCreators({
+//         setSingleCourse: setSingleCourse,
+//         toggleComponent: toggleComponent,
+//         fetchApplicants: fetchApplicants
+//
+//     }, dispatch)
+//
+// }
 
 export default connect(mapStateToProps)(ApplicantList);

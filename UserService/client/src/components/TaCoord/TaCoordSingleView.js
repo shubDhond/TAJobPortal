@@ -23,15 +23,16 @@ export default class TaCoordSingleView extends React.Component {
   render() {
     return (
       <div>
+          <Row>
+              <Button onClick={this.buttonClick}>Back</Button>
+          </Row>
         <Row>
             <h3>{this.props.courses.title}</h3>
             <h5>{this.props.courses.status}</h5>
             <h7>{this.props.courses.description}</h7>
         </Row>
 
-        <Row>
-        <Button onClick={this.buttonClick}>Button</Button>
-        </Row>
+
       </div>
     );
   }

@@ -52,7 +52,6 @@ export default class TaCoordJobView extends React.Component {
     getCourses(){
 
         if (this.props.listings.listings){
-            console.log("here")
             var courses = [];
             var object = this.props.listings.listings
             var count = 0;
@@ -63,10 +62,7 @@ export default class TaCoordJobView extends React.Component {
                     courses.push(course)
                 }
             }
-            console.log(courses)
-
             return Object.keys(courses).map((course) => {
-                console.log(count)
                 count++
                 return (
                     <div>
