@@ -89,9 +89,10 @@ export default class TaCoordJobView extends React.Component {
   }
 
   assignApplicant(assignment) {
-     var config = {
+    var config = {
       headers: {'x-access-token': this.props.user.user.user_token}
     };
+    this.setState({...this.state, dragOver: null});
     this.props.dispatch(createAssignment(
       taCoordClient.post('/assignment', {
         ...assignment

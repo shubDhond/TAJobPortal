@@ -5,6 +5,7 @@ import { toggleComponent } from "../../actions/courseListingsActions";
 import { taCoordClient } from "../../axiosClient";
 import { getAssignments } from "../../actions/assignmentsActions"
 import { fetchListing } from "../../actions/listingsActions";
+import ListItem from "../pages/views/ListItem";
 
 @connect((store) => {
   return {
@@ -60,7 +61,6 @@ export default class TaCoordSingleView extends React.Component {
     const { listing } = nextProps.listings;
 
     if(nextProps.assignments.fetched){
-      console.log(nextProps)
       //look for course_id matching this one
       let assignments = nextProps.assignments.assignments
       for(var i = 0; i < assignments.length; i++){
@@ -92,23 +92,28 @@ export default class TaCoordSingleView extends React.Component {
   render() {
     let tas = []
     let count = 0
+
     for(var ta in this.state.assignments){
       tas.push(<h5 key={count++}>{this.state.assignments[ta].student_id}</h5>)
     }
     return (
       <div>
-        <Row>
+        <ListItem>
+          <Row>
             <h3>{this.state.course_name}</h3>
             <h7>{this.state.requirements}</h7>
             <h5>{this.state.end_date}</h5>
             <h5>{this.state.term}</h5>
-
             <h5>{this.state.tas_needed}</h5>
-        </Row>
-        {tas}
-        <Row>
-        <Button onClick={this.buttonClick}>Button</Button>
-        </Row>
+          </Row>
+
+          {tas}
+
+          <Row>
+            <Button onClick={this.buttonClick}>Button</Button>
+          </Row>
+
+        </ListItem>
       </div>
     );
   }

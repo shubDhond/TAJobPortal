@@ -39,7 +39,7 @@ export function toggleComponent() {
 export function setSingleCourse(state) {
   return {
      type: "SET_SINGLE_COURSE",
-     course_id: state.id,
+     course_id: state.course_id,
      posting_id: state.posting_id
   }
 }
