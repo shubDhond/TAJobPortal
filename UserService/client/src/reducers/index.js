@@ -7,12 +7,14 @@ import rankings from "./rankingReducer";
 import application from "./applicationReducer";
 import userReducer from './userReducer';
 import courses from "./courseReducer";
+import assignments from './assignmentsReducer';
 
 export default combineReducers({
     courses,
     rankings,
     listings,
     headings,
+    assignments,
 	inbox: InboxReducer,
 	applicants: ApplicantReducer,
     application,
