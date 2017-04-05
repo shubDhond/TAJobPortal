@@ -127,17 +127,12 @@ export default class Profile extends React.Component {
             course_taken:courses,
             previous_assignments: tacourses,
         }
-
-        let data = {
-            user_id: id,
-            application: app
-        }
-
+        
         var config = {
             headers: {'x-access-token': this.props.user.user.user_token}
         };
         this.props.dispatch(submitProfile(
-            applicantClient.post("/application", data, config)
+            applicantClient.post("/application", app, config)
         ));
     }
 
