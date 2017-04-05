@@ -2,6 +2,7 @@ import React from "react";
 import { Nav, Navbar, NavItem} from "react-bootstrap";
 import {connect} from "react-redux";
 import {browserHistory} from "react-router";
+import {logout} from "../../actions/userActions"
 
 @connect((store) => {
     return {};
