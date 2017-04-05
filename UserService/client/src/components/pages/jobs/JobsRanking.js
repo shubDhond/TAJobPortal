@@ -40,19 +40,22 @@ export default class JobsRanking extends React.Component {
         rankings: rankings.topJobs
       });
     }
-    else if(rankings.error != null && rankings.error.response.status === 404){
+    else if(rankings.error != null){
 
-      var data = {
-        user_id: this.props.user.user.id,
-        rankings: []
+      if(rankings.error.response.status === 404){
+          var data = {
+              user_id: this.props.user.user.id,
+              rankings: []
+          }
+
+          var config = {
+              headers: {'x-access-token': this.props.user.user.user_token}
+          };
+          this.props.dispatch(updateRankings(
+              applicantClient.post("/rankings" , data , config)
+          ));
       }
 
-      var config = {
-        headers: {'x-access-token': this.props.user.user.user_token}
-      };
-      this.props.dispatch(updateRankings(
-        applicantClient.post("/rankings" , data , config)
-      ));
     }
 
     if(rankings.change){

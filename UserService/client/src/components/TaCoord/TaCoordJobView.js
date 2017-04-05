@@ -1,17 +1,22 @@
 import React from "react";
-import {Col, Row} from "react-bootstrap";
-import ListItem from "../pages/views/ListItem";
+import { taCoordClient } from "../../axiosClient";
+import { fetchListings } from "../../actions/listingsActions";
 import {connect} from "react-redux";
-
-import TaCoordSingleView from "./TaCoordSingleView";
+import TaCoordJob from "./TaCoordJob";
+import LazyLoad from 'react-lazy-load';
+import {Accordion} from 'react-bootstrap';
 
 @connect((store) => {
-  return {};
+  return {
+    listings : store.listings,
+    user: store.user
+  };
 })
 
 export default class TaCoordJobView extends React.Component {
   constructor(props) {
     super(props);
+    const {listings} = this.props.listings;
     this.state = {
       title: this.props.title,
       description: this.props.description,
@@ -19,7 +24,17 @@ export default class TaCoordJobView extends React.Component {
       status: this.props.status,
       showComponent: true
     };
-    this.buttonClick = this.buttonClick.bind(this);
+  }
+
+  componentWillMount(){
+    if(!this.props.listings.fetched){
+      var config = {
+        headers: {'x-access-token': this.props.user.user.user_token}
+      };
+      this.props.dispatch(fetchListings(
+        taCoordClient.get("/posting", config)
+      ));
+    }
   }
 
   buttonClick() {
@@ -34,27 +49,48 @@ export default class TaCoordJobView extends React.Component {
     }
   }
 
+    getCourses(){
+
+        if (this.props.listings.listings){
+            console.log("here")
+            var courses = [];
+            var object = this.props.listings.listings
+            var count = 0;
+
+            for (var id in object) {
+                if (object.hasOwnProperty(id)) {
+                    var course = object[id];
+                    courses.push(course)
+                }
+            }
+            console.log(courses)
+
+            return Object.keys(courses).map((course) => {
+                console.log(count)
+                count++
+                return (
+                    <div>
+                      <TaCoordJob showComponent={courses[course].showComponent} key={count} title={courses[course].course_name} status={courses[course].status} description={courses[course].requirements} deadline={courses[course].end_date}/>
+                    </div>
+                );
+            });
+        }else {
+            return null
+        }
+    }
+
   render() {
     return (
-      <ListItem>
-        <Row>
-          <Col xs={6}>
-            <h3>{this.state.title}</h3>
-          </Col>
-          <Col xsOffset={10}>
-            <h7>{this.state.status}</h7>
-          </Col>
-        </Row>
-        <Row>
-        {this.state.showComponent ?
-           <TaCoordSingleView /> :
-           null
-        }
-        </Row>
-        <Row>
-        {/*<Button onClick={this.buttonClick}>Button</Button>*/}
-        </Row>
-      </ListItem>
+        <div style={{overflow: 'auto', maxHeight: 500}}>
+          <div className="filler" />
+          <LazyLoad height={762} offsetVertical={300}>
+            <Accordion>
+                {this.getCourses()}
+            </Accordion>
+          </LazyLoad>
+          <div className="filler" />
+        </div>
+
     );
   }
 }

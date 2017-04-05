@@ -74,6 +74,10 @@ export default class ApplicantsFilterBar extends React.Component {
         });
         this.props.dispatch(setApplicants(sorted_applicants));
     }
+    GetAll(e) {
+        e.preventDefault();
+        this.props.dispatch(setApplicants(this.props.applicants));
+    }
 
 
     render() {
@@ -96,7 +100,7 @@ export default class ApplicantsFilterBar extends React.Component {
                         />
                 </Col>
                 <Col xs={2}>
-                    <DropdownButton bsSize="large" title=" Sort By" pullRight id="split-button-pull-right">
+                    <DropdownButton bsSize="large" title=" Filter By" pullRight id="split-button-pull-right">
                         <MenuItem eventKey="1" onClick={this.YearInc.bind(this)}>Year (ascending)</MenuItem>
                         <MenuItem eventKey="2" onClick={this.YearDes.bind(this)}>Year (descending)</MenuItem>
                         <MenuItem eventKey="3" onClick={this.UG.bind(this)}>UG</MenuItem>
@@ -104,6 +108,7 @@ export default class ApplicantsFilterBar extends React.Component {
                         <MenuItem eventKey="5" onClick={this.MSAC.bind(this)}>MSAC</MenuItem>
                         <MenuItem eventKey="6" onClick={this.PHD.bind(this)}>PHD</MenuItem>
                         <MenuItem eventKey="7">Unassigned</MenuItem>
+                        <MenuItem eventKey="8" onClick={this.GetAll.bind(this)}>All Applicants</MenuItem>
 
                     </DropdownButton>
                 </Col>
