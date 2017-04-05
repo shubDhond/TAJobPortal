@@ -1,15 +1,18 @@
 import React from "react";
 import { taCoordClient } from "../../axiosClient";
 import { fetchListings } from "../../actions/listingsActions";
+import { createAssignment } from "../../actions/assignmentsActions";
 import {connect} from "react-redux";
 import TaCoordJob from "./TaCoordJob";
 import LazyLoad from 'react-lazy-load';
 import {Accordion} from 'react-bootstrap';
+import {Droppable} from 'react-drag-and-drop';
 
 @connect((store) => {
   return {
     listings : store.listings,
-    user: store.user
+    user: store.user,
+    assignments: store.assignments
   };
 })
 
@@ -49,37 +52,64 @@ export default class TaCoordJobView extends React.Component {
     }
   }
 
-    getCourses(){
+  getCourses(){
+    if (this.props.listings.listings){
+        var courses = [];
+        var object = this.props.listings.listings
+        var count = 0;
 
-        if (this.props.listings.listings){
-            console.log("here")
-            var courses = [];
-            var object = this.props.listings.listings
-            var count = 0;
-
-            for (var id in object) {
-                if (object.hasOwnProperty(id)) {
-                    var course = object[id];
-                    courses.push(course)
-                }
+        for (var id in object) {
+            if (object.hasOwnProperty(id)) {
+                var course = object[id];
+                courses.push(course)
             }
-            console.log(courses)
-
-            return Object.keys(courses).map((course) => {
-                console.log(count)
-                count++
-                return (
-                    <div>
-                      <TaCoordJob showComponent={courses[course].showComponent} key={count} title={courses[course].course_name} status={courses[course].status} description={courses[course].requirements} deadline={courses[course].end_date}/>
-                    </div>
-                );
-            });
-        }else {
-            return null
         }
+        console.log(courses
+        )
+
+        return Object.keys(courses).map((course) => {
+          let dragOverStyle = {};
+
+          if (this.state.dragOver === course) {
+            dragOverStyle['border'] = '2px solid green';
+          }
+
+          return (
+              <Droppable types={['applicant']}
+                          onDragOver={() => this.setState({...this.state, dragOver: course})}
+                          onDragLeave={() => this.setState({...this.state, dragOver: null})}
+                          key={course}
+                          style={dragOverStyle}
+                          onDrop={(data) => this.assignApplicant({
+                            ...JSON.parse(data.applicant),
+                            posting_id: courses[course].posting_id,
+                            course_id: courses[course].course_id
+                          })}>
+                <TaCoordJob showComponent={courses[course].showComponent} title={courses[course].course_name} status={courses[course].status} description={courses[course].requirements} deadline={courses[course].end_date}/>
+              </Droppable>
+          );
+        });
+    }else {
+        return null
     }
+  }
+
+  assignApplicant(assignment) {
+     var config = {
+      headers: {'x-access-token': this.props.user.user.user_token}
+    };
+    this.props.dispatch(createAssignment(
+      taCoordClient.post('/assignment', {
+        ...assignment
+      }, config)
+    ));
+  }
 
   render() {
+    if (this.props.assignments.assignment) {
+      console.log(this.props.assignments.assignment);
+    }
+
     return (
         <div style={{overflow: 'auto', maxHeight: 500}}>
           <div className="filler" />
