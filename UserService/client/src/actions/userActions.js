@@ -50,3 +50,9 @@ export function userAccessKeyValid() {
     type: 'USER_ACCESS_KEY_VALID'
   };
 }
+
+export function logout() {
+    return {
+        type: 'USER_LOGOUT'
+    };
+}
