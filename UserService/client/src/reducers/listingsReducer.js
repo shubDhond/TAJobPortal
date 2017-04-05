@@ -137,7 +137,8 @@ export default function reducer(state={
             course_id: course_id,
             requirements: reqs,
             start_date: start_date,
-            end_date: end_date
+            end_date: end_date,
+            posting_id: id
           };
 
           listings[id] = obj;
