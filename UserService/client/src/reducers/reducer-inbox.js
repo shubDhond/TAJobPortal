@@ -1,17 +1,17 @@
 const dummyInbox = [
     {
         posting_id: 1,
-        course: "csc301",
+        course_name: "csc301",
         status: "Pending"
     },
     {
         posting_id: 2,
-        course: "csc302",
+        course_name: "csc302",
         status: "Accepted"
     },
     {
         posting_id: 3,
-        course: "csc303",
+        course_name: "csc303",
         status: "Rejected"
     }
 ]

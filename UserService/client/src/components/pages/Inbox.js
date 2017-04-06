@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import InboxList from './inbox_list';
+import InboxList from './InboxList';
 import {setHeading} from "../../actions/headingsActions"
 
 @connect((store) => {

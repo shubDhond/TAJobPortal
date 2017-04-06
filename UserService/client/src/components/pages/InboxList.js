@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux';
 import { Table } from 'react-bootstrap';
+import InboxListItem from "./InboxListItem"
 
 @connect((store) => {
 
@@ -29,29 +30,28 @@ export default class InboxList extends Component{
 
 	getListItems(){
 
-		return this.state.inbox.map((course) => {
+		return this.state.inbox.map((course, index) => {
 			return (
-				<tr key={course.posting_id} >
-					<td  style={{padding:12}}><a>{course.course}</a></td>
-			        <td  style={{padding:12}}>{course.status}</td>
-		        </tr>
+				<InboxListItem key={index} course_name={course.course_name} status={course.status}/>
 			);
 		});
 	}
 
 	render(){
 		return (
-			<Table striped condensed >
-				<thead>
-				 	<tr>
-					   	<th style={{padding:12}}>Courses Applied</th>
-					    <th style={{padding:12}}>Status</th>
-				  	</tr>
-				</thead>
-				<tbody >
-					{this.getListItems()}
-				</tbody>
-			</Table>
+			<div>
+				<Table striped condensed >
+					<thead>
+					    <tr>
+						    <th style={{padding:12}}>Courses Applied</th>
+						    <th style={{padding:12}}>Status</th>
+					    </tr>
+					</thead>
+					<tbody >
+						{this.getListItems()}
+					</tbody>
+				</Table>
+			</div>
 		);
 	}
 }
