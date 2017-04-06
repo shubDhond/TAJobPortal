@@ -36,6 +36,7 @@ class SignUp extends Component {
     this.setType = this.setType.bind(this);
     this.validate = this.validate.bind(this);
     this.signUp = this.signUp.bind(this);
+    this.state = {};
   }
 
   componentWillMount() {
@@ -48,22 +49,50 @@ class SignUp extends Component {
 
   validate() {
       if (!this.validateEmail(this.email.value)) {
-          this.props.dispatch(userEmailError('Invalid Email Address'));
+          this.setState({
+              ...this.state,
+              emailError: 'Invalid Email Address'
+          });
+          this.emailError = true;
       } else {
-          this.props.dispatch(userEmailValid());
+          this.setState({
+              ...this.state,
+              emailError: null
+          });
+          this.emailError = false;
       }
       if (!this.validatePassword(this.password.value)) {
-          this.props.dispatch(userPasswordError('Invalid Password'));
+          this.setState({
+              ...this.state,
+              passwordError: 'Invalid Password'
+          });
+          this.passwordError = true;
       } else if (this.password.value !== this.confirmPassword.value) {
-          this.props.dispatch(userPasswordError('Confirm password does not match'));
+           this.setState({
+              ...this.state,
+              passwordError: 'Confirm Password does not match'
+          });
+          this.passwordError = true;
       } else {
-          this.props.dispatch(userPasswordValid());
+           this.setState({
+              ...this.state,
+              passwordError: null
+          });
+          this.passwordError = false;
       }
       if (this.props.user.user.user_type === 'ta-coordinator') {
           if (!this.accessKey.value) {
-              this.props.dispatch(userAccessKeyError('Enter an Access Key'));
+            this.setState({
+                ...this.state,
+                accessKeyError: 'Invalid Account Key'
+            });
+            this.accessKeyError = true;
           } else {
-              this.props.dispatch(userAccessKeyValid());
+              this.setState({
+                ...this.state,
+                accessKeyError: null
+            });
+            this.accessKeyError = false;
           }
       }
   }
@@ -81,7 +110,7 @@ class SignUp extends Component {
   signUp(event) {
       event.preventDefault();
       this.validate();
-    if (!this.props.user.emailError && !this.props.user.passwordError && !this.props.user.accessKeyError) {
+    if (!this.emailError && !this.passwordError && !this.accessKeyError) {
       if (this.props.user.user.user_type === 'ta-coordinator') {
         this.props.dispatch(userAuthenticate(
             coordinatorUserClient.post('/sign-up', {
@@ -123,15 +152,21 @@ class SignUp extends Component {
                           <Row>
                               <Col xs={12}>
                                   <FormControl type="text" placeholder="ACCOUNT KEY" inputRef={ref => {this.accessKey = ref;}}/>
+                                  <div style={{color: 'red'}}>{this.state.accessKeyError}</div>
                               </Col>
                           </Row></div>)
+      }
+      let SignUpError;
+      if (this.props.user.error) {
+          SignUpError = <h2 style={{color: 'red'}}>{this.props.user.error}</h2>
       }
 
       return (
           <Grid style={{height: "100%", paddingTop: 96}} >
               <Row className="centered">
                   <Col xsOffset={2} xs={8}>
-                      <h1>{this.props.user.user.user_type} Sign up</h1>
+                      <h1>{this.props.user.user.user_type.toUpperCase()} Sign up</h1>
+                      {SignUpError}
                   </Col>
               </Row>
               <Row style={{marginTop:64}}>
@@ -154,6 +189,7 @@ class SignUp extends Component {
                           <Row>
                               <Col xs={12}>
                                   <FormControl type="text" placeholder="Email" inputRef={ref => {this.email = ref;}}/>
+                                  <div style={{color: 'red'}}>{this.state.emailError}</div>
                               </Col>
                           </Row>
                           <br />
@@ -164,8 +200,9 @@ class SignUp extends Component {
                           </Row>
                           <Row>
                               <Col xs={12}>
-                                  <FormControl type="password" autoComplete="off"
+                                <FormControl type="password" autoComplete="off"
                                                 placeholder="Password" inputRef={ref => {this.password = ref;}}/>
+                                <div style={{color: 'red'}}>{this.state.passwordError}</div>
                               </Col>
                           </Row>
                           <br />
@@ -176,8 +213,9 @@ class SignUp extends Component {
                           </Row>
                           <Row>
                               <Col xs={12}>
-                                  <FormControl type="password" autoComplete="off"
+                                <FormControl type="password" autoComplete="off"
                                                 placeholder="Confirm Password" inputRef={ref => {this.confirmPassword = ref;}}/>
+                                <div style={{color: 'red'}}>{this.state.passwordError}</div>
                               </Col>
                           </Row>
                           <br />

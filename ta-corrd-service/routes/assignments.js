@@ -7,6 +7,7 @@ let Assignment = require('../models/assignment');
 let Course = require('../models/course');
 let checkCoordinatorToken = require('./checkCoordinatorToken');
 let checkGenericToken = require('./checkGenericToken');
+let _ = require('lodash');
 let Client = require('node-rest-client').Client;
 let client = new Client();
 
@@ -15,7 +16,6 @@ let client = new Client();
  * course_id,
  * */
 router.get('/', checkGenericToken, function(req, res) {
-    // console.log(req.headers);
     Assignment.find(req.query, (err, assignments) =>{
         "use strict";
         if (err) throw err;
@@ -96,12 +96,14 @@ router.post('/', checkCoordinatorToken, (req, res)=>{
                 if (err) throw err;
 
                 if (assignment){
-                    assignment.ta_assignments.push({
-                        'student_id' : req.body.student_id,
-                        'posting_id' : req.body.posting_id,
-                        'application_id' : req.body.application_id,
-                        'notes' : req.body.notes,
-                    });
+                    if (!_.find(assignment.ta_assignments, assignment => assignment.student_id === req.body.student_id)){
+                        assignment.ta_assignments.push({
+                            'student_id' : req.body.student_id,
+                            'posting_id' : req.body.posting_id,
+                            'application_id' : req.body.application_id,
+                            'notes' : req.body.notes,
+                        });
+                    }
                     assignment.save((err) =>{
                         if (err) throw err;
 
@@ -153,7 +155,7 @@ router.put('/:course_id', checkCoordinatorToken, (req, res)=>{
                 message: 'Assignment for the course not found.'
             });
         } else{
-            // console.log(assignment.ta_assignments[0]);
+            console.log(assignment.ta_assignments[0]);
 
             for (let i = 0; i< assignment.ta_assignments.length; i++){
                 if (assignment.ta_assignments[i]['student_id'] == req.body.student_id){
