@@ -54,7 +54,7 @@ function get_course(assignments, callback, headers) {
             if (err) throw err;
             course = convertMongoDoc(JSON.stringify(course));
             if (course.length > 0){
-                assignments[i]['course'] = course[0];
+                assignments[iheaders]['course'] = course[0];
             }
             else{
                 assignments[i]['course'] = {};
