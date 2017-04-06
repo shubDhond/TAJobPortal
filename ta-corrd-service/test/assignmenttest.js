@@ -200,7 +200,7 @@ describe('assignments', function(){
         });
       });
 
-      it.only('should successfully create a new assignment', function(done){
+      it('should successfully create a new assignment', function(done){
         //create a new course
         let newCourse = new Course(newCourseBody2);
         newCourse.save((err,doc)=>{
