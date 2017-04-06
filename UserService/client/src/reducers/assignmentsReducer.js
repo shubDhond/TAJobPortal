@@ -1,5 +1,6 @@
 export default function reducer(state={
   assignment: {},
+  assignments: {},
   fetching: false,
   fetched: false,
   creating: false,
@@ -28,6 +29,31 @@ export default function reducer(state={
         assignment: action.payload.data.assignment,
         created: true,
         creating: false,
+        fetched: false,
+        error: null
+      };
+    }
+    case 'GET_ASSIGNMENTS_PENDING': {
+      return {
+        ...state,
+        fetching: true,
+        fetched: false
+      };
+    }
+    case 'GET_ASSIGNMENTS_REJECTED': {
+      return {
+        ...state,
+        fetching: false,
+        fetched: false,
+        error: action.payload.response.data.message
+      };
+    }
+    case 'GET_ASSIGNMENTS_FULFILLED': {
+      return {
+        ...state,
+        assignments: action.payload.data,
+        fetched: true,
+        fetching: false,
         error: null
       };
     }

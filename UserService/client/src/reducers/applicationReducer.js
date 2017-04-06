@@ -4,6 +4,8 @@ export default function reducer(state={
       description: null,
       deadline: null,
     },
+    submitting: false,
+    submitted: false,
     error: null,
   }, action) {
 
@@ -11,6 +13,29 @@ export default function reducer(state={
       case "SET_COURSE": {
         return {...state, course: action.payload}
       }
+        // Get one listing for single view.
+        case 'SUBMIT_APPLICANT_PENDING': {
+            return {
+                ...state,
+                submitting: true
+            }
+        }
+        case 'SUBMIT_APPLICANT_REJECTED': {
+            return {
+                ...state,
+                submitting: false,
+                submitted: false,
+                error: action.payload,
+            }
+        }
+        case 'SUBMIT_APPLICANT_FULFILLED': {
+            return {
+                ...state,
+                submitting: false,
+                submitted: true,
+                error: null,
+            }
+        }
       default:
         return state
     }

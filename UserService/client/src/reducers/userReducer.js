@@ -1,13 +1,16 @@
-export default function reducer(state={
-  user: {},
-  authenticating: false,
-  authenticated: false,
-  emailError: null,
-  passwordError: null,
-  accessKeyError: null,
-  error: null,
-  status: null
-}, action) {
+const initialState = {
+    user: {},
+    authenticating: false,
+    authenticated: false,
+    emailError: null,
+    passwordError: null,
+    accessKeyError: null,
+    error: null,
+    status: null,
+}
+
+
+export default function reducer(state=initialState, action) {
   switch (action.type) {
     case 'SET_USER_TYPE': {
       return {
@@ -123,6 +126,9 @@ export default function reducer(state={
         error: null,
         status: action.payload.status
       }
+    }
+    case 'USER_LOGOUT': {
+        return initialState
     }
     default: 
       return state;

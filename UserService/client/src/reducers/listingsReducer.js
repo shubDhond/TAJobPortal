@@ -123,12 +123,12 @@ export default function reducer(state={
           var date = new Date(data[i].end_date)
 
           var deadline = date.getDate() +"-"+ (parseInt(date.getMonth()) + 1) +"-"+ date.getFullYear()
-
           var id = data[i]._id;
           var course_id = data[i].course_id;
+          var posting_id = data[i]._id;
           var reqs = data[i].requirements;
           var start_date = data[i].start_date;
-          var end_date = deadline;   
+          var end_date = deadline;
           var course_name = course.course_code
 
           var obj = {
