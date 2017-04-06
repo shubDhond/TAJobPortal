@@ -34,6 +34,7 @@ class Login extends Component {
     this.setType = this.setType.bind(this);
     this.validate = this.validate.bind(this);
     this.login = this.login.bind(this);
+    this.state = {};
   }
 
   componentWillMount() {
@@ -46,14 +47,30 @@ class Login extends Component {
 
   validate() {
     if (!this.validateEmail(this.email.value)) {
-      this.props.dispatch(userEmailError('Invalid Email Address'));
+      this.setState({
+        ...this.state,
+        emailError: 'Invalid Email Address'
+      });
+      this.emailError = true;
     } else {
-      this.props.dispatch(userEmailValid());
+      this.setState({
+        ...this.state,
+        emailError: null
+      });
+      this.emailError = false;
     }
     if (!this.validatePassword(this.password.value)) {
-      this.props.dispatch(userPasswordError('Invalid Password'));
+      this.setState({
+        ...this.state,
+        passwordError: 'Invalid Password'
+      });
+      this.passworError = true;
     } else {
-      this.props.dispatch(userPasswordValid());
+      this.setState({
+        ...this.state,
+        passwordError: null
+      });
+      this.passwordError = false;
     }
   }
 
@@ -70,7 +87,7 @@ class Login extends Component {
     event.preventDefault();
     this.validate();
 
-    if (!this.props.user.emailError && !this.props.user.passwordError) {
+    if (!this.emailError && !this.passwordError) {
       if (this.props.user.user.user_type === 'ta-coordinator') {
         this.props.dispatch(userAuthenticate(
           coordinatorUserClient.post('/authenticate', {
@@ -90,12 +107,6 @@ class Login extends Component {
   }
 
   render() {
-    // if (this.props.user.user.id) {
-    //   browserHistory.push(
-    //     this.props.user.user.user_type === 'student' ? '/app/profile' :
-    //                                                    '/coord'
-    //   );
-    // }
 
     if (this.props.user.authenticated){
       if(this.props.user.user.user_type === "student"){
@@ -103,7 +114,6 @@ class Login extends Component {
       }else if (this.props.user.user.user_type === "ta-coordinator") {
           browserHistory.push("/coord")
       }
-
     }
 
     let SuccessLabel;
@@ -174,6 +184,7 @@ class Login extends Component {
                           <Row>
                               <Col xs={12}>
                                   <FormControl type="text" placeholder="Email" inputRef={ref => {this.email = ref;}}/>
+                                  <div style={{color: 'red'}}>{this.state.emailError}</div>
                               </Col>
                           </Row>
                           <br />
@@ -185,6 +196,7 @@ class Login extends Component {
                           <Row>
                               <Col xs={12}>
                                   <FormControl type="password" placeholder="Password" inputRef={ref => {this.password = ref;}}/>
+                                  <div style={{color: 'red'}}>{this.state.passwordError}</div>
                               </Col>
                           </Row>
                           <br />

@@ -2,9 +2,6 @@ const initialState = {
     user: {},
     authenticating: false,
     authenticated: false,
-    emailError: null,
-    passwordError: null,
-    accessKeyError: null,
     error: null,
     status: null,
 }
@@ -21,69 +18,6 @@ export default function reducer(state=initialState, action) {
         },
         authenticating: false,
         authenticated: false,
-        emailError: null,
-        passwordError: null,
-        accessKeyError: null,
-        error: null,
-        status: null
-      }
-    }
-    case 'USER_EMAIL_ERROR': {
-      return {
-        ...state,
-        emailError: action.payload,
-        authenticating: false,
-        authenticated: false,
-        error: null,
-        status: null
-      }
-    }
-    case 'USER_EMAIL_VALID': {
-      return {
-        ...state,
-        emailError: null,
-        authenticating: false,
-        authenticated: false,
-        error: null,
-        status: null
-      }
-    }
-    case 'USER_PASSWORD_ERROR': {
-      return {
-        ...state,
-        passwordError: action.payload,
-        authenticating: false,
-        authenticated: false,
-        error: null,
-        status: null
-      }
-    }
-    case 'USER_PASSWORD_VALID': {
-      return {
-        ...state,
-        passwordError: null,
-        authenticating: false,
-        authenticated: false,
-        error: null,
-        status: null
-      }
-    }
-    case 'USER_ACCESS_KEY_ERROR': {
-      return {
-        ...state,
-        accessKeyError: action.payload,
-        authenticating: false,
-        authenticated: false,
-        error: null,
-        status: null
-      }
-    }
-    case 'USER_ACCESS_KEY_VALID': {
-      return {
-        ...state,
-        accessKeyError: null,
-        authenticating: false,
-        authenticated: false,
         error: null,
         status: null
       }
@@ -93,9 +27,6 @@ export default function reducer(state=initialState, action) {
         ...state,
         authenticating: true,
         authenticated: false,
-        emailError: null,
-        passwordError: null,
-        accessKeyError: null,
         error: null,
         status: null
       }
@@ -105,9 +36,6 @@ export default function reducer(state=initialState, action) {
         ...state,
         authenticating: false,
         authenticated: false,
-        emailError: null,
-        passwordError: null,
-        accessKeyError: null,
         error: action.payload.response.data.message,
         status: action.payload.response.status
       }
@@ -120,9 +48,6 @@ export default function reducer(state=initialState, action) {
         },
         authenticating: false,
         authenticated: true,
-        emailError: null,
-        passwordError: null,
-        accessKeyError: null,
         error: null,
         status: action.payload.status
       }
