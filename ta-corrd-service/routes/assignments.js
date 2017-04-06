@@ -22,10 +22,49 @@ router.get('/', checkGenericToken, function(req, res) {
                 message :"No Assignments found"
             });
         } else {
-            res.status(200).json(assignments);
+            let new_assign = convertMongoDoc(JSON.stringify(assignments) );
+            get_course(new_assign, (response) => {
+                res.status(200).json(response);
+            });
         }
     });
 });
+
+function convertMongoDoc(assignments) {
+    let new_res = [];
+    assignments = JSON.parse(assignments);
+    for(let i=0; i < assignments.length; i++){
+        let post = {};
+        let obj = assignments[i];
+        for (let key in Object.keys(obj)){
+            post[Object.keys(obj)[key]] = obj[Object.keys(obj)[key]];
+        }
+        new_res.push(post);
+    }
+    return new_res;
+}
+
+function get_course(assignments, callback) {
+    let index = 0;
+    for(let i = 0; i < assignments.length; i ++) {
+        Course.find({"_id" : assignments[i].course_id}, (err, course) => {
+            if (err) throw err;
+            course = convertMongoDoc(JSON.stringify(course));
+            if (course.length > 0){
+                assignments[i]['course'] = course[0];
+            }
+            else{
+                assignments[i]['course'] = {};
+            }
+            index += 1;
+            if (index == assignments.length) {
+                callback(assignments);
+            }
+        }).lean();
+    }
+}
+
+
 
 router.post('/', checkCoordinatorToken, (req, res)=>{
     "use strict";
@@ -55,10 +94,13 @@ router.post('/', checkCoordinatorToken, (req, res)=>{
                     assignment.save((err) =>{
                         if (err) throw err;
 
-                        res.status(200).json({
-                            message : 'Assignment created.',
-                            assignment : assignment
+                        let new_assign = convertMongoDoc(JSON.stringify([assignment]) );
+                        get_course(new_assign, (response) => {
+                            res.status(200).json({
+                                message : "Assignment created.",
+                                assignment : response[0]});
                         });
+
                     });
                 } else {
                     let assignment  = new Assignment({
@@ -73,9 +115,11 @@ router.post('/', checkCoordinatorToken, (req, res)=>{
                     assignment.save((err) =>{
                         if (err) throw err;
 
-                        res.status(200).json({
-                            message : 'Assignment created.',
-                            assignment : assignment
+                        let new_assign = convertMongoDoc(JSON.stringify([assignment]) );
+                        get_course(new_assign, (response) => {
+                            res.status(200).json({
+                                message : "Assignment created.",
+                                assignment : response[0]});
                         });
 
                     });
@@ -107,10 +151,13 @@ router.put('/:course_id', checkCoordinatorToken, (req, res)=>{
                     assignment.save((err) => {
                         if (err) throw err;
 
-                        res.status(200).json({
-                            message: 'Assignment updated',
-                            assignment : assignment
+                        let new_assign = convertMongoDoc(JSON.stringify([assignment]) );
+                        get_course(new_assign, (response) => {
+                            res.status(200).json({
+                                message : "Assignment created.",
+                                assignment : response[0]});
                         });
+
                     });
                     return;
                 }
@@ -139,18 +186,24 @@ router.delete('/:course_id', checkCoordinatorToken, (req, res) =>{
                     assignment.ta_assignments.splice(i, 1);
                     assignment.save((err) => {
                         if (err) throw err;
-                        res.status(200).json({
-                            message: 'Assignment Deleted.',
-                            assignment : assignment
+                        let new_assign = convertMongoDoc(JSON.stringify([assignment]) );
+                        get_course(new_assign, (response) => {
+                            res.status(200).json({
+                                message : "Assignment Deleted.",
+                                assignment : response[0]});
                         });
+
                     });
                     return;
                 }
             }
-            res.status(404).json({
-               message : 'Student not assigned to this course.',
-                assignment : assignment
+            let new_assign = convertMongoDoc(JSON.stringify([assignment]) );
+            get_course(new_assign, (response) => {
+                res.status(404).json({
+                    message : "Student not assigned to this course.",
+                    assignment : response[0]});
             });
+
         }
     });
 });
