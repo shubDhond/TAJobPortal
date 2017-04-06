@@ -7,6 +7,8 @@ let Assignment = require('../models/assignment');
 let Course = require('../models/course');
 let checkCoordinatorToken = require('./checkCoordinatorToken');
 let checkGenericToken = require('./checkGenericToken');
+let Client = require('node-rest-client').Client;
+let client = new Client();
 let _ = require('lodash');
 
 /** GET all assignments or search by query param.
@@ -157,5 +159,76 @@ router.delete('/:course_id', checkCoordinatorToken, (req, res) =>{
         }
     });
 });
+
+router.get('/assigned', checkGenericToken, function(req, res) {
+    Assignment.find({}, (err, assignments) =>{
+        "use strict";
+        if (err) throw err;
+
+        if (assignments.length == 0){
+            res.status(404).json({
+                message :"No TAs Assigned"
+            });
+        } else {
+            let url = 'http://localhost:3003/application';
+            client.get(url, {headers: req.headers}, (data) =>{
+                let response = [];
+                let applications = [];
+                console.log(data);
+                for(let i = 0; i < assignments.length; i++){
+                    for(let j = 0; j< assignments[i].ta_assignments.length; j++){
+                        applications.push(assignments[i].ta_assignments[j].application_id);
+                    }
+                }
+                console.log(applications);
+                for (let k = 0; k < data.length; k ++){
+                    console.log(data[k]._id);
+                    if(applications.indexOf(data[k]._id) != -1){
+
+                        response.push(data[k]);
+                    }
+                }
+               res.status(200).json(response);
+
+            });
+        }
+    });
+});
+
+router.get('/unassigned', checkGenericToken, function(req, res) {
+    Assignment.find({}, (err, assignments) =>{
+        "use strict";
+        if (err) throw err;
+
+        if (assignments.length == 0){
+            res.status(404).json({
+                message :"No TAs Assigned"
+            });
+        } else {
+            let url = 'http://localhost:3003/application';
+            client.get(url, {headers: req.headers}, (data) =>{
+                let response = [];
+                let applications = [];
+                console.log(data);
+                for(let i = 0; i < assignments.length; i++){
+                    for(let j = 0; j< assignments[i].ta_assignments.length; j++){
+                        applications.push(assignments[i].ta_assignments[j].application_id);
+                    }
+                }
+                console.log(applications);
+                for (let k = 0; k < data.length; k ++){
+                    console.log(data[k]._id);
+                    if(applications.indexOf(data[k]._id) === -1){
+
+                        response.push(data[k]);
+                    }
+                }
+                res.status(200).json(response);
+
+            });
+        }
+    });
+});
+
 
 module.exports = router;
