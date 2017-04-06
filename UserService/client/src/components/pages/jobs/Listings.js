@@ -15,7 +15,9 @@ import FetchingView from "./FetchingView"
 export default class Listings extends React.Component {
 
   componentWillMount(){
-    if(!this.props.listings.fetched){
+    const { listings } = this.props;
+
+    if(!listings.fetched){
       var config = {
         headers: {'x-access-token': this.props.user.user.user_token}
       };
@@ -23,6 +25,24 @@ export default class Listings extends React.Component {
         taCoordClient.get("/posting", config)
       ));
     }
+    else{
+        if(listings.queryResults != null){
+            this.setState({...this.state,
+                listings: listings.queryResults,
+                pagination: {...this.state.pagination,
+                    activePage: 1
+                }
+            });
+        }
+        else
+            this.setState({...this.state,
+                listings: listings.listings,
+                pagination: {...this.state.pagination,
+                    activePage: 1
+                }
+            });
+    }
+
   }
 
   constructor(props){
@@ -137,6 +157,7 @@ export default class Listings extends React.Component {
                 last
                 ellipsis
                 items={numOfPages}
+                maxButtons={7}
                 activePage={this.state.pagination.activePage}
                 onSelect={this.handleSelect.bind(this)} />
           </Col>

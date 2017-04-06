@@ -7,7 +7,7 @@ import {browserHistory} from "react-router";
 import { taCoordClient } from "../../../axiosClient";
 import FetchingView from "./FetchingView"
 @connect((store) => {
-    
+
     return {
         listings: store.listings,
         rankings: store.rankings,
@@ -27,7 +27,7 @@ export default class JobsSingleView extends React.Component {
     }
 
     constructor(props) {
-        
+
         super(props);
 
         this.state = {
@@ -41,7 +41,7 @@ export default class JobsSingleView extends React.Component {
             instructors: null,
         }
     }
-    
+
     componentWillReceiveProps(nextProps){
         const { listing } = nextProps.listings;
 
@@ -83,7 +83,7 @@ export default class JobsSingleView extends React.Component {
             this.props.dispatch(setRanking(this.state, newRanking));
         }
     };
-    
+
     goBackToJobs= () =>{
         return () => {
             browserHistory.push("/app/jobs")
@@ -128,7 +128,7 @@ export default class JobsSingleView extends React.Component {
             if (object.hasOwnProperty(rank)) {
                 if(object[rank] != null && rank > max) max=rank;
             }
-        }   
+        }
 
         if(max === 0){
             preferences.push(<MenuItem key={1} onClick={this.dispatchRankingChange(1)} eventKey={1}>Preference #1</MenuItem>)

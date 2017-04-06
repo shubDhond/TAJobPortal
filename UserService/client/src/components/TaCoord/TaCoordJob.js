@@ -16,17 +16,18 @@ export default class TaCoordJob extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: this.props.title,
-      description: this.props.description,
-      deadline: this.props.deadline,
-      status: this.props.status,
-      showComponent: this.props.showComponent
+      course_name: this.props.course_name,
+      requirements: this.props.requirements,
+      end_date: this.props.end_date,
+      showComponent: this.props.showComponent,
+      course_id: this.props.course_id,
+      posting_id: this.props.posting_id
     };
     this.buttonClick = this.buttonClick.bind(this);
   }
 
   buttonClick() {
-    this.props.dispatch(setSingleCourse(this.state.title, this.state.description, this.state.status));
+    this.props.dispatch(setSingleCourse(this.state));
     this.props.dispatch(toggleComponent());
 
   }
@@ -35,10 +36,9 @@ export default class TaCoordJob extends React.Component {
     return (
       <div>
         <ListItem>
-          <h3>{this.state.title}</h3>
-          <h5>{this.state.status}</h5>
-          <h7>{this.state.description}</h7>
-          <h5>{this.state.deadline}</h5>
+          <h3>{this.state.course_name}</h3>
+          <h7>{this.state.requirements}</h7>
+          <h5>{this.state.end_date}</h5>
 
           <Button onClick={this.buttonClick}>View</Button>
         </ListItem>

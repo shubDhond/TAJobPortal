@@ -1,7 +1,7 @@
 let Client = require('node-rest-client').Client;
 let client = new Client();
 let Config = require('../config');
-var forEach = require('async-foreach').forEach;
+let forEach = require('async-foreach').forEach;
 
 let args = {
   headers:{
@@ -51,13 +51,26 @@ client.get(cobaltCoursesUrl, args, function(data, response){
           } else {
             console.log("error " + data.message);
           }
+          //make posting for course
+          let posting_args = {
+            data: {
+              course_id: data.course._id,
+              requirements: "none",
+              start_date: new Date("January 1, 2017"),
+              end_date: new Date("April 30, 2017")
+            },
+            headers: {
+              "Content-Type": "application/json",
+              "x-access-token": coordinator_token
+            }
+          };
+          client.post(Config.BASE_URL + 'posting', posting_args, function(data,response){
+            console.log('Creating posting for ' + item.code);
+          });
         });
-
-        var done = this.async();
-        setTimeout(done, 50);
-
+        let done = this.async();
+        setTimeout(done, 100);
       });
     });
   });
-
 });

@@ -4,9 +4,8 @@ export default function reducer(state={
     fetching: false,
     fetched: false,
     error: null,
-    title: null,
-    description: null,
-    status: null,
+    posting_id: null,
+    course_id: null
   }, action) {
 
     switch (action.type) {
@@ -32,9 +31,8 @@ export default function reducer(state={
       case "SET_SINGLE_COURSE": {
         return {
           ...state,
-          title: action.title,
-          description: action.description,
-          status: action.status
+          course_id: action.course_id,
+          posting_id: action.posting_id
         }
       }
       case 'FETCH_COURSES_PENDING': {
