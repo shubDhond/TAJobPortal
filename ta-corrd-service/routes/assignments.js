@@ -7,12 +7,15 @@ let Assignment = require('../models/assignment');
 let Course = require('../models/course');
 let checkCoordinatorToken = require('./checkCoordinatorToken');
 let checkGenericToken = require('./checkGenericToken');
+let Client = require('node-rest-client').Client;
+let client = new Client();
 
 /** GET all assignments or search by query param.
  * query_params could be
  * course_id,
  * */
 router.get('/', checkGenericToken, function(req, res) {
+    // console.log(req.headers);
     Assignment.find(req.query, (err, assignments) =>{
         "use strict";
         if (err) throw err;
@@ -25,7 +28,7 @@ router.get('/', checkGenericToken, function(req, res) {
             let new_assign = convertMongoDoc(JSON.stringify(assignments) );
             get_course(new_assign, (response) => {
                 res.status(200).json(response);
-            });
+            }, req.headers);
         }
     });
 });
@@ -44,7 +47,7 @@ function convertMongoDoc(assignments) {
     return new_res;
 }
 
-function get_course(assignments, callback) {
+function get_course(assignments, callback, headers) {
     let index = 0;
     for(let i = 0; i < assignments.length; i ++) {
         Course.find({"_id" : assignments[i].course_id}, (err, course) => {
@@ -56,9 +59,17 @@ function get_course(assignments, callback) {
             else{
                 assignments[i]['course'] = {};
             }
-            index += 1;
-            if (index == assignments.length) {
-                callback(assignments);
+            for (let j = 0; j < assignments[i].ta_assignments.length; j++){
+                let url = 'http://localhost:3003/application/' + assignments[i].ta_assignments[j].application_id;
+
+                client.get(url, {headers: headers}, (data)=>{
+                    "use strict";
+                    assignments[i].ta_assignments[j]['application'] = data.application;
+                    index += 1;
+                    if (index == assignments.length) {
+                        callback(assignments);
+                    }
+                });
             }
         }).lean();
     }
@@ -142,7 +153,7 @@ router.put('/:course_id', checkCoordinatorToken, (req, res)=>{
                 message: 'Assignment for the course not found.'
             });
         } else{
-            console.log(assignment.ta_assignments[0]);
+            // console.log(assignment.ta_assignments[0]);
 
             for (let i = 0; i< assignment.ta_assignments.length; i++){
                 if (assignment.ta_assignments[i]['student_id'] == req.body.student_id){
