@@ -7,11 +7,32 @@ import {fetchApplicants} from "../../actions/applicantsActions";
 import {Draggable} from 'react-drag-and-drop';
 
 class PanelHeader extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
     render(){
+        let dragStyle = {};
+
+        if (this.state.dragging) {
+            dragStyle['border'] = '2px solid blue';
+        }
+
         return (
             <div style={{padding:"16px 16px 8px 16px"}}>
                 <Glyphicon glyph="user"  style={{marginRight:8}}/>
                 {this.props.first_name} {this.props.last_name}, {this.props.student_id}
+                <Draggable type='applicant'
+                               data={JSON.stringify({
+                                   student_id: this.props.user_id,
+                                   application_id: this.props.application_id
+                               })}
+                               key={this.props.user_id}
+                               onDrag={() => this.setState({...this.state, dragging: true})}
+                               onDragEnd={() => this.setState({...this.state, dragging: false})}>
+                    <p style={dragStyle}>Drag this to assign</p>
+                </Draggable>
             </div>
         );
     }
@@ -96,46 +117,33 @@ class ApplicantList extends Component{
         if (this.props.applicants.fetched){
 
             return Object.keys(obj).map((applicant) => {
-                let dragStyle = {};
-
-                if (this.state.dragging === obj[applicant].user_id) {
-                    dragStyle['border'] = '2px solid blue';
-                }
-
                 return (
-                    <Draggable type='applicant'
-                               data={JSON.stringify({
-                                   student_id: obj[applicant].user_id,
-                                   application_id: obj[applicant].id
-                               })}
-                               key={obj[applicant].user_id}
-                               onDrag={() => this.setState({...this.state, dragging: obj[applicant].user_id})}
-                               onDragEnd={() => this.setState({...this.state, dragging: null})}>
-                        <Panel key={obj[applicant].user_id} header=
-                            {<div>
-                                <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}/>
-                            </div>}
-                            footer={<div><Courses courses={obj[applicant].courses}/></div>}
-                            eventKey={obj[applicant].user_id}  style={{...dragStyle, marginBottom:15}}>
-                            <div style={{padding:0}}>
-                                <AboutMe
-                                    phone_number={obj[applicant].phone_number}
-                                    email={obj[applicant].email}
-                                    program={obj[applicant].program}
-                                    year_of_study={obj[applicant].year_of_study}
-                                    department_explain={obj[applicant].department_explain}
-                                    work_status={obj[applicant].work_status}
-                                    work_status_explain={obj[applicant].work_status_explain}
-                                    student_status={obj[applicant].student_status}
-                                    student_status_explain={obj[applicant].student_status_explain}
-                                    status={obj[applicant].status}
-                                    previous_assignments={obj[applicant].previous_assignments}
-                                    courses={obj[applicant].courses}
-                                />
+                    
+                    <Panel key={obj[applicant].user_id} header=
+                        {<div>
+                            <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}
+                                            user_id={obj[applicant].user_id} application_id={obj[applicant].id}/>
+                        </div>}
+                        footer={<div><Courses courses={obj[applicant].courses}/></div>}
+                        eventKey={obj[applicant].user_id}  style={{marginBottom:15}}>
+                        <div style={{padding:0}}>
+                            <AboutMe
+                                phone_number={obj[applicant].phone_number}
+                                email={obj[applicant].email}
+                                program={obj[applicant].program}
+                                year_of_study={obj[applicant].year_of_study}
+                                department_explain={obj[applicant].department_explain}
+                                work_status={obj[applicant].work_status}
+                                work_status_explain={obj[applicant].work_status_explain}
+                                student_status={obj[applicant].student_status}
+                                student_status_explain={obj[applicant].student_status_explain}
+                                status={obj[applicant].status}
+                                previous_assignments={obj[applicant].previous_assignments}
+                                courses={obj[applicant].courses}
+                            />
 
-                            </div>
-                        </Panel>
-                    </Draggable>
+                        </div>
+                    </Panel>
                 );
             });
 

@@ -7,6 +7,7 @@ let Assignment = require('../models/assignment');
 let Course = require('../models/course');
 let checkCoordinatorToken = require('./checkCoordinatorToken');
 let checkGenericToken = require('./checkGenericToken');
+let _ = require('lodash');
 
 /** GET all assignments or search by query param.
  * query_params could be
@@ -46,12 +47,14 @@ router.post('/', checkCoordinatorToken, (req, res)=>{
                 if (err) throw err;
 
                 if (assignment){
-                    assignment.ta_assignments.push({
-                        'student_id' : req.body.student_id,
-                        'posting_id' : req.body.posting_id,
-                        'application_id' : req.body.application_id,
-                        'notes' : req.body.notes,
-                    });
+                    if (!_.find(assignment.ta_assignments, assignment => assignment.student_id === req.body.student_id)){
+                        assignment.ta_assignments.push({
+                            'student_id' : req.body.student_id,
+                            'posting_id' : req.body.posting_id,
+                            'application_id' : req.body.application_id,
+                            'notes' : req.body.notes,
+                        });
+                    }
                     assignment.save((err) =>{
                         if (err) throw err;
 
