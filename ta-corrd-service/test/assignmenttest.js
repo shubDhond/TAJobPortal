@@ -192,11 +192,11 @@ describe('assignments', function(){
         .get('/assignment')
         .set('x-access-token', coordinator_token)
         .end(function(err,res){
-          expect(res).to.have.status(200);
-          expect(res.body[0].course._id.toString()).to.be.equal(courseObject._id.toString());
-          expect(res.body[0].course.term).to.be.equal(courseObject.term);
-          expect(res.body[0].course.year).to.be.equal(courseObject.year);
-          done();
+          Assignment.find({}, (err,doc)=>{
+            expect(doc[0]._id.toString()).to.be.equal(res.body[0]._id);
+            expect(doc[0].course_id.toString()).to.be.equal(res.body[0].course_id);
+            done();
+          });
         });
       });
 

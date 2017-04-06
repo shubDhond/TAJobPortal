@@ -137,10 +137,10 @@ describe('posting', function() {
             .set('x-access-token', coordinator_token)
             .end((err, res) => {
                 expect(res).to.have.status(200);
-                expect(courseObject._id.toString()).to.be.equal(res.body[0].course._id.toString());
-                expect(courseObject.course_code).to.be.equal(res.body[0].course.course_code);
-                expect(courseObject.term).to.be.equal(res.body[0].course.term);
-                done();
+                Posting.find({}, (err,doc)=>{
+                  expect(doc.length).to.be.equal(res.body.length);
+                  done();
+                })
             });
     });
     it('should be able to get all postings as a student', (done) => {
