@@ -3,6 +3,8 @@ export default function reducer(state={
     showComponent: false,
     fetching: false,
     fetched: false,
+    posting: false,
+    posted: false,
     error: null,
     posting_id: null,
     course_id: null
@@ -52,28 +54,35 @@ export default function reducer(state={
       }
       case 'FETCH_COURSES_FULFILLED': {
         var data = action.payload.data;
-        var courses={};
-
-        for(let i = 0 ; i < data.length ; i++){
-          var id = data[i]._id;
-          var course_id = data[i].course_id;
-          var reqs = data[i].requirements;
-          var start_date = data[i].start_date;
-          var end_date = data[i].end_date;
-          var course_name = "placeholder " + id.slice(-2);
-          var description = "placeholder";
-
-          var obj = {
-            course_name : course_name,
-            description: description,
-            ranking: null,
-            course_id: course_id,
-            requirements: reqs,
-            start_date: start_date,
-            end_date: end_date
-          };
-
-          courses[id] = obj;
+        return {
+          ...state,
+          fetching: false,
+          fetched: true,
+          courses: data
+        }
+      }
+      case 'POST_AD_PENDING': {
+        return {
+          ...state,
+          posting: true,
+          posted: false,
+        }
+      }
+      case 'POST_AD_REJECTED': {
+        return {
+          ...state,
+          posting: false,
+          posted: false,
+          error: action.payload,
+        }
+      }
+      case 'POST_AD_FULFILLED': {
+        var data = action.payload.data;
+        console.log(data)
+        return {
+          ...state,
+          posting: false,
+          posted: true,
         }
       }
       default:
