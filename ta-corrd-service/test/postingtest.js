@@ -40,6 +40,8 @@ let newPostingBody = {
 };
 
 let courseId;
+let courseObject;
+let courseObject2;
 let course2Id;
 let postingId;
 
@@ -81,10 +83,12 @@ describe('posting', function() {
         newCourse2.save((err, doc) => {
             if (err) throw err;
             course2Id = doc._id;
+            courseObject2 = doc;
             newCourse.save((err, doc) => {
                 if (err) throw err;
                 courseId = doc._id;
                 newPostingBody.course_id = doc._id;
+                courseObject = doc;
                 let newPosting = new Posting(newPostingBody);
                 newPosting.save((err, doc) => {
                     if (err) throw err;
@@ -133,7 +137,10 @@ describe('posting', function() {
             .set('x-access-token', coordinator_token)
             .end((err, res) => {
                 expect(res).to.have.status(200);
-                done();
+                Posting.find({}, (err,doc)=>{
+                  expect(doc.length).to.be.equal(res.body.length);
+                  done();
+                })
             });
     });
     it('should be able to get all postings as a student', (done) => {
@@ -175,6 +182,9 @@ describe('posting', function() {
             .end((err, res) => {
                 expect(res).to.have.status(200);
                 expect(res.body.posting.course_id).to.be.equal(course2Id.toString());
+                expect(courseObject2._id.toString()).to.be.equal(res.body.posting.course._id.toString());
+                expect(courseObject2.course_code).to.be.equal(res.body.posting.course.course_code);
+                expect(courseObject2.term).to.be.equal(res.body.posting.course.term);
                 done();
             });
     });
