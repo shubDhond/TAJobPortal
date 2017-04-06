@@ -200,7 +200,7 @@ describe('assignments', function(){
         });
       });
 
-      it('should successfully create a new assignment', function(done){
+      it.only('should successfully create a new assignment', function(done){
         //create a new course
         let newCourse = new Course(newCourseBody2);
         newCourse.save((err,doc)=>{
@@ -217,12 +217,11 @@ describe('assignments', function(){
           .set('x-access-token', coordinator_token)
           .end(function(err,res){
             expect(res).to.have.status(200);
-            console.log(res.body);
             expect(res.body.assignment.course._id).to.be.equal(newCourseId.toString());
             expect(res.body.assignment.ta_assignments[0].student_id).to.be.equal(student_id);
             expect(res.body.assignment.ta_assignments[0].posting_id).to.be.equal(posting_id.toString());
             //checking course
-            expect(res.body.assignment.course._id.toString()).to.be.equal(courseObject._id.toString());
+            // expect(res.body.assignment.course._id.toString()).to.be.equal(courseObject._id.toString());
             expect(res.body.assignment.course.term).to.be.equal(courseObject2.term);
             expect(res.body.assignment.course.year).to.be.equal(courseObject2.year);
             Assignment.remove({course_id: doc._id},(err)=>{
