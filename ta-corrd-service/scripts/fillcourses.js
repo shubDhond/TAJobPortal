@@ -1,7 +1,7 @@
 let Client = require('node-rest-client').Client;
 let client = new Client();
 let Config = require('../config');
-var forEach = require('async-foreach').forEach;
+let forEach = require('async-foreach').forEach;
 
 let args = {
   headers:{
@@ -51,13 +51,53 @@ client.get(cobaltCoursesUrl, args, function(data, response){
           } else {
             console.log("error " + data.message);
           }
+          //make posting for course
+          let posting_args = {
+            data: {
+              course: data.course,
+              requirements: "none",
+              start_date: new Date("January 1, 2017"),
+              end_date: new Date("April 30, 2017")
+            },
+            headers: {
+              "Content-Type": "application/json",
+              "x-access-token": coordinator_token
+            }
+          };
+          client.post(Config.BASE_URL + 'posting', posting_args, function(data,response){
+            console.log('Making posting for ' + item.code);
+          });
         });
-
-        var done = this.async();
-        setTimeout(done, 50);
-
+        let done = this.async();
+        setTimeout(done, 100);
       });
     });
   });
-
 });
+//create student accounts
+//all passwords are 'test'
+// let useraccounts = {};
+// for(var i=0;i<500;i++){
+//   let email = 'testing' + i.toString();
+//   useraccounts[email] = '';
+// }
+// //get tokens for all useraccounts
+// console.log(Object.keys(useraccounts));
+// forEach(Object.keys(useraccounts), function(item,index,arr){
+//   let signin_args = {
+//     data: {
+//       email: item,
+//       password: 'test'
+//     },
+//     headers: {
+//       "Content-Type": "application/json"
+//     }
+//   }
+//   client.post('http://localhost:3002/students/sign-up', signin_args, function(data,response){
+//     useraccounts[data.user.email] = {
+//       token: data.user.user_token,
+//       id: data.user.id
+//     };
+//
+//   });
+// });

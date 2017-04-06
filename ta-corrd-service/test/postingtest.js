@@ -39,8 +39,8 @@ let newPostingBody = {
     end_date: endDate
 };
 
-let courseId;
-let course2Id;
+let course;
+let course2;
 let postingId;
 
 let ta_coord_signin_args = {
@@ -80,11 +80,11 @@ describe('posting', function() {
         let newCourse2 = new Course(newCourseBody2);
         newCourse2.save((err, doc) => {
             if (err) throw err;
-            course2Id = doc._id;
+            course2 = doc;
             newCourse.save((err, doc) => {
                 if (err) throw err;
-                courseId = doc._id;
-                newPostingBody.course_id = doc._id;
+                course = doc;
+                newPostingBody.course = doc;
                 let newPosting = new Posting(newPostingBody);
                 newPosting.save((err, doc) => {
                     if (err) throw err;
@@ -163,7 +163,7 @@ describe('posting', function() {
         new_start_date = new Date("January 1, 2018");
         new_end_date = new Date("April 30, 2018");
         data = {
-            course_id: course2Id,
+            course: course2,
             requirements: "nothing",
             start_date: new_start_date,
             end_date: new_end_date
@@ -174,7 +174,7 @@ describe('posting', function() {
             .send(data)
             .end((err, res) => {
                 expect(res).to.have.status(200);
-                expect(res.body.posting.course_id).to.be.equal(course2Id.toString());
+                expect(res.body.posting.course._id).to.be.equal(course2._id.toString());
                 done();
             });
     });
@@ -183,7 +183,7 @@ describe('posting', function() {
         new_start_date = new Date("January 1, 2018");
         new_end_date = new Date("April 30, 2018");
         data = {
-            course_id: course2Id,
+            course_id: course2,
             requirements: "nothing",
             start_date: new_start_date,
             end_date: new_end_date
@@ -202,7 +202,7 @@ describe('posting', function() {
         new_start_date = new Date("January 1, 2018");
         new_end_date = new Date("April 30, 2018");
         data = {
-            course_id: courseId,
+            course,
             requirements: "nothing",
             start_date: new_start_date,
             end_date: new_end_date
@@ -221,7 +221,7 @@ describe('posting', function() {
         new_start_date = new Date("January 1, 2018");
         new_end_date = new Date("April 30, 2018");
         data = {
-            course_id: "507f191e810c19729de860ea",
+            course._id: "507f191e810c19729de860ea",
             requirements: "nothing",
             start_date: new_start_date,
             end_date: new_end_date
@@ -242,7 +242,7 @@ describe('posting', function() {
             .set('x-access-token', coordinator_token)
             .end((err, res) => {
                 expect(res).to.have.status(200);
-                expect(res.body[0].course_id).to.be.equal(courseId.toString());
+                expect(res.body[0].course._id.toString()).to.be.equal(course._id.toString());
                 done();
             });
     });
