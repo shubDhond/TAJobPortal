@@ -13,7 +13,7 @@ import TaCoordSingleView from "./TaCoordSingleView";
 export default class TaCoordListing extends React.Component {
   render() {
     return (
-      <div>
+      <div style={{padding:15}}>
         {this.props.courses.showComponent ?
           <TaCoordSingleView /> :
           <TaCoordJobView />

@@ -150,8 +150,7 @@ class ApplicantList extends Component{
     render(){
 
         return (
-            <div style={{overflow: 'auto', maxHeight: 500}}>
-
+            <div style={{padding:15,overflow: 'auto', maxHeight: 500}}>
                 <div className="filler" />
                 <LazyLoad height={762} offsetVertical={300}>
                     <Accordion>
@@ -159,8 +158,6 @@ class ApplicantList extends Component{
                     </Accordion>
                 </LazyLoad>
                 <div className="filler" />
-
-
             </div>
         );
     }

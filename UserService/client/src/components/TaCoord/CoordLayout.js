@@ -26,7 +26,7 @@ export default class Layout extends React.Component {
             <div >
                 <Header/>
                 <Grid fluid style={{marginTop:82}}>
-                    <Row className="show-grid">
+                    <Row  className="show-grid">
 
                       <Col style={{padding:0}} md={6}>
 

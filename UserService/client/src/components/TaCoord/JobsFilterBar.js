@@ -28,7 +28,7 @@ export default class JobsFilterBar extends React.Component {
 
     render() {
         return (
-            <FormGroup style={{margin: 0}}>
+            <FormGroup style={{margin: 0 , padding: 15}}>
             <Row>
                 <Col xs={8}  style={{paddingRight:0}}>
                         <FormControl bsSize="large" type="text" placeholder="Search"/>

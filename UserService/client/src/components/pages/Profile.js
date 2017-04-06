@@ -39,7 +39,6 @@ export default class Profile extends React.Component {
             studentstatusexplain: "",
             year: "",
         }
-
         this.baseState = this.state
     }
 
