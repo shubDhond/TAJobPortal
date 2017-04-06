@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 let Ranking = require('../models/ranking');
 let checkCoordinatorTokenOrStudentById = require('./checkCoordinatorTokenOrStudentById');
+let checkGenericToken = require('./checkGenericToken');
 
 router.post('/', checkCoordinatorTokenOrStudentById, (req, res) => {
   req.body.rankings = req.body.rankings || [];
@@ -64,5 +65,21 @@ router.delete('/:id', checkCoordinatorTokenOrStudentById, (req, res) => {
     }
   });
 });
+
+router.get('/', checkGenericToken, function(req, res) {
+    Ranking.find(req.query, (err, rankings) =>{
+        "use strict";
+        if (err) throw err;
+
+        if (rankings.length == 0){
+            res.status(404).json({
+                message :"No Rankings found."
+            });
+        } else {
+            res.status(200).json(rankings);
+        }
+    });
+});
+
 
 module.exports = router;
