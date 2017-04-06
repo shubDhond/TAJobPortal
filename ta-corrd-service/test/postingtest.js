@@ -221,7 +221,9 @@ describe('posting', function() {
         new_start_date = new Date("January 1, 2018");
         new_end_date = new Date("April 30, 2018");
         data = {
-            course._id: "507f191e810c19729de860ea",
+            course: {
+              _id: "507f191e810c19729de860ea"
+            },
             requirements: "nothing",
             start_date: new_start_date,
             end_date: new_end_date
