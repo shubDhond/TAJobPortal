@@ -99,11 +99,11 @@ router.post('/', checkCoordinatorToken, (req, res) =>{
                                 message: err.message
                             });
                         } else {
-                            let new_post = convertMongoDoc(JSON.stringify(posting) );
+                            let new_post = convertMongoDoc(JSON.stringify([posting]) );
                             get_course(new_post, (response) => {
                                 res.status(200).json( {
                                     message:'New Posting created.',
-                                    posting : response
+                                    posting : response[0]
                                 });
                             });
                         }
