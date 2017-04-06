@@ -6,7 +6,7 @@ let forEach = require('async-foreach').forEach;
 //create 200 student accounts, make applications and rankings
 let user_accounts = [];
 for(var i=0;i<200;i++){
-  user_accounts.push('testing' + i.toString());
+  user_accounts.push('testing' + i.toString() + '@gmail.com');
 };
 
 let first_names = [
@@ -257,12 +257,13 @@ let ta_coord_signin_args = {
         "Content-Type": "application/json"
     },
     data: {
-        email: 'test',
+        email: 'test@gmail.com',
         id: 'test',
         password: 'test',
         user_type: 'ta-coordinator'
     },
 };
+let programs = ["UG", "MSC", "MSAC", "PHD"];
 
 client.post('http://localhost:3002/ta-coordinators/authenticate', ta_coord_signin_args,function(data,res){
   let coordinator_token = data.user.user_token;
@@ -292,19 +293,21 @@ client.post('http://localhost:3002/ta-coordinators/authenticate', ta_coord_signi
           //make an application
           first_name = first_names[Math.floor(Math.random() * first_names.length)];
           last_name = last_names[Math.floor(Math.random() * last_names.length)];
+
           let applicationBody = {
             user_id,
             student_number: Math.floor(Math.random() * 10000000000),
             first_name,
             last_name,
             phone_number: "555-555-5555",
-            program: "Computer Science",
+            program: programs[Math.floor(Math.random() * ((3-0)+0) + 0)],
             email: first_name + last_name + "@mail.utoronto.ca",
             year_of_study: Math.floor(Math.random() * ((4-1)+1) + 1),
             department: "Computer Science",
             department_explain: "I want to be in computer science",
             student_status: "",
-            course_taken: ["CSC148", "CSC165"]
+            course_taken: ["CSC148", "CSC165"],
+            previous_assignments: ["CSC108", "CSC148", "CSC104"]
           };
           let applicant_args = {
             data: applicationBody,
