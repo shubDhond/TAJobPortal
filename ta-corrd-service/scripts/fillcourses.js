@@ -14,6 +14,7 @@ let args = {
 }
 let cobaltCoursesUrl = 'https://cobalt.qas.im/api/1.0/courses/filter';
 let coordinator_token;
+let requirements = "Understand the course content and be able to follow a student's thinking to interpret answers that might not be complete; be consistent so your grading is fair and reliable; know your department's grading procedures and policies and work with your course supervisor to develop grading criteria; become familiar with your department's and the University's policies on academic integrity; develop strategies for dealing with angry or aggressive students.";
 client.get(cobaltCoursesUrl, args, function(data, response){
   //sign up for a TA coordinator account
   let ta_coord_signin_args = {
@@ -22,7 +23,7 @@ client.get(cobaltCoursesUrl, args, function(data, response){
       "Content-Type": "application/json"
     },
     data: {
-      email: 'test',
+      email: 'test@gmail.com',
       id: 'test',
       password: 'test',
       user_type: 'ta-coordinator'
@@ -55,7 +56,7 @@ client.get(cobaltCoursesUrl, args, function(data, response){
           let posting_args = {
             data: {
               course_id: data.course._id,
-              requirements: "none",
+              requirements,
               start_date: new Date("January 1, 2017"),
               end_date: new Date("April 30, 2017")
             },
