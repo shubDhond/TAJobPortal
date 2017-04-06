@@ -62,6 +62,8 @@ let student_signin_args2 = {
 //course and posting information
 let course_id;
 let posting_id;
+let courseObject;
+let courseObject2;
 
 let newCourseBody = {
     course_code: "CSC500H1S",
@@ -119,6 +121,7 @@ describe('assignments', function(){
     newCourse.save((err, doc) => {
         if (err) throw err;
         course_id = doc._id;
+        courseObject = doc;
         newPostingBody.course_id = doc._id;
         let newPosting = new Posting(newPostingBody);
         newPosting.save((err,doc)=>{
@@ -174,10 +177,14 @@ describe('assignments', function(){
       });
 
       after((done)=>{
-        Assignment.remove({_id: assignment_id}, (err)=>{
+        Assignment.remove({}, (err)=>{
           if(err) throw err;
-          done();
+          Posting.remove({requirements: "nothing"},(err)=>{
+            if(err) throw err;
+            done();
+          });
         });
+
       });
 
       it('successfully get all assignments', function(done){
@@ -186,6 +193,9 @@ describe('assignments', function(){
         .set('x-access-token', coordinator_token)
         .end(function(err,res){
           expect(res).to.have.status(200);
+          expect(res.body[0].course._id.toString()).to.be.equal(courseObject._id.toString());
+          expect(res.body[0].course.term).to.be.equal(courseObject.term);
+          expect(res.body[0].course.year).to.be.equal(courseObject.year);
           done();
         });
       });
@@ -194,10 +204,12 @@ describe('assignments', function(){
         //create a new course
         let newCourse = new Course(newCourseBody2);
         newCourse.save((err,doc)=>{
+          courseObject2 = doc;
+          newCourseId = doc._id;
           chai.request(app)
           .post('/assignment')
           .send({
-            course_id: doc._id,
+            course_id: newCourseId,
             student_id,
             posting_id,
             application_id,
@@ -205,10 +217,14 @@ describe('assignments', function(){
           .set('x-access-token', coordinator_token)
           .end(function(err,res){
             expect(res).to.have.status(200);
-            expect(res.body.assignment.course_id).to.be.equal(doc._id.toString());
+            console.log(res.body);
+            expect(res.body.assignment.course._id).to.be.equal(newCourseId.toString());
             expect(res.body.assignment.ta_assignments[0].student_id).to.be.equal(student_id);
             expect(res.body.assignment.ta_assignments[0].posting_id).to.be.equal(posting_id.toString());
-            console.log("assign to remove is " + doc._id);
+            //checking course
+            expect(res.body.assignment.course._id.toString()).to.be.equal(courseObject._id.toString());
+            expect(res.body.assignment.course.term).to.be.equal(courseObject2.term);
+            expect(res.body.assignment.course.year).to.be.equal(courseObject2.year);
             Assignment.remove({course_id: doc._id},(err)=>{
               if(err) throw err;
               done();
