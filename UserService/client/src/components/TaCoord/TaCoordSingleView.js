@@ -92,7 +92,7 @@ export default class TaCoordSingleView extends React.Component {
   render() {
     let tas = []
     let count = 0
-
+    console.log(this.state)
     for(var ta in this.state.assignments){
       tas.push(<h5 key={count++}>{this.state.assignments[ta].student_id}</h5>)
     }
