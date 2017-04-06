@@ -11,3 +11,10 @@ export function getAssignments(promise) {
     payload: promise
   }
 }
+
+export function updateAssignments(requestPromise) {
+  return {
+    type: 'UPDATE_ASSIGNMENTS',
+    payload: requestPromise
+  };
+}

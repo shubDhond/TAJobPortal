@@ -5,6 +5,7 @@ import { toggleComponent } from "../../actions/courseListingsActions";
 import { taCoordClient } from "../../axiosClient";
 import { getAssignments } from "../../actions/assignmentsActions"
 import { fetchListing } from "../../actions/listingsActions";
+import ApplicantListItem from "./ApplicantListItem";
 
 @connect((store) => {
   return {
@@ -58,15 +59,14 @@ export default class TaCoordSingleView extends React.Component {
   componentWillReceiveProps(nextProps){
     const { listing } = nextProps.listings;
 
-    if(nextProps.assignments.fetched){
+    if(nextProps.assignments.fetched && this.state.assignments.length==0){
       //look for course_id matching this one
       let assignments = nextProps.assignments.assignments
       for(var i = 0; i < assignments.length; i++){
-        if(assignments[i].course_id==this.props.courses.course_id){
+        if(assignments[i].course_id===this.props.courses.course_id){
           this.setState({
             assignments: assignments[i].ta_assignments
           })
-
           break;
         }
       }
@@ -96,9 +96,15 @@ export default class TaCoordSingleView extends React.Component {
         marginBottom:4
     }
 
-    for(var ta in this.state.assignments){
-      tas.push(<h5 key={count++}>{this.state.assignments[ta].student_id}</h5>)
+    if(this.state.assignments.length!=0 && this.state.course_id!=null){
+      console.log("kjbkjbjkbkj",this.state);
+
+      for(var ta in this.state.assignments){
+        tas.push(<ApplicantListItem key={ta} course_id={this.state.course_id} student_id={this.state.assignments[ta].student_id} />)
+      }
     }
+    else tas = <h5>Loading applicants... </h5>
+
     return (
 
       <div>
