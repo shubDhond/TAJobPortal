@@ -2,10 +2,34 @@ import React, {Component} from "react";
 import {connect} from 'react-redux';
 import { Table } from 'react-bootstrap';
 
-class InboxList extends Component{
+@connect((store) => {
+
+    return {
+        inbox: store.inbox
+    };
+})
+
+export default class InboxList extends Component{
+
+	componentWillMount(){
+		// make API call here
+	}
+
+	componentWillReceiveProps(nextProps){
+		// check for return from Inbox
+	}
+
+	constructor(props){
+		super(props)
+
+		this.state = {
+			inbox: this.props.inbox.inbox
+		}
+	}
 
 	getListItems(){
-		return this.props.inbox.map((course) => {
+
+		return this.state.inbox.map((course) => {
 			return (
 				<tr key={course.posting_id} >
 					<td  style={{padding:12}}><a>{course.course}</a></td>
@@ -31,11 +55,3 @@ class InboxList extends Component{
 		);
 	}
 }
-
-function mapStateToProps(state) {
-	return {
-		inbox: state.inbox
-	}
-}
-
-export default connect(mapStateToProps)(InboxList);
