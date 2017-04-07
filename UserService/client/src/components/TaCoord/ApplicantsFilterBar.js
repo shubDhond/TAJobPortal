@@ -49,7 +49,7 @@ export default class ApplicantsFilterBar extends React.Component {
     YearInc(e) {
         e.preventDefault();
         this.setState({
-            filter: "yearInc"
+            filter: "year Inc"
         });
         var list;
         if (this.state.checked){
@@ -65,7 +65,7 @@ export default class ApplicantsFilterBar extends React.Component {
     YearDes(e) {
         e.preventDefault();
         this.setState({
-            filter: "yearDnc"
+            filter: "year Dec"
         });
         var list;
         if (this.state.checked){
@@ -179,7 +179,7 @@ export default class ApplicantsFilterBar extends React.Component {
 
         return (
             <div>
-            <FormGroup  style={{margin: 0, display: 'flex',flexDirection:"row"}}>
+            <FormGroup  style={{margin: 0, display: 'flex',flexDirection:"row" ,justifyContent:'center'}}>
                     <FormControl
                         bsSize="large"
                         type="text"
@@ -188,8 +188,8 @@ export default class ApplicantsFilterBar extends React.Component {
                         onChange={this.handleChange}
                         style={{marginRight:8}}
                     />
-                    <Checkbox onChange={this.Unassigned.bind(this)} checked={this.state.checked}>
-                        Unassigned
+                    <Checkbox style={{padding:0,paddingRight:8,marginRight:8}} onChange={this.Unassigned.bind(this)} checked={this.state.checked}>
+                        <h5 style={{margin:0}}>Unassigned</h5>
                     </Checkbox>
                     <DropdownButton bsSize="large" title={this.state.filter} pullRight
                                     id="split-button-pull-right">

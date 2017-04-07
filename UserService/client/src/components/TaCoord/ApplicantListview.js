@@ -186,8 +186,9 @@ class ApplicantList extends Component {
             return Object.keys(obj).map((applicant) => {
                 return (
                     <LazyLoad >
-                        <Accordion>
-                            <Panel key={obj[applicant].user_id} header=
+                        <Accordion style={{marginBottom:8}}>
+                            <Panel key={obj[applicant].user_id}
+                                   style={{marginBottom:8}} header=
                                 {<div>
                                     <PanelHeader first_name={obj[applicant].first_name}
                                                  last_name={obj[applicant].last_name}
