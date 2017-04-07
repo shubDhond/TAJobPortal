@@ -265,12 +265,12 @@ router.get('/unassigned', checkGenericToken, function(req, res) {
 
         if (assignments.length == 0){
             assignments = [];
-        } else {
+        }
             let url = 'http://localhost:3003/application';
             client.get(url, {headers: req.headers}, (data) =>{
                 let response = [];
                 let applications = [];
-                console.log(data);
+                // console.log(data);
                 for(let i = 0; i < assignments.length; i++){
                     for(let j = 0; j< assignments[i].ta_assignments.length; j++){
                         applications.push(assignments[i].ta_assignments[j].application_id);
@@ -287,7 +287,7 @@ router.get('/unassigned', checkGenericToken, function(req, res) {
                 res.status(200).json(response);
 
             });
-        }
+
     });
 });
 
