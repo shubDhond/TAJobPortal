@@ -185,7 +185,7 @@ router.put('/:course_id', checkCoordinatorToken, (req, res)=>{
     });
 });
 
-router.delete('/:course_id', checkCoordinatorToken, (req, res) =>{
+router.post('/:course_id', checkCoordinatorToken, (req, res) =>{
     "use strict";
     Assignment.findOne({
         course_id : req.params.course_id
@@ -197,7 +197,7 @@ router.delete('/:course_id', checkCoordinatorToken, (req, res) =>{
             });
         } else {
             for(let i= 0; i < assignment.ta_assignments.length; i++){
-                if (assignment.ta_assignments[i]['student_id'] == req.body.student_id){
+                if (assignment.ta_assignments[i]['student_id'] == req.query.student_id){
                     assignment.ta_assignments.splice(i, 1);
                     assignment.save((err) => {
                         if (err) throw err;
@@ -264,15 +264,13 @@ router.get('/unassigned', checkGenericToken, function(req, res) {
         if (err) throw err;
 
         if (assignments.length == 0){
-            res.status(404).json({
-                message :"No TAs Assigned"
-            });
-        } else {
+            assignments = [];
+        }
             let url = 'http://localhost:3003/application';
             client.get(url, {headers: req.headers}, (data) =>{
                 let response = [];
                 let applications = [];
-                console.log(data);
+                // console.log(data);
                 for(let i = 0; i < assignments.length; i++){
                     for(let j = 0; j< assignments[i].ta_assignments.length; j++){
                         applications.push(assignments[i].ta_assignments[j].application_id);
@@ -289,7 +287,7 @@ router.get('/unassigned', checkGenericToken, function(req, res) {
                 res.status(200).json(response);
 
             });
-        }
+
     });
 });
 
