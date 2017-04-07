@@ -8,54 +8,41 @@ import {fetchApplicants, fetchAllRankings, fetchUnassigned} from "../../actions/
 import { setSingleCourse, toggleComponent } from "../../actions/courseListingsActions";
 import {Draggable} from 'react-drag-and-drop';
 
-class PanelHeader extends Component {
+class PanelHeader extends Component{
     constructor(props) {
         super(props);
         this.state = {};
     }
 
-    render() {
+    render(){
         let dragStyle = {};
 
         if (this.state.dragging) {
-            dragStyle['background'] = '#F5F5F5';
-            dragStyle['color'] = '#F5F5F5';
+            dragStyle['border'] = '2px solid blue';
         }
 
         return (
-            <div style={{padding: "16px", display: 'flex', alignItems: 'center'}}>
-                <Glyphicon glyph="user" style={{marginRight: 8}}/>
-
-                <div style={{flexGrow: "1"}}>
-                    {this.props.first_name} {this.props.last_name}, {this.props.student_id}
-                </div>
+            <div style={{padding:"16px 16px 8px 16px"}}>
+                <Glyphicon glyph="user"  style={{marginRight:8}}/>
+                {this.props.first_name} {this.props.last_name}, {this.props.student_id}
                 <Draggable type='applicant'
-                           data={JSON.stringify({
-                               student_id: this.props.user_id,
-                               application_id: this.props.application_id
-                           })}
-                           style={Object.assign({
-                               background: "#E0E0E0",
-                               padding: "4px 8px",
-                               borderRadius: 4
-                           }, dragStyle)}
-                           key={this.props.user_id}
-                           onDrag={() => this.setState({...this.state, dragging: true})}
-                           onDragEnd={() => this.setState({...this.state, dragging: false})}>
-                    <p style={{
-                        display: "inline-block",
-                        margin: 0
-                    }}>Drag to assign</p>
-                    <Glyphicon glyph="arrow-right" style={{marginLeft: 8}}/>
+                               data={JSON.stringify({
+                                   student_id: this.props.user_id,
+                                   application_id: this.props.application_id
+                               })}
+                               key={this.props.user_id}
+                               onDrag={() => this.setState({...this.state, dragging: true})}
+                               onDragEnd={() => this.setState({...this.state, dragging: false})}>
+                    <p style={dragStyle}>Drag this to assign</p>
                 </Draggable>
             </div>
         );
     }
 }
 
-class AboutMe extends Component {
+class AboutMe extends Component{
 
-    render() {
+    render(){
         return (
             <div >
                 <h4>About me:</h4>
@@ -75,7 +62,7 @@ class AboutMe extends Component {
         );
     }
 }
-class Courses extends Component {
+class Courses extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -101,46 +88,36 @@ class Courses extends Component {
             posting_id: posting_id
         }
         this.props.dispatch(setSingleCourse(state));
-        if (!this.props.show) {
+        if(!this.props.show){
             this.props.dispatch(toggleComponent());
         }
     }
 
-    getCourses() {
+    getCourses(){
         var courses = this.props.courses;
-        if (courses) {
+        if (courses){
             return courses.map((course, index) => {
-                return (
-                    <div>
-                        <h4 style={{
-                            display: "inline",
-                            padding: "4px 8px",
-                            background: '#EEEEEE',
-                            borderRadius: 4
-                        }}>{index + 1}</h4>
 
-                        <h4 style={{display: "inline", marginRight: 16}} key={index}><a
-                            onClick={() => this.link_course(course.posting_id)}> {course.course_code}</a>
-                        </h4>
-                    </div>
+                return (
+                    <h5 style={{display:"inline",marginRight:16}} key={index}><a onClick={() => this.link_course(course.posting_id)}>{course.course_code}</a></h5>
                 );
             });
         }
 
     }
 
-    render() {
+    render(){
         return (
-            <div style={{padding: "16px 0px"}}>
-                {this.getCourses()}
+            <div>
+                Course Rank: {this.getCourses()}
             </div>
         );
     }
 }
 
-class ApplicantList extends Component {
+class ApplicantList extends Component{
 
-    componentWillMount() {
+    componentWillMount(){
         var config = {
             headers: {'x-access-token': this.props.user.user.user_token}
         };
@@ -155,87 +132,99 @@ class ApplicantList extends Component {
         ));
     }
 
-    constructor(props) {
+    constructor(props){
         super(props);
-        const {applicants} = this.props.applicants;
+            const {applicants} = this.props.applicants;
 
         this.state = {
             applicants: applicants
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        const {applicants} = nextProps;
+    componentWillReceiveProps(nextProps){
+        const { applicants } = nextProps;
 
-        if (applicants.fetched) {
-            this.setState({
-                ...this.state,
+        if(applicants.fetched){
+            this.setState({...this.state,
                 applicants: applicants.applicants
             });
 
         }
     }
 
-    getApplicants() {
+
+
+    getApplicants(){
         //console.log(this.props.applicants.applicants);
         var obj = [this.props.applicants.applicants_copy][0];
         var rankings = this.props.applicants.allRankings;
         //console.log(rankings)
-        if (this.props.applicants.fetched && this.props.applicants.ranking_fetched && this.props.applicants.unassigned_fetched) {
+        if (this.props.applicants.fetched && this.props.applicants.ranking_fetched && this.props.applicants.unassigned_fetched){
 
             return Object.keys(obj).map((applicant) => {
-                return (
-                    <LazyLoad >
-                        <Accordion>
-                            <Panel key={obj[applicant].user_id} header=
-                                {<div>
-                                    <PanelHeader first_name={obj[applicant].first_name}
-                                                 last_name={obj[applicant].last_name}
-                                                 student_id={obj[applicant].student_number}
-                                                 profile_pic={obj[applicant].profile_pic}
-                                                 user_id={obj[applicant].user_id}
-                                                 application_id={obj[applicant].id}/>
-                                </div>}
-                                   footer={
-                                       <div>
-                                           <Courses dispatch={this.props.dispatch}
-                                                    show={this.props.courses.showComponent}
-                                                    courses={rankings[obj[applicant].user_id]}/>
-                                       </div>}
-                                   eventKey={obj[applicant].user_id}>
-                                <div style={{padding: 0}}>
-                                    <AboutMe
-                                        phone_number={obj[applicant].phone_number}
-                                        email={obj[applicant].email}
-                                        program={obj[applicant].program}
-                                        year_of_study={obj[applicant].year_of_study}
-                                        department_explain={obj[applicant].department_explain}
-                                        work_status={obj[applicant].work_status}
-                                        work_status_explain={obj[applicant].work_status_explain}
-                                        student_status={obj[applicant].student_status}
-                                        student_status_explain={obj[applicant].student_status_explain}
-                                        status={obj[applicant].status}
-                                        previous_assignments={obj[applicant].previous_assignments}
-                                        courses={obj[applicant].courses}
-                                    />
+                let dragStyle = {};
 
-                                </div>
-                            </Panel>
+                if (this.state.dragging === obj[applicant].user_id) {
+                    dragStyle['border'] = '2px solid blue';
+                }
+                //console.log(rankings[obj[applicant].user_id])
+
+                return(
+                    <LazyLoad height={762} onContentVisible={() => console.log('load')}>
+                        <Accordion>
+                            <Draggable type='applicant'
+                                       data={JSON.stringify({
+                                           student_id: obj[applicant].user_id,
+                                           application_id: obj[applicant].id
+                                       })}
+                                       key={obj[applicant].user_id}
+                                       onDrag={() => this.setState({...this.state, dragging: obj[applicant].user_id})}
+                                       onDragEnd={() => this.setState({...this.state, dragging: null})} >
+                                <Panel key={obj[applicant].user_id} header=
+                                    {<div>
+                                        <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}
+                                                     user_id={obj[applicant].user_id} application_id={obj[applicant].id}/>
+                                    </div>}
+                                       footer={<div><Courses dispatch={this.props.dispatch} show={this.props.courses.showComponent} courses={rankings[obj[applicant].user_id]} /></div>}
+                                       eventKey={obj[applicant].user_id}  style={{...dragStyle, marginBottom:15}}>
+                                    <div style={{padding:0}}>
+                                        <AboutMe
+                                            phone_number={obj[applicant].phone_number}
+                                            email={obj[applicant].email}
+                                            program={obj[applicant].program}
+                                            year_of_study={obj[applicant].year_of_study}
+                                            department_explain={obj[applicant].department_explain}
+                                            work_status={obj[applicant].work_status}
+                                            work_status_explain={obj[applicant].work_status_explain}
+                                            student_status={obj[applicant].student_status}
+                                            student_status_explain={obj[applicant].student_status_explain}
+                                            status={obj[applicant].status}
+                                            previous_assignments={obj[applicant].previous_assignments}
+                                            courses={obj[applicant].courses}
+                                        />
+
+                                    </div>
+                                </Panel>
+                            </Draggable>
                         </Accordion>
                     </LazyLoad>
+
                 );
+
             });
-        } else {
+
+        }else {
             return null
+
         }
 
     }
 
 
-    render() {
+    render(){
 
         return (
-            <div style={{padding: 15, overflow: 'auto'}} className="fullheight">
+            <div style={{padding:15,overflow: 'auto'}} className="fullheight">
                 {this.getApplicants()}
             </div>
         );
