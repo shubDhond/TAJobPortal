@@ -38,8 +38,12 @@ export default class NewAd extends React.Component {
 
       this.setState({
         ...this.state,
-        courses: courseList
-      })
+        courses: courseList,
+        form: {
+          ...this.state.form,
+          course: courseList.length ? courseList[0].course_id : ""
+        }
+      });
     }
   }
 
@@ -105,19 +109,28 @@ export default class NewAd extends React.Component {
     let editorVal = this.state.form.requirements.toString("html")
 
     // fill in data for post here
-    let data ={
-      course_id: this.state.form.course_id,
-      requirements: editorVal,
-      start_date: this.state.form.start_date,
-      end_date: this.state.form.end_date
-    }
+    if (this.state.form.course_id && this.state.form.start_date && 
+    this.state.form.end_date && this.state.form.tas_needed && this.state.form.tas_needed > 0) {
+      let data ={
+        course_id: this.state.form.course_id,
+        requirements: editorVal,
+        start_date: this.state.form.start_date,
+        end_date: this.state.form.end_date,
+        tas_needed: this.state.form.tas_needed
+      };
 
-    var config = {
-      headers: {'x-access-token': this.props.user.user.user_token}
-    };
-    this.props.dispatch(postAd(
-      taCoordClient.post("/posting", data, config)
-    ));
+      var config = {
+        headers: {'x-access-token': this.props.user.user.user_token}
+      };
+      this.props.dispatch(postAd(
+        taCoordClient.post("/posting", data, config)
+      ));
+    } else {
+      this.setState({
+        ...this.state,
+        error: 'Please enter course name, start date, end date, and TAs needed.'
+      });
+    }
   }
 
   render() {
@@ -141,14 +154,16 @@ export default class NewAd extends React.Component {
                 {courseList}
               </FormControl>
             </FormGroup>
-            <FormControl value={this.state.form.start_date} onChange={this.handleInputChange.bind(this)} name="start_date" type="text" placeholder="Start Date" />
+            <FormControl value={this.state.form.start_date} onChange={this.handleInputChange.bind(this)} name="start_date" type="date" placeholder="Start Date" />
             <FormControl value={this.state.form.end_date} onChange={this.handleInputChange.bind(this)} name="end_date" type="date" placeholder="End Date" />
-            <FormControl value={this.state.form.tas_needed} onChange={this.handleInputChange.bind(this)} name="tas_needed" type="date" placeholder="TAs Needed" />
+            <FormControl value={this.state.form.tas_needed} onChange={this.handleInputChange.bind(this)} name="tas_needed" type="text" placeholder="TAs Needed" />
             <RichTextEditor value={this.state.form.requirements} onChange={this.onChange}/>
 
             <Button onClick={this.sendPost.bind(this)}>Submit</Button>
+            <p style={{color: 'red'}}>{this.state.error}</p>
           </Modal.Body>
         </Modal.Header>
     );
+
   }
 }
