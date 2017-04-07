@@ -164,40 +164,44 @@ class ApplicantList extends Component{
                 //console.log(rankings[obj[applicant].user_id])
 
                 return(
-                    <Draggable type='applicant'
-                               data={JSON.stringify({
-                                   student_id: obj[applicant].user_id,
-                                   application_id: obj[applicant].id
-                               })}
-                               key={obj[applicant].user_id}
-                               onDrag={() => this.setState({...this.state, dragging: obj[applicant].user_id})}
-                               onDragEnd={() => this.setState({...this.state, dragging: null})} >
-                        <Panel key={obj[applicant].user_id} header=
-                            {<div>
-                                <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}
-                                             user_id={obj[applicant].user_id} application_id={obj[applicant].id}/>
-                            </div>}
-                               footer={<div><Courses dispatch={this.props.dispatch} show={this.props.courses.showComponent} courses={rankings[obj[applicant].user_id]} /></div>}
-                               eventKey={obj[applicant].user_id}  style={{...dragStyle, marginBottom:15}}>
-                            <div style={{padding:0}}>
-                                <AboutMe
-                                    phone_number={obj[applicant].phone_number}
-                                    email={obj[applicant].email}
-                                    program={obj[applicant].program}
-                                    year_of_study={obj[applicant].year_of_study}
-                                    department_explain={obj[applicant].department_explain}
-                                    work_status={obj[applicant].work_status}
-                                    work_status_explain={obj[applicant].work_status_explain}
-                                    student_status={obj[applicant].student_status}
-                                    student_status_explain={obj[applicant].student_status_explain}
-                                    status={obj[applicant].status}
-                                    previous_assignments={obj[applicant].previous_assignments}
-                                    courses={obj[applicant].courses}
-                                />
+                    <LazyLoad height={762} onContentVisible={() => console.log('load')}>
+                        <Accordion>
+                            <Draggable type='applicant'
+                                       data={JSON.stringify({
+                                           student_id: obj[applicant].user_id,
+                                           application_id: obj[applicant].id
+                                       })}
+                                       key={obj[applicant].user_id}
+                                       onDrag={() => this.setState({...this.state, dragging: obj[applicant].user_id})}
+                                       onDragEnd={() => this.setState({...this.state, dragging: null})} >
+                                <Panel key={obj[applicant].user_id} header=
+                                    {<div>
+                                        <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}
+                                                     user_id={obj[applicant].user_id} application_id={obj[applicant].id}/>
+                                    </div>}
+                                       footer={<div><Courses dispatch={this.props.dispatch} show={this.props.courses.showComponent} courses={rankings[obj[applicant].user_id]} /></div>}
+                                       eventKey={obj[applicant].user_id}  style={{...dragStyle, marginBottom:15}}>
+                                    <div style={{padding:0}}>
+                                        <AboutMe
+                                            phone_number={obj[applicant].phone_number}
+                                            email={obj[applicant].email}
+                                            program={obj[applicant].program}
+                                            year_of_study={obj[applicant].year_of_study}
+                                            department_explain={obj[applicant].department_explain}
+                                            work_status={obj[applicant].work_status}
+                                            work_status_explain={obj[applicant].work_status_explain}
+                                            student_status={obj[applicant].student_status}
+                                            student_status_explain={obj[applicant].student_status_explain}
+                                            status={obj[applicant].status}
+                                            previous_assignments={obj[applicant].previous_assignments}
+                                            courses={obj[applicant].courses}
+                                        />
 
-                            </div>
-                        </Panel>
-                    </Draggable>
+                                    </div>
+                                </Panel>
+                            </Draggable>
+                        </Accordion>
+                    </LazyLoad>
 
                 );
 
@@ -215,11 +219,9 @@ class ApplicantList extends Component{
 
         return (
             <div style={{padding:15,overflow: 'auto'}} className="fullheight">
-                <LazyLoad height={'100%'} offsetVertical={300}>
-                    <Accordion>
+
                         {this.getApplicants()}
-                    </Accordion>
-                </LazyLoad>
+
             </div>
         );
     }
