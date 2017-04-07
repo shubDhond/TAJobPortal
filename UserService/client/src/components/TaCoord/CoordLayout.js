@@ -15,12 +15,13 @@ import {logout} from "../../actions/userActions"
 })
 export default class Layout extends React.Component {
 
-    // componentWillMount(){
-    //     if (!this.props.user.authenticated){
-    //         browserHistory.push("/")
-    //         this.props.dispatch(logout())
-    //     }
-    // }
+    componentWillMount(){
+
+        if (!this.props.user.user.id || this.props.user.user.user_type === "student"){
+            browserHistory.push("/");
+            this.props.dispatch(logout());
+        }
+    }
 
     render() {
         return (
