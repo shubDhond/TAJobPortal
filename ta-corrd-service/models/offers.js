@@ -30,7 +30,7 @@ let offerSchema = mongoose.Schema({
 
     status:{
        type: String,
-        enum : ['offer_sent', 'offer_accepted'],
+        enum : ['offer_sent', 'offer_accepted', 'offer_rejected'],
         default: 'offer_sent'
     },
 
