@@ -41,7 +41,7 @@ export default class NewAd extends React.Component {
         courses: courseList,
         form: {
           ...this.state.form,
-          course: courseList.length ? courseList[0].course_id : ""
+          course_id: courseList.length ? courseList[0].course_id : ""
         }
       });
     }
@@ -64,7 +64,8 @@ export default class NewAd extends React.Component {
 
   onChange(value) {
     this.setState({...this.state,
-      form:{...this.state.form,
+      form:{
+        ...this.state.form,
         requirements: value
       }});
   }
@@ -77,8 +78,9 @@ export default class NewAd extends React.Component {
       console.log(name, value)
       this.setState({
         ...this.state,
-        form:{...this.state.form,
-            [name]: value
+        form:{
+          ...this.state.form,
+          [name]: value
         }
       });
   }
@@ -89,6 +91,7 @@ export default class NewAd extends React.Component {
 
     if(courses.fetched){
       let courseList = []
+
       for(var i =0; i < courses.courses.length; i++){
         courseList.push({
           course_name:courses.courses[i].course_code,
@@ -98,26 +101,32 @@ export default class NewAd extends React.Component {
 
       this.setState({
         ...this.state,
-        courses: courseList
+        courses: courseList,
+        form: {
+          ...this.state.form,
+          course_id: courseList.length ? courseList[0].course_id : ""
+        }
       })
     }
 
   }
 
   sendPost(){
-
     let editorVal = this.state.form.requirements.toString("html")
 
-    // fill in data for post here
-    if (this.state.form.course_id && this.state.form.start_date && 
+    if (this.state.form.course_id && this.state.form.start_date &&
     this.state.form.end_date && this.state.form.tas_needed && this.state.form.tas_needed > 0) {
+      let start = new Date(this.state.form.start_date).toISOString()
+      let end = new Date(this.state.form.end_date).toISOString()
       let data ={
         course_id: this.state.form.course_id,
         requirements: editorVal,
-        start_date: this.state.form.start_date,
-        end_date: this.state.form.end_date,
+        start_date: start,
+        end_date: end,
         tas_needed: this.state.form.tas_needed
       };
+
+      console.log(data)
 
       var config = {
         headers: {'x-access-token': this.props.user.user.user_token}
@@ -155,8 +164,8 @@ export default class NewAd extends React.Component {
               </FormControl>
             </FormGroup>
             <FormControl value={this.state.form.start_date} onChange={this.handleInputChange.bind(this)} name="start_date" type="date" placeholder="Start Date" />
-            <FormControl value={this.state.form.end_date} onChange={this.handleInputChange.bind(this)} name="end_date" type="date" placeholder="End Date" />
-            <FormControl value={this.state.form.tas_needed} onChange={this.handleInputChange.bind(this)} name="tas_needed" type="text" placeholder="TAs Needed" />
+            <FormControl value={this.state.form.end_date} onChange={this.handleInputChange.bind(this)} name="end_date" type="data" placeholder="End Date" />
+            <FormControl value={this.state.form.tas_needed} onChange={this.handleInputChange.bind(this)} name="tas_needed" type="number" placeholder="TAs Needed" />
             <RichTextEditor value={this.state.form.requirements} onChange={this.onChange}/>
 
             <Button onClick={this.sendPost.bind(this)}>Submit</Button>

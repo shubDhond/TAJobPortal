@@ -5,6 +5,8 @@ export default function reducer(state={
   fetched: false,
   creating: false,
   created: true,
+  updating: false,
+  updated: false,
   error: null
 }, action) {
   switch (action.type) {
@@ -36,6 +38,7 @@ export default function reducer(state={
     case 'GET_ASSIGNMENTS_PENDING': {
       return {
         ...state,
+        updated: false,
         fetching: true,
         fetched: false
       };
@@ -56,6 +59,51 @@ export default function reducer(state={
         fetching: false,
         error: null
       };
+    }
+    case 'UPDATE_ASSIGNMENTS_PENDING': {
+        return {
+            ...state,
+            updating: true
+        }
+    }
+    case 'UPDATE_ASSIGNMENTS_REJECTED': {
+        return {
+            ...state,
+            updating: false,
+            updated: false,
+            error: action.payload,
+        }
+    }
+    case 'UPDATE_ASSIGNMENTS_FULFILLED': {
+        return {
+            ...state,
+            updating: false,
+            updated: true,
+            fetched: false,
+            error: null,
+        }
+    }
+    case 'SEND_ASSIGNMENTS_PENDING': {
+        return {
+            ...state,
+            sending: true
+        }
+    }
+    case 'SEND_ASSIGNMENTS_REJECTED': {
+        return {
+            ...state,
+            sending: false,
+            sent: false,
+            error: action.payload,
+        }
+    }
+    case 'SEND_ASSIGNMENTS_FULFILLED': {
+        return {
+            ...state,
+            sending: false,
+            sent: true,
+            error: null,
+        }
     }
     default: {
       return state;

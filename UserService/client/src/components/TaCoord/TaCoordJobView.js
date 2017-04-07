@@ -2,6 +2,7 @@ import React from "react";
 import { taCoordClient } from "../../axiosClient";
 import { fetchListings } from "../../actions/listingsActions";
 import { createAssignment } from "../../actions/assignmentsActions";
+import { resetAd } from "../../actions/courseActions";
 import {connect} from "react-redux";
 import TaCoordJob from "./TaCoordJob";
 import LazyLoad from 'react-lazy-load';
@@ -12,7 +13,8 @@ import {Droppable} from 'react-drag-and-drop';
   return {
     listings : store.listings,
     user: store.user,
-    assignments: store.assignments
+    assignments: store.assignments,
+    courses: store.courses
   };
 })
 
@@ -45,6 +47,18 @@ export default class TaCoordJobView extends React.Component {
       this.setState({
         showComponent: true
       });
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.courses.posted){
+      var config = {
+        headers: {'x-access-token': this.props.user.user.user_token}
+      };
+      this.props.dispatch(resetAd())
+      this.props.dispatch(fetchListings(
+        taCoordClient.get("/posting", config)
+      ));
     }
   }
 
