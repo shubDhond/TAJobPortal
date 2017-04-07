@@ -45,6 +45,7 @@ export default class TaCoordSingleView extends React.Component {
             course_name: null,
             requirements: null,
             end_date: null,
+            start_date: null,
             tas_needed: null,
             term: null,
             assignments: []
@@ -82,6 +83,7 @@ export default class TaCoordSingleView extends React.Component {
                 course_name: course.course_name,
                 requirements: course.requirements,
                 end_date: course.end_date,
+                start_date: course.start_date,
                 tas_needed: course.tas_needed,
                 term: course.term,
             });
@@ -95,10 +97,13 @@ export default class TaCoordSingleView extends React.Component {
         const headingstyle = {
             marginTop: 8,
             marginBottom: 4
-        }
-        console.log(this.state)
+        };
         for (var ta in this.state.assignments) {
-            tas.push(<h5 key={count++}>{this.state.assignments[ta].student_id}</h5>)
+            tas.push(
+                <div style={{display:'flex',flexDirection:'row'}}>
+                    <h5 key={count++}>{this.state.assignments[ta].student_id}</h5>
+                </div>
+            )
         }
 
         if (this.state.assignments.length != 0 && this.state.course_id != null) {
@@ -113,20 +118,20 @@ export default class TaCoordSingleView extends React.Component {
 
         return (
 
-            <div style={{padding:15}}>
+            <div style={{padding: 15}}>
                 <h4 style={{marginBottom: 15}}>
                     <a onClick={this.toggleBack.bind(this)} className="see-more">
                         <Glyphicon glyph="chevron-left"/>Back</a>
                 </h4>
                 <div className="card">
-                    <Row style={{marginBottom: 30}}>
-                        <Col xs={8}>
-
-                            <h2 style={{margin: 0, fontWeight: 600}}>
-                                {this.state.course_name}
-                            </h2>
-                        </Col>
-                    </Row>
+                    <div style={{display: 'flex'}}>
+                        <h3 style={{flexGrow: 1, marginTop: 0, marginBottom: 16}}>
+                            {this.state.course_name}</h3>
+                        <h5 style={{marginTop: 0, marginRight: 16, alignSelf: "flex-start"}}>
+                            Start: TODO: START DATE</h5>
+                        <h5 style={{marginTop: 0, alignSelf: "flex-start"}}>
+                            End: {this.state.end_date}</h5>
+                    </div>
                     <Row>
                         <Col xs={12}>
                             <div>
@@ -140,18 +145,12 @@ export default class TaCoordSingleView extends React.Component {
                             </div>
                         </Col>
                     </Row>
-                    <Row>
-                        {tas}
-                    </Row>
-                    <Row style={{margintop: 16}}>
-                        <Col xs={4}>
-                            <h6>
-                                End Date: {this.state.end_date}
-                            </h6>
-                        </Col>
-                    </Row>
+                    <div>{tas}
+                    </div>
+
                 </div>
             </div>
         );
     }
 }
+

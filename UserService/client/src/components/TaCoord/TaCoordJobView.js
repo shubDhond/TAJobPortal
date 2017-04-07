@@ -91,6 +91,7 @@ export default class TaCoordJobView extends React.Component {
                                     requirements={listings[course].requirements}
                                     course_id={listings[course].course_id}
                                     posting_id={listings[course].posting_id}
+                                    start_date={listings[course].start_date}
                                     end_date={listings[course].end_date}/>
                     </Droppable>
                 );
