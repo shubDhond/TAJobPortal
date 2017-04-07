@@ -61,6 +61,12 @@ function get_course(assignments, callback, headers) {
             else{
                 assignments[i]['course'] = {};
             }
+            if (assignments[i].ta_assignments.length == 0){
+                index += 1;
+                if (index == assignments.length) {
+                    callback(assignments);
+                }
+            }
             for (let j = 0; j < assignments[i].ta_assignments.length; j++){
                 let url = 'http://localhost:3003/application/' + assignments[i].ta_assignments[j].application_id;
 
@@ -187,6 +193,7 @@ router.put('/:course_id', checkCoordinatorToken, (req, res)=>{
 
 router.delete('/:course_id', checkCoordinatorToken, (req, res) =>{
     "use strict";
+    console.log("asdasdasdasd");
     Assignment.findOne({
         course_id : req.params.course_id
     }, (err, assignment)=>{
@@ -195,12 +202,16 @@ router.delete('/:course_id', checkCoordinatorToken, (req, res) =>{
             res.status(404).json({
                 message: 'Assignment not found.'
             });
+
         } else {
+            console.log(assignment);
             for(let i= 0; i < assignment.ta_assignments.length; i++){
                 if (assignment.ta_assignments[i]['student_id'] == req.body.student_id){
                     assignment.ta_assignments.splice(i, 1);
+                    console.log(assignment.ta_assignments);
                     assignment.save((err) => {
                         if (err) throw err;
+                        console.log(assignment);
                         let new_assign = convertMongoDoc(JSON.stringify([assignment]) );
                         get_course(new_assign, (response) => {
                             res.status(200).json({
