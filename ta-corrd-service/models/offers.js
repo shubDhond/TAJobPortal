@@ -16,6 +16,12 @@ let offerSchema = mongoose.Schema({
         required: true
     },
 
+    posting_id : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'Posting',
+        required: true
+    },
+
     course_id : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course',
@@ -24,7 +30,8 @@ let offerSchema = mongoose.Schema({
 
     status:{
        type: String,
-        enum : ['offer_sent', 'offer_accepted']
+        enum : ['offer_sent', 'offer_accepted'],
+        default: 'offer_sent'
     },
 
     deadline: {
