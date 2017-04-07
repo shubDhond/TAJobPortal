@@ -118,7 +118,7 @@ class ApplicantList extends Component{
 
             return Object.keys(obj).map((applicant) => {
                 return (
-                    
+
                     <Panel key={obj[applicant].user_id} header=
                         {<div>
                             <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}
@@ -158,17 +158,12 @@ class ApplicantList extends Component{
     render(){
 
         return (
-            <div style={{overflow: 'auto', maxHeight: 500}}>
-
-                <div className="filler" />
-                <LazyLoad height={762} offsetVertical={300}>
+            <div style={{padding:15,overflow: 'auto'}} className="fullheight">
+                <LazyLoad height={'100%'} offsetVertical={300}>
                     <Accordion>
                         {this.getApplicants()}
                     </Accordion>
                 </LazyLoad>
-                <div className="filler" />
-
-
             </div>
         );
     }
