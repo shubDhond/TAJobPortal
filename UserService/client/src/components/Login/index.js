@@ -108,7 +108,7 @@ class Login extends Component {
 
   render() {
 
-    if (this.props.user.authenticated){
+    if (this.props.user.user.id){
       if(this.props.user.user.user_type === "student"){
           browserHistory.push("/app/jobs")
       }else if (this.props.user.user.user_type === "ta-coordinator") {

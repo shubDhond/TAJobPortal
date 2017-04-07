@@ -56,101 +56,86 @@ export default class TaCoordSingleView extends React.Component {
         this.props.dispatch(toggleComponent());
 
     }
+  componentWillReceiveProps(nextProps) {
+    const {listing} = nextProps.listings;
 
-    componentWillReceiveProps(nextProps) {
-        const {listing} = nextProps.listings;
+    if(listing.fetched){
+        var course = nextProps.listings.listing.course;
 
-        if (nextProps.assignments.fetched && this.state.assignments.length == 0) {
-            //look for course_id matching this one
-            let assignments = nextProps.assignments.assignments
-            for (var i = 0; i < assignments.length; i++) {
-                if (assignments[i].course_id === this.props.courses.course_id) {
-                    this.setState({
-                        assignments: assignments[i].ta_assignments
-                    })
-                    break;
-                }
-            }
-        }
+        this.setState({...this.state,
+            posting_id: course.id,
+            course_id: course.course_id,
+            course_name: course.course_name,
+            requirements: course.requirements,
+            end_date: course.end_date,
+            tas_needed: course.tas_needed,
+            term: course.term,
+        });
+    }
+  }
 
-        if (listing.fetched) {
-            var course = nextProps.listings.listing.course;
+  render() {
+    let tas = [];
+    let count = 0;
 
-            this.setState({
-                ...this.state,
-                posting_id: course.id,
-                course_id: course.course_id,
-                course_name: course.course_name,
-                requirements: course.requirements,
-                end_date: course.end_date,
-                start_date: course.start_date,
-                tas_needed: course.tas_needed,
-                term: course.term,
-            });
-        }
+    const headingstyle = {
+        marginTop: 8,
+        marginBottom: 4
     }
 
-    render() {
-        let tas = [];
-        let count = 0;
 
-        const headingstyle = {
-            marginTop: 8,
-            marginBottom: 4
-        };
-        for (var ta in this.state.assignments) {
-            tas.push(
-                <div style={{display:'flex',flexDirection:'row'}}>
-                    <h5 key={count++}>{this.state.assignments[ta].student_id}</h5>
-                </div>
-            )
-        }
+    if(this.props.assignments.assignments){
+      //look for course_id matching this one
+      let assignments = this.props.assignments.assignments;
+      for(var i = 0; i < assignments.length; i++){
+        if(assignments[i].course_id===this.state.course_id){
+          if(assignments[i].ta_assignments.length){
 
-        if (this.state.assignments.length != 0 && this.state.course_id != null) {
-            console.log("kjbkjbjkbkj", this.state);
-
-            for (var ta in this.state.assignments) {
-                tas.push(<ApplicantListItem key={ta} course_id={this.state.course_id}
-                                            student_id={this.state.assignments[ta].student_id}/>)
+            for(var ta in assignments[i].ta_assignments){
+              let assignment = assignments[i].ta_assignments[ta];
+              tas.push(<ApplicantListItem key={ta} course_id={this.state.course_id} student_id={assignment.student_id} user_id={assignment.application.user_id} application_id={assignment.application._id} posting_id={assignment.posting_id}/>)
             }
+          }
+          break;
         }
-        else tas = <h5>Loading applicants... </h5>
-
-        return (
-
-            <div style={{padding: 15}}>
-                <h4 style={{marginBottom: 15}}>
-                    <a onClick={this.toggleBack.bind(this)} className="see-more">
-                        <Glyphicon glyph="chevron-left"/>Back</a>
-                </h4>
-                <div className="card">
-                    <div style={{display: 'flex'}}>
-                        <h3 style={{flexGrow: 1, marginTop: 0, marginBottom: 16}}>
-                            {this.state.course_name}</h3>
-                        <h5 style={{marginTop: 0, marginRight: 16, alignSelf: "flex-start"}}>
-                            Start: TODO: START DATE</h5>
-                        <h5 style={{marginTop: 0, alignSelf: "flex-start"}}>
-                            End: {this.state.end_date}</h5>
-                    </div>
-                    <Row>
-                        <Col xs={12}>
-                            <div>
-                                <h6 style={headingstyle}>Requirements:</h6>
-                                {this.state.requirements}
-                                <div style={{marginTop: 32}}/>
-                                <h6 style={headingstyle}>Term:</h6>
-                                {this.state.term}
-                                <h6 style={headingstyle}>TAs Needed:</h6>
-                                {this.state.tas_needed}
-                            </div>
-                        </Col>
-                    </Row>
-                    <div>{tas}
-                    </div>
-
-                </div>
-            </div>
-        );
+      }
     }
+
+      return (
+
+          <div style={{padding: 15}}>
+              <h4 style={{marginBottom: 15}}>
+                  <a onClick={this.toggleBack.bind(this)} className="see-more">
+                      <Glyphicon glyph="chevron-left"/>Back</a>
+              </h4>
+              <div className="card">
+                  <div style={{display: 'flex'}}>
+                      <h3 style={{flexGrow: 1, marginTop: 0, marginBottom: 16}}>
+                          {this.state.course_name}</h3>
+                      <h5 style={{marginTop: 0, marginRight: 16, alignSelf: "flex-start"}}>
+                          Start: TODO: START DATE</h5>
+                      <h5 style={{marginTop: 0, alignSelf: "flex-start"}}>
+                          End: {this.state.end_date}</h5>
+                  </div>
+                  <Row>
+                      <Col xs={12}>
+                          <div>
+                              <h6 style={headingstyle}>Requirements:</h6>
+                              {this.state.requirements}
+                              <div style={{marginTop: 32}}/>
+                              <h6 style={headingstyle}>Term:</h6>
+                              {this.state.term}
+                              <h6 style={headingstyle}>TAs Needed:</h6>
+                              {this.state.tas_needed}
+                          </div>
+                      </Col>
+                  </Row>
+                  <div>{tas}
+                  </div>
+
+              </div>
+          </div>
+      );
+  }
 }
 
