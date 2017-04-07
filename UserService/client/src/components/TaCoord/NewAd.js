@@ -1,4 +1,5 @@
 import React from "react";
+
 import {Button, ControlLabel, FormControl, FormGroup, Modal,Glyphicon} from "react-bootstrap";
 import RichTextEditor from "react-rte";
 import {taCoordClient} from "../../axiosClient";
@@ -13,6 +14,7 @@ import {fetchCourses, postAd} from "../../actions/courseActions";
 })
 
 export default class NewAd extends React.Component {
+
 
     componentWillMount() {
 
@@ -52,7 +54,9 @@ export default class NewAd extends React.Component {
                 start_date: "",
                 end_date: "",
                 tas_needed: "",
-                course_id: ""
+                course_id: "",
+                posted: false,
+                error: null
             }
         }
         this.onChange = this.onChange.bind(this);
@@ -109,19 +113,27 @@ export default class NewAd extends React.Component {
         let editorVal = this.state.form.requirements.toString("html")
 
         // fill in data for post here
-        let data = {
-            course_id: this.state.form.course_id,
-            requirements: editorVal,
-            start_date: this.state.form.start_date,
-            end_date: this.state.form.end_date
-        }
+        if (this.state.form.course_id && editorVal && this.state.form.start_date && this.state.form.end_date && this.state.form.tas_needed && this.state.form.tas_needed > 0){
+          this.setState({
+            posted: true
+          })
+          
+          let data = {
+              course_id: this.state.form.course_id,
+              requirements: editorVal,
+              start_date: this.state.form.start_date,
+              end_date: this.state.form.end_date,
+              tas_needed: this.state.form.tas_needed
+          }
 
-        var config = {
-            headers: {'x-access-token': this.props.user.user.user_token}
-        };
-        this.props.dispatch(postAd(
-            taCoordClient.post("/posting", data, config)
-        ));
+          var config = {
+              headers: {'x-access-token': this.props.user.user.user_token}
+          };
+
+          this.props.dispatch(postAd(
+              taCoordClient.post("/posting", data, config)
+          ));
+        }
     }
 
     render() {
@@ -132,6 +144,15 @@ export default class NewAd extends React.Component {
                     {courses[i].course_name}
                 </option>
             )
+        }
+        let res = null;
+        console.log(this.state.posted)
+        console.log(this.state.error)
+        console.log(!this.state.error);
+        if (this.state.posted && this.state.error == null) {
+          res = <h3>Successfully posted ad!</h3>
+        } else {
+          res = this.state.error
         }
         return (
             <div >
@@ -183,7 +204,7 @@ export default class NewAd extends React.Component {
                 </Modal.Body>
                 <Modal.Footer style={{display:'flex',flexDirection:'row' ,justifyContent:"flex-end"}}>
                     <Glyphicon style={{color:"#F50057",display:"inline-block",marginRight:8,fontSize:24,alignSelf:'center'}} glyph="bell"/>
-                    <h4 style={{color:"#F50057" ,display:"inline-block",marginRight:16,alignSelf:'center'}}>John, display Error message here</h4>
+                    <h4 style={{color:"#F50057" ,display:"inline-block",marginRight:16,alignSelf:'center'}}>{res}</h4>
 
                     <Button onClick={this.sendPost.bind(this)} bsStyle="primary">Submit</Button>
                 </Modal.Footer>

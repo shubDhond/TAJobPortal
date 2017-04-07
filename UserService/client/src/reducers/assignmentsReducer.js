@@ -83,6 +83,28 @@ export default function reducer(state={
             error: null,
         }
     }
+    case 'SEND_ASSIGNMENTS_PENDING': {
+        return {
+            ...state,
+            sending: true
+        }
+    }
+    case 'SEND_ASSIGNMENTS_REJECTED': {
+        return {
+            ...state,
+            sending: false,
+            sent: false,
+            error: action.payload,
+        }
+    }
+    case 'SEND_ASSIGNMENTS_FULFILLED': {
+        return {
+            ...state,
+            sending: false,
+            sent: true,
+            error: null,
+        }
+    }
     default: {
       return state;
     }

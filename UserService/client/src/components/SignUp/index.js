@@ -202,6 +202,7 @@ class SignUp extends Component {
                               <Col xs={12}>
                                 <FormControl type="password" autoComplete="off"
                                                 placeholder="Password" inputRef={ref => {this.password = ref;}}/>
+                                <div style={{color: 'gray'}}>Your password should have a capital letter, a number and should be greater than 8 characters in length.</div>                
                                 <div style={{color: 'red'}}>{this.state.passwordError}</div>
                               </Col>
                           </Row>
@@ -224,7 +225,7 @@ class SignUp extends Component {
                           <Row>
                               <Col xs={12}>
                                   <Button block bsStyle="primary"
-                                          bsSize="large" onClick={this.signUp}>Creat an
+                                          bsSize="large" onClick={this.signUp}>Create an
                                       Account</Button>
                               </Col>
                           </Row>

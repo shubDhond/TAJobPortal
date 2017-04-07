@@ -17,6 +17,13 @@ export default function reducer(state={
           courses: action.payload,
         }
       }
+      case "RESET_AD": {
+        return {
+          ...state,
+          posting: false,
+          posted: false
+        }
+      }
       case "TOGGLE_COMPONENT": {
         if (state.showComponent) {
           return{

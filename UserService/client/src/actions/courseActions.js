@@ -24,3 +24,9 @@ export function postAd(requestPromise) {
           payload: requestPromise
       }
 }
+
+export function resetAd() {
+  return {
+          type: "RESET_AD"
+      }
+}
