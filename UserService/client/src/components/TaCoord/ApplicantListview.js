@@ -95,7 +95,6 @@ class Courses extends Component{
 
     getCourses(){
         var courses = this.props.courses;
-        console.log(this.props.showComponent)
         return courses.map((course, index) => {
 
             return (

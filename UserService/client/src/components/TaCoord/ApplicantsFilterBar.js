@@ -16,7 +16,8 @@ export default class ApplicantsFilterBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: ''
+            value: '',
+            filter: 'All'
         };
 
 
@@ -36,6 +37,9 @@ export default class ApplicantsFilterBar extends React.Component {
 
     YearInc(e) {
         e.preventDefault();
+        this.setState({
+            filter: "yearInc"
+        });
         var sorted_applicants = sortBy(this.props.applicants, [function(n) {
             return n.year_of_study;
         }]);
@@ -43,11 +47,17 @@ export default class ApplicantsFilterBar extends React.Component {
     }
     YearDes(e) {
         e.preventDefault();
+        this.setState({
+            filter: "yearDnc"
+        });
         var sorted_applicants = orderBy(this.props.applicants, [function(n) {return n.year_of_study;}], ['desc']);
         this.props.dispatch(setApplicants(sorted_applicants));
     }
     UG(e) {
         e.preventDefault();
+        this.setState({
+            filter: "UG"
+        });
         var sorted_applicants = filter(this.props.applicants, function(n) {
             return n.program === "UG";
         });
@@ -55,6 +65,9 @@ export default class ApplicantsFilterBar extends React.Component {
     }
     MSC(e) {
         e.preventDefault();
+        this.setState({
+            filter: "MSC"
+        });
         var sorted_applicants = filter(this.props.applicants, function(n) {
             return n.program === "MSC";
         });
@@ -62,6 +75,9 @@ export default class ApplicantsFilterBar extends React.Component {
     }
     MSAC(e) {
         e.preventDefault();
+        this.setState({
+            filter: "MSAC"
+        });
         var sorted_applicants = filter(this.props.applicants, function(n) {
             return n.program === "MSAC";
         });
@@ -69,6 +85,9 @@ export default class ApplicantsFilterBar extends React.Component {
     }
     PHD(e) {
         e.preventDefault();
+        this.setState({
+            filter: "PHD"
+        });
         var sorted_applicants = filter(this.props.applicants, function(n) {
             return n.program === "PHD";
         });
@@ -76,6 +95,9 @@ export default class ApplicantsFilterBar extends React.Component {
     }
     GetAll(e) {
         e.preventDefault();
+        this.setState({
+            filter: "All"
+        });
         this.props.dispatch(setApplicants(this.props.applicants));
     }
 
@@ -90,7 +112,7 @@ export default class ApplicantsFilterBar extends React.Component {
 
             <FormGroup style={{marginBottom:0}}>
             <Row>
-                <Col xs={9}  style={{paddingRight:0}}>
+                <Col xs={6}  style={{paddingRight:0}}>
                         <FormControl
                             bsSize="large"
                             type="text"
@@ -100,7 +122,7 @@ export default class ApplicantsFilterBar extends React.Component {
                         />
                 </Col>
                 <Col xs={2}>
-                    <DropdownButton bsSize="large" title=" Filter By" pullRight id="split-button-pull-right">
+                    <DropdownButton bsSize="large" title={"Filter by: "+this.state.filter} pullRight id="split-button-pull-right">
                         <MenuItem eventKey="1" onClick={this.YearInc.bind(this)}>Year (ascending)</MenuItem>
                         <MenuItem eventKey="2" onClick={this.YearDes.bind(this)}>Year (descending)</MenuItem>
                         <MenuItem eventKey="3" onClick={this.UG.bind(this)}>UG</MenuItem>
