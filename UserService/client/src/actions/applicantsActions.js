@@ -12,6 +12,13 @@ export function fetchAllRankings(requestPromise) {
     };
 }
 
+export function fetchUnassigned(requestPromise) {
+    return {
+        type: 'FETCH_UNASSIGNED',
+        payload: requestPromise
+    };
+}
+
 export function setApplicants(applicants) {
     return {
         type: 'SET_APPLICANTS',

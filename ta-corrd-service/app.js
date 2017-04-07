@@ -9,6 +9,7 @@ let index = require('./routes/index');
 let course = require('./routes/course');
 let assignments = require('./routes/assignments');
 let posting = require('./routes/posting');
+let offers = require('./routes/offers');
 
 let app = express();
 
@@ -29,6 +30,7 @@ app.use('/', index);
 app.use('/course', course);
 app.use('/assignment', assignments);
 app.use('/posting', posting);
+app.use('/offers', offers);
 
 
 /**
