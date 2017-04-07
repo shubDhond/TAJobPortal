@@ -13,7 +13,7 @@ let checkGenericToken = require('./checkCoordinatorToken');
  * query_params could be
  * anything in defined in the Application model
  * */
-router.get('/', checkCoordinatorTokenOrStudentById, (req, res) => {
+router.get('/', (req, res) => {
     // let params =  req.query;
     Application.find(req.query, (err, applications)=>{
         "use strict";

@@ -4,8 +4,11 @@ export default function reducer(state={
       description: null,
       deadline: null,
     },
+    applicant: {},
     submitting: false,
     submitted: false,
+    fetched: false,
+    fetching: true,
     error: null,
   }, action) {
 
@@ -36,6 +39,32 @@ export default function reducer(state={
                 error: null,
             }
         }
+
+        case 'FETCH_APPLICANT_PENDING': {
+            return {
+                ...state,
+                fetching: true,
+                fetched: false,
+            }
+        }
+        case 'FETCH_APPLICANT_REJECTED': {
+            return {
+                ...state,
+                fetching: false,
+                fetched: false,
+                error: action.payload,
+            }
+        }
+        case 'FETCH_APPLICANT_FULFILLED': {
+            return {
+                ...state,
+                fetching: false,
+                fetched: true,
+                applicant: action.payload.data,
+                error: null,
+            }
+        }
+
       default:
         return state
     }
