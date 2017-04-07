@@ -73,7 +73,7 @@ export default class NewAd extends React.Component {
         const target = event.target;
         let value = target.value;
         const name = target.name;
-        console.log(name, value)
+        console.log(name, value);
         this.setState({
             ...this.state,
             form: {
@@ -81,6 +81,7 @@ export default class NewAd extends React.Component {
                 [name]: value
             }
         });
+        console.log(this.state.form);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -147,7 +148,7 @@ export default class NewAd extends React.Component {
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <FormGroup controlId="formControlsSelect" style={{flex:1}}>
                             <ControlLabel>Course</ControlLabel>
-                            <FormControl componentClass="select" value={this.state.course_id}
+                            <FormControl componentClass="select" value={this.state.form.course_id}
                                          onChange={this.handleInputChange.bind(this)}
                                          name="course_id"
                                          placeholder="Course Code">
