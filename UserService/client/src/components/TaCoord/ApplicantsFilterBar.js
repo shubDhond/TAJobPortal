@@ -95,7 +95,7 @@ export default class ApplicantsFilterBar extends React.Component {
         }
 
         return (
-
+            <div>
             <FormGroup  style={{margin: 0, display: 'flex',flexDirection:"row"}}>
                     <FormControl
                         bsSize="large"
@@ -120,9 +120,10 @@ export default class ApplicantsFilterBar extends React.Component {
                             Applicants</MenuItem>
 
                     </DropdownButton>
-                {header}
-            </FormGroup>
 
+            </FormGroup>
+                {header}
+            </div>
         );
     }
 }

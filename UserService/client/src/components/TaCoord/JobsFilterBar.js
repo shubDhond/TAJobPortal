@@ -27,25 +27,27 @@ export default class JobsFilterBar extends React.Component {
 
     render() {
         return (
-            <FormGroup style={{margin: 0, display: 'flex',flexDirection:"row"}}>
+            <div>
+                <FormGroup style={{margin: 0, display: 'flex', flexDirection: "row"}}>
 
-                <FormControl style={{flexGrow:1}}
-                             bsSize="large" type="text" placeholder="Search"/>
+                    <FormControl style={{flexGrow: 1}}
+                                 bsSize="large" type="text" placeholder="Search"/>
 
-                <DropdownButton style={{marginLeft:8, marginRight:8}} title="Sort By" bsSize="large" pullRight
-                                id="split-button-pull-right">
-                    <MenuItem eventKey="1">Year</MenuItem>
-                    <MenuItem eventKey="2">Program</MenuItem>
-                </DropdownButton>
+                    <DropdownButton style={{marginLeft: 8, marginRight: 8}} title="Sort By"
+                                    bsSize="large" pullRight
+                                    id="split-button-pull-right">
+                        <MenuItem eventKey="1">Year</MenuItem>
+                        <MenuItem eventKey="2">Program</MenuItem>
+                    </DropdownButton>
 
-                <Button type="submit" style={{padding: 12,flexShrink:1}} bsStyle="primary"
-                        onClick={this.open}>New Ad+</Button>
+                    <Button type="submit" style={{padding: 12, flexShrink: 1}} bsStyle="primary"
+                            onClick={this.open}>Create posting+</Button>
 
-                <Modal show={this.state.showModal} onHide={this.close}>
-                    <NewAd/>
-                </Modal>
-
-            </FormGroup>
+                    <Modal show={this.state.showModal} onHide={this.close} bsSize="large">
+                        <NewAd/>
+                    </Modal>
+                </FormGroup>
+            </div>
         );
     }
 }
