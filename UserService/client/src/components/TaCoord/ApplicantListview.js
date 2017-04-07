@@ -62,15 +62,15 @@ class AboutMe extends Component{
                 <p>Phone Number: {this.props.phone_number}</p>
                 <p>Email: {this.props.email}</p>
                 <p>Program: {this.props.program}</p>
-                <p>year_of_study: {this.props.year_of_study}</p>
-                <p>department_explain: {this.props.department_explain}</p>
-                <p>work_status: {this.props.work_status}</p>
-                <p>work_status_explain: {this.props.work_status_explain}</p>
-                <p>student_status: {this.props.student_status}</p>
-                <p>student_status_explain: {this.props.student_status_explain}</p>
-                <p>status: {this.props.status}</p>
-                <p>previous_assignments: {this.props.previous_assignments}</p>
-                <p>courses: {this.props.courses}</p>
+                <p>Year of study: {this.props.year_of_study}</p>
+                <p>Department explain: {this.props.department_explain}</p>
+                <p>Work status: {this.props.work_status}</p>
+                <p>Work status explain: {this.props.work_status_explain}</p>
+                <p>Student status: {this.props.student_status}</p>
+                <p>Student status explain: {this.props.student_status_explain}</p>
+                <p>Status: {this.props.status}</p>
+                <p>Previous assignments: {this.props.previous_assignments}</p>
+                <p>Courses: {this.props.courses}</p>
             </div>
         );
     }
