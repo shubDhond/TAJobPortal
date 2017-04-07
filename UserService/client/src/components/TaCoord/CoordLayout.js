@@ -6,6 +6,7 @@ import Header from "./NavBar"
 
 import Applicant from './Applicant';
 import CourseList from './courses';
+import {logout} from "../../actions/userActions"
 
 @connect((store) => {
     return {
@@ -14,26 +15,25 @@ import CourseList from './courses';
 })
 export default class Layout extends React.Component {
 
-    componentWillMount(){
-        if (!this.props.user.user.id){
-            browserHistory.push("/")
-        }
-    }
+    // componentWillMount(){
+    //     if (!this.props.user.authenticated){
+    //         browserHistory.push("/")
+    //         this.props.dispatch(logout())
+    //     }
+    // }
 
     render() {
-
         return (
-            <div >
+
+            <div className="fullheight">
                 <Header/>
-                <Grid fluid style={{marginTop:82}}>
-                    <Row className="show-grid">
-
-                      <Col style={{padding:0}} md={6}>
-
-                        <Applicant />
+                <Grid fluid  className="fullheight">
+                    <Row  className="show-grid fullheight"  >
+                      <Col style={{padding:0}} md={6} className="fullheight">
+                        <Applicant  className="fullheight"/>
                       </Col>
-                      <Col style={{padding:0}} md={6}>
-                        <CourseList />
+                      <Col  style={{padding:0}} md={6}  className="fullheight">
+                        <CourseList className="fullheight"/>
                       </Col>
 
                     </Row>
