@@ -17,7 +17,7 @@ const dummyInbox = [
 ]
 
 export default function reducer(state={
-    inbox: dummyInbox,
+    inbox: [],
     fetching: false,
     fetched: false,
     accepting: false,
@@ -29,7 +29,8 @@ export default function reducer(state={
             return {
                 ...state,
                 fetching: true,
-                fetched: false
+                fetched: false,
+                accepted: false
             };
         }
         case 'FETCH_INBOX_REJECTED': {
@@ -71,6 +72,7 @@ export default function reducer(state={
                 ...state,
                 accepted: true,
                 accepting: false,
+                fetched: false,
                 error: null
             };
         }
