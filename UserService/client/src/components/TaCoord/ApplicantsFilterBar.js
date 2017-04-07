@@ -27,11 +27,22 @@ export default class ApplicantsFilterBar extends React.Component {
 
     handleChange(event) {
         this.setState({value: event.target.value});
+        console.log(event.target.value);
 
         var sorted_applicants = filter(this.props.applicants_copy, function (n) {
             return includes(n.first_name.toLowerCase() + ' '.concat(n.last_name).toLowerCase() + ' '.concat(n.student_number), event.target.value.toLowerCase());
         });
-        this.props.dispatch(setApplicants(sorted_applicants));
+        if (event.target.value === ''){
+            if (this.state.checked){
+                this.props.dispatch(setApplicants(this.props.unassigned));
+            }else{
+                this.props.dispatch(setApplicants(this.props.applicants));
+            }
+
+        }else{
+            this.props.dispatch(setApplicants(sorted_applicants));
+        }
+
 
     }
 
