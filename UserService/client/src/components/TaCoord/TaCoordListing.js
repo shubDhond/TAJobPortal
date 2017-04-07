@@ -13,7 +13,7 @@ import TaCoordSingleView from "./TaCoordSingleView";
 export default class TaCoordListing extends React.Component {
   render() {
     return (
-      <div  className="fullheight">
+      <div  style={{display:'flex',flexFlow: 'column'}} className="fullheight">
         {this.props.courses.showComponent ?
           <TaCoordSingleView  className="fullheight"/> :
           <TaCoordJobView  className="fullheight" />

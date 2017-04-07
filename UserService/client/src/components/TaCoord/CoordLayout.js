@@ -27,7 +27,6 @@ export default class Layout extends React.Component {
                 <Header/>
                 <Grid fluid  className="fullheight">
                     <Row  className="show-grid fullheight"  >
-
                       <Col style={{padding:0}} md={6} className="fullheight">
                         <Applicant  className="fullheight"/>
                       </Col>
