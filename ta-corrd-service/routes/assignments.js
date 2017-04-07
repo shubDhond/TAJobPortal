@@ -191,7 +191,7 @@ router.put('/:course_id', checkCoordinatorToken, (req, res)=>{
     });
 });
 
-router.post('/:course_id', checkCoordinatorToken, (req, res) =>{
+router.delete('/:course_id', checkCoordinatorToken, (req, res) =>{
     "use strict";
     console.log("asdasdasdasd");
     Assignment.findOne({
