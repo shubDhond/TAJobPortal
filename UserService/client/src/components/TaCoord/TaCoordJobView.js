@@ -73,18 +73,22 @@ export default class TaCoordJobView extends React.Component {
           }
 
           return (
-              <Droppable types={['applicant']}
-                          onDragOver={() => this.setState({...this.state, dragOver: course})}
-                          onDragLeave={() => this.setState({...this.state, dragOver: null})}
-                          key={course}
-                          style={dragOverStyle}
-                          onDrop={(data) => this.assignApplicant({
-                            ...JSON.parse(data.applicant),
-                            posting_id: listings[course].posting_id,
-                            course_id: listings[course].course_id
-                          })}>
-                <TaCoordJob showComponent={listings[course].showComponent} course_name={listings[course].course_name} requirements={listings[course].requirements} course_id={listings[course].course_id} posting_id={listings[course].posting_id} end_date={listings[course].end_date}/>
-              </Droppable>
+              <LazyLoad height='100%'>
+                  <Accordion>
+                      <Droppable types={['applicant']}
+                                  onDragOver={() => this.setState({...this.state, dragOver: course})}
+                                  onDragLeave={() => this.setState({...this.state, dragOver: null})}
+                                  key={course}
+                                  style={dragOverStyle}
+                                  onDrop={(data) => this.assignApplicant({
+                                    ...JSON.parse(data.applicant),
+                                    posting_id: listings[course].posting_id,
+                                    course_id: listings[course].course_id
+                                  })}>
+                        <TaCoordJob showComponent={listings[course].showComponent} course_name={listings[course].course_name} requirements={listings[course].requirements} course_id={listings[course].course_id} posting_id={listings[course].posting_id} end_date={listings[course].end_date}/>
+                      </Droppable>
+                  </Accordion>
+              </LazyLoad>
           );
         });
     }else {
@@ -111,11 +115,7 @@ export default class TaCoordJobView extends React.Component {
 
     return (
         <div style={{padding:15,overflow: 'auto'}} className="fullheight">
-          <LazyLoad height='100%'>
-            <Accordion>
-                {this.getCourses()}
-            </Accordion>
-          </LazyLoad>
+            {this.getCourses()}
         </div>
 
     );

@@ -6,11 +6,13 @@ import sortBy from "lodash/sortBy";
 import orderBy from "lodash/orderBy";
 import filter from "lodash/filter";
 import includes from "lodash/includes";
+import { taCoordClient } from "../../axiosClient";
 
 @connect((store) => {
     return {
         applicants: store.applicants.applicants,
-        applicants_copy: store.applicants.applicants_copy
+        applicants_copy: store.applicants.applicants_copy,
+        unassigned: store.applicants.unassigned
     };
 })
 export default class ApplicantsFilterBar extends React.Component {
@@ -101,6 +103,16 @@ export default class ApplicantsFilterBar extends React.Component {
         });
         this.props.dispatch(setApplicants(this.props.applicants));
     }
+    Unassigned(e) {
+        e.preventDefault();
+        console.log("unassigned clicked");
+        this.setState({
+            filter: "Unassigned"
+        });
+
+        this.props.dispatch(setApplicants(this.props.unassigned));
+    }
+
 
 
     render() {
@@ -130,7 +142,7 @@ export default class ApplicantsFilterBar extends React.Component {
                         <MenuItem eventKey="4" onClick={this.MSC.bind(this)}>MSC</MenuItem>
                         <MenuItem eventKey="5" onClick={this.MSAC.bind(this)}>MSAC</MenuItem>
                         <MenuItem eventKey="6" onClick={this.PHD.bind(this)}>PHD</MenuItem>
-                        <MenuItem eventKey="7">Unassigned</MenuItem>
+                        <MenuItem eventKey="7" onClick={this.Unassigned.bind(this)}>Unassigned</MenuItem>
                         <MenuItem eventKey="8" onClick={this.GetAll.bind(this)}>All
                             Applicants</MenuItem>
 
