@@ -185,7 +185,7 @@ class ApplicantList extends Component {
 
             return Object.keys(obj).map((applicant) => {
                 return (
-                    <LazyLoad height={137}onContentVisible={() => console.log('load')}>
+                    <LazyLoad >
                         <Accordion>
                             <Panel key={obj[applicant].user_id} header=
                                 {<div>

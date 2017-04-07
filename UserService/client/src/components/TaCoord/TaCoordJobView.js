@@ -75,8 +75,7 @@ export default class TaCoordJobView extends React.Component {
                     dragOverStyle['boxShadow'] = "";
                 }
                 return (
-                    <LazyLoad height={286}>
-                        <Accordion>
+                    <LazyLoad>
                             <Droppable types={['applicant']}
                                        onDragOver={() => this.setState({
                                            ...this.state,
@@ -108,7 +107,6 @@ export default class TaCoordJobView extends React.Component {
                                             posting_id={listings[course].posting_id}
                                             end_date={listings[course].end_date}/>
                             </Droppable>
-                        </Accordion>
                     </LazyLoad>
                 );
             });
