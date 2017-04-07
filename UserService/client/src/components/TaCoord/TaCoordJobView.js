@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import TaCoordJob from "./TaCoordJob";
 import LazyLoad from "react-lazy-load";
 import {Droppable} from "react-drag-and-drop";
+import { Panel, Accordion, Glyphicon} from 'react-bootstrap';
 
 @connect((store) => {
     return {
