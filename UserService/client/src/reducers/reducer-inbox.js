@@ -17,20 +17,23 @@ const dummyInbox = [
 ]
 
 export default function reducer(state={
-    inbox: dummyInbox,
+    inbox: [],
     fetching: false,
     fetched: false,
+    accepting: false,
+    accepted: false,
     error: null
 }, action) {
     switch (action.type) {
-        case 'GET_INBOX_PENDING': {
+        case 'FETCH_INBOX_PENDING': {
             return {
                 ...state,
                 fetching: true,
-                fetched: false
+                fetched: false,
+                accepted: false
             };
         }
-        case 'GET_INBOX_REJECTED': {
+        case 'FETCH_INBOX_REJECTED': {
             return {
                 ...state,
                 fetching: false,
@@ -38,12 +41,38 @@ export default function reducer(state={
                 error: action.payload.response.data.message
             };
         }
-        case 'GET_INBOX_FULFILLED': {
+        case 'FETCH_INBOX_FULFILLED': {
+            console.log(action.payload.data)
+
             return {
                 ...state,
                 inbox: action.payload.data,
                 fetched: true,
                 fetching: false,
+                error: null
+            };
+        }
+        case 'ACCEPT_OFFER_PENDING': {
+            return {
+                ...state,
+                accepting: true,
+                accepted: false
+            };
+        }
+        case 'ACCEPT_OFFER_REJECTED': {
+            return {
+                ...state,
+                accepting: false,
+                accepted: false,
+                error: action.payload.response.data.message
+            };
+        }
+        case 'ACCEPT_OFFER_FULFILLED': {
+            return {
+                ...state,
+                accepted: true,
+                accepting: false,
+                fetched: false,
                 error: null
             };
         }

@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import TaCoordJob from "./TaCoordJob";
 import LazyLoad from "react-lazy-load";
 import {Droppable} from "react-drag-and-drop";
+import {Accordion} from "react-bootstrap";
 
 @connect((store) => {
     return {
@@ -74,25 +75,41 @@ export default class TaCoordJobView extends React.Component {
                     dragOverStyle['boxShadow'] = "";
                 }
                 return (
-                    <Droppable types={['applicant']}
-                               onDragOver={() => this.setState({...this.state, dragOver: course})}
-                               onDragLeave={() => this.setState({...this.state, dragOver: null})}
-                               onDragEnter={() => this.setState({...this.state, dragOver: null})}
-                               onDragExit={() => this.setState({...this.state, dragOver: null})}
-                               key={course}
-                               style={dragOverStyle}
-                               onDrop={(data) => this.assignApplicant({
-                                   ...JSON.parse(data.applicant),
-                                   posting_id: listings[course].posting_id,
-                                   course_id: listings[course].course_id
-                               })}>
-                        <TaCoordJob showComponent={listings[course].showComponent}
-                                    course_name={listings[course].course_name}
-                                    requirements={listings[course].requirements}
-                                    course_id={listings[course].course_id}
-                                    posting_id={listings[course].posting_id}
-                                    end_date={listings[course].end_date}/>
-                    </Droppable>
+                    <LazyLoad height={286}>
+                        <Accordion>
+                            <Droppable types={['applicant']}
+                                       onDragOver={() => this.setState({
+                                           ...this.state,
+                                           dragOver: course
+                                       })}
+                                       onDragLeave={() => this.setState({
+                                           ...this.state,
+                                           dragOver: null
+                                       })}
+                                       onDragEnter={() => this.setState({
+                                           ...this.state,
+                                           dragOver: null
+                                       })}
+                                       onDragExit={() => this.setState({
+                                           ...this.state,
+                                           dragOver: null
+                                       })}
+                                       key={course}
+                                       style={dragOverStyle}
+                                       onDrop={(data) => this.assignApplicant({
+                                           ...JSON.parse(data.applicant),
+                                           posting_id: listings[course].posting_id,
+                                           course_id: listings[course].course_id
+                                       })}>
+                                <TaCoordJob showComponent={listings[course].showComponent}
+                                            course_name={listings[course].course_name}
+                                            requirements={listings[course].requirements}
+                                            course_id={listings[course].course_id}
+                                            posting_id={listings[course].posting_id}
+                                            end_date={listings[course].end_date}/>
+                            </Droppable>
+                        </Accordion>
+                    </LazyLoad>
                 );
             });
         } else {
@@ -119,15 +136,8 @@ export default class TaCoordJobView extends React.Component {
 
         return (
             <div style={{padding: 15, overflow: 'auto'}} className="fullheight">
-                <LazyLoad height='100%' overflow unmountIfInvisible placeholder={
-                    <div style={{height: 2}}>HELLO</div>
-                }>
-                    <div>
-                        {this.getCourses()}
-                    </div>
-                </LazyLoad>
+                {this.getCourses()}
             </div>
-
         );
     }
 }

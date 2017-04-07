@@ -15,9 +15,9 @@ import {logout} from "../../actions/userActions"
 
 export default class Layout extends React.Component {
     componentWillMount(){
-        if (!this.props.user.authenticated){
-            browserHistory.push("/")
-            this.props.dispatch(logout())
+        if (!this.props.user.user.id || this.props.user.user.user_type === "ta-coordinator"){
+            browserHistory.push("/");
+            this.props.dispatch(logout());
         }
     }
 

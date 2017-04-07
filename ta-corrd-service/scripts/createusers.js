@@ -300,7 +300,7 @@ client.post('http://localhost:3002/ta-coordinators/authenticate', ta_coord_signi
             first_name,
             last_name,
             phone_number: "555-555-5555",
-            program: programs[Math.floor(Math.random() * ((3-0)+0) + 0)],
+            program: programs[Math.floor(Math.random() * ((4-0)+0) + 0)],
             email: first_name + last_name + "@mail.utoronto.ca",
             year_of_study: Math.floor(Math.random() * ((4-1)+1) + 1),
             department: "Computer Science",

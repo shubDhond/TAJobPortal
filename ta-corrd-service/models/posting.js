@@ -25,6 +25,12 @@ let postingSchema = mongoose.Schema({
     end_date: {
         type: Date,
         required: true
+    },
+
+    tas_needed: {
+        type: Number,
+        required: true,
+        default: 1
     }
 });
 
