@@ -10,8 +10,8 @@ let checkGenericToken = require('./checkGenericToken');
 let Client = require('node-rest-client').Client;
 let client = new Client();
 let _ = require('lodash');
-let Client = require('node-rest-client').Client;
-let client = new Client();
+
+
 
 /** GET all assignments or search by query param.
  * query_params could be
