@@ -1,9 +1,11 @@
 import React, {Component} from "react";
+import {bindActionCreators} from "redux";
 import {connect} from 'react-redux';
 import { Panel, Accordion, Glyphicon} from 'react-bootstrap';
 import LazyLoad from 'react-lazy-load';
 import { applicantClient } from "../../axiosClient";
-import {fetchApplicants} from "../../actions/applicantsActions";
+import {fetchApplicants, fetchAllRankings} from "../../actions/applicantsActions";
+import { setSingleCourse, toggleComponent } from "../../actions/courseListingsActions";
 import {Draggable} from 'react-drag-and-drop';
 
 class PanelHeader extends Component{
@@ -61,12 +63,42 @@ class AboutMe extends Component{
     }
 }
 class Courses extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            course_name: this.props.course_name,
+            requirements: this.props.requirements,
+            end_date: this.props.end_date,
+            showComponent: this.props.showComponent,
+            course_id: this.props.course_id,
+            posting_id: this.props.posting_id
+        };
+        //console.log(this.props);
+
+        this.link_course = this.link_course.bind(this);
+    }
+
+    link_course(posting_id) {
+        let state = {
+            course_name: null,
+            requirements: null,
+            end_date: null,
+            showComponent: null,
+            course_id: null,
+            posting_id: posting_id
+        }
+        this.props.dispatch(setSingleCourse(state));
+        if(!this.props.show){
+            this.props.dispatch(toggleComponent());
+        }
+    }
 
     getCourses(){
-        var courses = [this.props.courses][0][0];
-        return Object.keys(courses).map((course) => {
+        var courses = this.props.courses;
+        return courses.map((course, index) => {
+
             return (
-                <h5 style={{display:"inline",marginRight:16}} key={course} type="submit" ><a>{courses[course]}</a></h5>
+                <h5 style={{display:"inline",marginRight:16}} key={index}><a onClick={() => this.link_course(course.posting_id)}>{course.course_code}</a></h5>
             );
         });
     }
@@ -89,11 +121,14 @@ class ApplicantList extends Component{
         this.props.dispatch(fetchApplicants(
             applicantClient.get("/application", config)
         ));
+        this.props.dispatch(fetchAllRankings(
+            applicantClient.get("/rankings", config)
+        ));
     }
 
     constructor(props){
         super(props);
-        const {applicants} = this.props.applicants;
+            const {applicants} = this.props.applicants;
 
         this.state = {
             applicants: applicants
@@ -107,44 +142,65 @@ class ApplicantList extends Component{
             this.setState({...this.state,
                 applicants: applicants.applicants
             });
-        }
 
+        }
     }
+
+
 
     getApplicants(){
         //console.log(this.props.applicants.applicants);
         var obj = [this.props.applicants.applicants_copy][0];
-        if (this.props.applicants.fetched){
+        var rankings = this.props.applicants.allRankings;
+        //console.log(rankings)
+        if (this.props.applicants.fetched && this.props.applicants.ranking_fetched){
 
             return Object.keys(obj).map((applicant) => {
-                return (
+                let dragStyle = {};
 
-                    <Panel key={obj[applicant].user_id} header=
-                        {<div>
-                            <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}
-                                            user_id={obj[applicant].user_id} application_id={obj[applicant].id}/>
-                        </div>}
-                        footer={<div><Courses courses={obj[applicant].courses}/></div>}
-                        eventKey={obj[applicant].user_id}  style={{marginBottom:15}}>
-                        <div style={{padding:0}}>
-                            <AboutMe
-                                phone_number={obj[applicant].phone_number}
-                                email={obj[applicant].email}
-                                program={obj[applicant].program}
-                                year_of_study={obj[applicant].year_of_study}
-                                department_explain={obj[applicant].department_explain}
-                                work_status={obj[applicant].work_status}
-                                work_status_explain={obj[applicant].work_status_explain}
-                                student_status={obj[applicant].student_status}
-                                student_status_explain={obj[applicant].student_status_explain}
-                                status={obj[applicant].status}
-                                previous_assignments={obj[applicant].previous_assignments}
-                                courses={obj[applicant].courses}
-                            />
+                if (this.state.dragging === obj[applicant].user_id) {
+                    dragStyle['border'] = '2px solid blue';
+                }
+                //console.log(rankings[obj[applicant].user_id])
 
-                        </div>
-                    </Panel>
+                return(
+                    <Draggable type='applicant'
+                               data={JSON.stringify({
+                                   student_id: obj[applicant].user_id,
+                                   application_id: obj[applicant].id
+                               })}
+                               key={obj[applicant].user_id}
+                               onDrag={() => this.setState({...this.state, dragging: obj[applicant].user_id})}
+                               onDragEnd={() => this.setState({...this.state, dragging: null})} >
+                        <Panel key={obj[applicant].user_id} header=
+                            {<div>
+                                <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}
+                                             user_id={obj[applicant].user_id} application_id={obj[applicant].id}/>
+                            </div>}
+                               footer={<div><Courses dispatch={this.props.dispatch} show={this.props.courses.showComponent} courses={rankings[obj[applicant].user_id]} /></div>}
+                               eventKey={obj[applicant].user_id}  style={{...dragStyle, marginBottom:15}}>
+                            <div style={{padding:0}}>
+                                <AboutMe
+                                    phone_number={obj[applicant].phone_number}
+                                    email={obj[applicant].email}
+                                    program={obj[applicant].program}
+                                    year_of_study={obj[applicant].year_of_study}
+                                    department_explain={obj[applicant].department_explain}
+                                    work_status={obj[applicant].work_status}
+                                    work_status_explain={obj[applicant].work_status_explain}
+                                    student_status={obj[applicant].student_status}
+                                    student_status_explain={obj[applicant].student_status_explain}
+                                    status={obj[applicant].status}
+                                    previous_assignments={obj[applicant].previous_assignments}
+                                    courses={obj[applicant].courses}
+                                />
+
+                            </div>
+                        </Panel>
+                    </Draggable>
+
                 );
+
             });
 
         }else {
@@ -172,7 +228,9 @@ class ApplicantList extends Component{
 function mapStateToProps(state) {
     return {
         applicants: state.applicants,
-        user: state.user
+        user: state.user,
+        allRankings: state.allRankings,
+        courses: state.courses
     }
 
 }
