@@ -29,7 +29,3 @@
 :global .navbar{
     background: #FFF;
 }
-
-:global .public-DraftEditor-content{
-    height:540px
-}
