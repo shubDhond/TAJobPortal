@@ -21,19 +21,18 @@ export default class Layout extends React.Component {
     }
 
     render() {
-
         return (
-            <div >
+
+            <div className="fullheight">
                 <Header/>
-                <Grid fluid style={{marginTop:82}}>
-                    <Row  className="show-grid">
+                <Grid fluid  className="fullheight">
+                    <Row  className="show-grid fullheight"  >
 
-                      <Col style={{padding:0}} md={6}>
-
-                        <Applicant />
+                      <Col style={{padding:0}} md={6} className="fullheight">
+                        <Applicant  className="fullheight"/>
                       </Col>
-                      <Col style={{padding:0}} md={6}>
-                        <CourseList />
+                      <Col  style={{padding:0}} md={6}  className="fullheight">
+                        <CourseList className="fullheight"/>
                       </Col>
 
                     </Row>

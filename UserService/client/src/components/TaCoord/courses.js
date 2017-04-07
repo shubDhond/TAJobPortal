@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {ListGroup} from "react-bootstrap";
+import {Col, ListGroup} from "react-bootstrap";
 import TaCoordListing from "./TaCoordListing";
 import JobsFilterBar from "./JobsFilterBar";
 
@@ -11,16 +11,16 @@ import JobsFilterBar from "./JobsFilterBar";
 export default class Courses extends React.Component {
     render() {
         return (
-            <div>
-                <div style={{background: "#fff", padding: 0, borderBottom: " 1px solid #E0E0E0"}}>
-                    <h3 style={{margin: 8}}>Courses</h3>
+            <Col xs={12} style={{display:"flex",
+                flexFlow: 'column',
+                padding:0,
+                borderRight:"1px solid #E0E0E0"}} className="fullheight">
+                <div style={{background: "#fff",padding: 15, paddingTop:82, borderBottom: " 1px solid #E0E0E0"}}>
+                    <h3 style={{marginTop: 24, marginBottom:16}}>Courses</h3>
                     <JobsFilterBar  />
-
                 </div>
-
-                    <TaCoordListing />
-            </div>
-
+                    <TaCoordListing  style={{flexGrow:1,height:'auto'}}/>
+            </Col>
         );
     }
 }
