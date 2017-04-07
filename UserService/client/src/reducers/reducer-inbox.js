@@ -41,6 +41,8 @@ export default function reducer(state={
             };
         }
         case 'FETCH_INBOX_FULFILLED': {
+            console.log(action.payload.data)
+
             return {
                 ...state,
                 inbox: action.payload.data,
