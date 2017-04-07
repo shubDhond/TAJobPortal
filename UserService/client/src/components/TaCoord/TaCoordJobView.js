@@ -5,7 +5,6 @@ import {createAssignment} from "../../actions/assignmentsActions";
 import {connect} from "react-redux";
 import TaCoordJob from "./TaCoordJob";
 import LazyLoad from "react-lazy-load";
-import {Accordion} from "react-bootstrap";
 import {Droppable} from "react-drag-and-drop";
 
 @connect((store) => {
@@ -21,6 +20,10 @@ export default class TaCoordJobView extends React.Component {
         super(props);
         const {listings} = this.props.listings;
         this.state = {
+            title: this.props.title,
+            description: this.props.description,
+            deadline: this.props.deadline,
+            status: this.props.status,
             showComponent: true
         };
     }
@@ -62,9 +65,7 @@ export default class TaCoordJobView extends React.Component {
             }
 
             return Object.keys(listings).map((course) => {
-                let dragOverStyle = {
-
-                };
+                let dragOverStyle = {};
 
                 if (this.state.dragOver === course) {
                     dragOverStyle['boxShadow'] = "0px 10px 18px 0px rgba(0,0,0,0.3)";
@@ -112,10 +113,14 @@ export default class TaCoordJobView extends React.Component {
     }
 
     render() {
+        if (this.props.assignments.assignment) {
+            //console.log(this.props.assignments.assignment);
+        }
+
         return (
             <div style={{padding: 15, overflow: 'auto'}} className="fullheight">
                 <LazyLoad height='100%' overflow unmountIfInvisible placeholder={
-                    <div style={{height:2}}>HELLO</div>
+                    <div style={{height: 2}}>HELLO</div>
                 }>
                     <div>
                         {this.getCourses()}

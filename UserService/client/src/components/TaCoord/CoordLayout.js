@@ -6,6 +6,7 @@ import Header from "./NavBar"
 
 import Applicant from './Applicant';
 import CourseList from './courses';
+import {logout} from "../../actions/userActions"
 
 @connect((store) => {
     return {
@@ -14,11 +15,12 @@ import CourseList from './courses';
 })
 export default class Layout extends React.Component {
 
-    componentWillMount(){
-        if (!this.props.user.user.id){
-            browserHistory.push("/")
-        }
-    }
+    // componentWillMount(){
+    //     if (!this.props.user.authenticated){
+    //         browserHistory.push("/")
+    //         this.props.dispatch(logout())
+    //     }
+    // }
 
     render() {
         return (

@@ -3,7 +3,8 @@ import {connect} from "react-redux";
 import {Accordion, Glyphicon, Panel} from "react-bootstrap";
 import LazyLoad from "react-lazy-load";
 import {applicantClient} from "../../axiosClient";
-import {fetchApplicants} from "../../actions/applicantsActions";
+import {fetchAllRankings, fetchApplicants} from "../../actions/applicantsActions";
+import {setSingleCourse, toggleComponent} from "../../actions/courseListingsActions";
 import {Draggable} from "react-drag-and-drop";
 
 class PanelHeader extends Component {
@@ -13,8 +14,7 @@ class PanelHeader extends Component {
     }
 
     render() {
-        let dragStyle = {
-        };
+        let dragStyle = {};
 
         if (this.state.dragging) {
             dragStyle['background'] = '#F5F5F5';
@@ -22,10 +22,10 @@ class PanelHeader extends Component {
         }
 
         return (
-            <div style={{padding: "16px", display: 'flex',alignItems:'center'}}>
+            <div style={{padding: "16px", display: 'flex', alignItems: 'center'}}>
                 <Glyphicon glyph="user" style={{marginRight: 8}}/>
 
-                <div style={{flexGrow:"1"}}>
+                <div style={{flexGrow: "1"}}>
                     {this.props.first_name} {this.props.last_name}, {this.props.student_id}
                 </div>
                 <Draggable type='applicant'
@@ -34,16 +34,17 @@ class PanelHeader extends Component {
                                application_id: this.props.application_id
                            })}
                            style={Object.assign({
-                               background:"#E0E0E0",
-                               padding:"4px 8px",
-                               borderRadius:4
-                           },dragStyle)}
+                               background: "#E0E0E0",
+                               padding: "4px 8px",
+                               borderRadius: 4
+                           }, dragStyle)}
                            key={this.props.user_id}
                            onDrag={() => this.setState({...this.state, dragging: true})}
                            onDragEnd={() => this.setState({...this.state, dragging: false})}>
                     <p style={{
-                        display:"inline-block",
-                        margin:0}}>Drag to assign</p>
+                        display: "inline-block",
+                        margin: 0
+                    }}>Drag to assign</p>
                     <Glyphicon glyph="arrow-right" style={{marginLeft: 8}}/>
                 </Draggable>
             </div>
@@ -74,21 +75,61 @@ class AboutMe extends Component {
     }
 }
 class Courses extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            course_name: this.props.course_name,
+            requirements: this.props.requirements,
+            end_date: this.props.end_date,
+            showComponent: this.props.showComponent,
+            course_id: this.props.course_id,
+            posting_id: this.props.posting_id
+        };
+        //console.log(this.props);
+
+        this.link_course = this.link_course.bind(this);
+    }
+
+    link_course(posting_id) {
+        let state = {
+            course_name: null,
+            requirements: null,
+            end_date: null,
+            showComponent: null,
+            course_id: null,
+            posting_id: posting_id
+        }
+        this.props.dispatch(setSingleCourse(state));
+        if (!this.props.show) {
+            this.props.dispatch(toggleComponent());
+        }
+    }
 
     getCourses() {
-        var courses = [this.props.courses][0][0];
-        return Object.keys(courses).map((course) => {
+        var courses = this.props.courses;
+        return courses.map((course, index) => {
+
             return (
-                <h5 style={{display: "inline", marginRight: 16}} key={course} type="submit">
-                    <a>{courses[course]}</a></h5>
+                <div>
+                    <h4 style={{
+                        display: "inline",
+                        padding: "4px 8px",
+                        background: '#EEEEEE',
+                        borderRadius: 4
+                    }}>{index + 1}</h4>
+
+                    <h4 style={{display: "inline", marginRight: 16}} key={index}><a
+                        onClick={() => this.link_course(course.posting_id)}> {course.course_code}</a>
+                    </h4>
+                </div>
             );
         });
     }
 
     render() {
         return (
-            <div>
-                Course Rank: {this.getCourses()}
+            <div style={{padding: "16px 0px"}}>
+                {this.getCourses()}
             </div>
         );
     }
@@ -102,6 +143,9 @@ class ApplicantList extends Component {
         };
         this.props.dispatch(fetchApplicants(
             applicantClient.get("/application", config)
+        ));
+        this.props.dispatch(fetchAllRankings(
+            applicantClient.get("/rankings", config)
         ));
     }
 
@@ -122,13 +166,14 @@ class ApplicantList extends Component {
                 ...this.state,
                 applicants: applicants.applicants
             });
-        }
 
+        }
     }
 
     getApplicants() {
         //console.log(this.props.applicants.applicants);
         var obj = [this.props.applicants.applicants_copy][0];
+        var rankings = this.props.applicants.allRankings;
         if (this.props.applicants.fetched) {
 
             return Object.keys(obj).map((applicant) => {
@@ -143,8 +188,13 @@ class ApplicantList extends Component {
                                          user_id={obj[applicant].user_id}
                                          application_id={obj[applicant].id}/>
                         </div>}
-                           footer={<div><Courses courses={obj[applicant].courses}/></div>}
-                           eventKey={obj[applicant].user_id} style={{marginBottom: 15}}>
+                           footer={
+                               <div>
+                                   <Courses dispatch={this.props.dispatch}
+                                            show={this.props.courses.showComponent}
+                                            courses={rankings[obj[applicant].user_id]}/>
+                               </div>}
+                           eventKey={obj[applicant].user_id}>
                         <div style={{padding: 0}}>
                             <AboutMe
                                 phone_number={obj[applicant].phone_number}
@@ -164,6 +214,7 @@ class ApplicantList extends Component {
                         </div>
                     </Panel>
                 );
+
             });
 
         } else {
@@ -191,7 +242,9 @@ class ApplicantList extends Component {
 function mapStateToProps(state) {
     return {
         applicants: state.applicants,
-        user: state.user
+        user: state.user,
+        allRankings: state.allRankings,
+        courses: state.courses
     }
 
 }

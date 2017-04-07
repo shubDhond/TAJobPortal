@@ -64,7 +64,7 @@ export default class JobsSingleView extends React.Component {
 
         else if(listing.fetched){
             var course = nextProps.listings.listing.course;
-
+            console.log(listing)
             this.setState({...this.state,
                 id: course.id,
                 course_name: course.course_name,
