@@ -106,7 +106,7 @@ export default class TaCoordJobView extends React.Component {
 
   render() {
     if (this.props.assignments.assignment) {
-      console.log(this.props.assignments.assignment);
+      //console.log(this.props.assignments.assignment);
     }
 
     return (

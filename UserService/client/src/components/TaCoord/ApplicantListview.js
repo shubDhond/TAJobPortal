@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import { Panel, Accordion, Glyphicon} from 'react-bootstrap';
 import LazyLoad from 'react-lazy-load';
 import { applicantClient } from "../../axiosClient";
-import {fetchApplicants} from "../../actions/applicantsActions";
+import {fetchApplicants, fetchAllRankings} from "../../actions/applicantsActions";
 import { setSingleCourse, toggleComponent } from "../../actions/courseListingsActions";
 import {Draggable} from 'react-drag-and-drop';
 
@@ -66,28 +66,40 @@ class Courses extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            title: "123",
-            description: "456",
-            status: "789"
+            course_name: this.props.course_name,
+            requirements: this.props.requirements,
+            end_date: this.props.end_date,
+            showComponent: this.props.showComponent,
+            course_id: this.props.course_id,
+            posting_id: this.props.posting_id
         };
-        console.log(this.props);
+        //console.log(this.props);
 
         this.link_course = this.link_course.bind(this);
     }
 
-    link_course(e) {
-        e.preventDefault();
-        this.props.dispatch(setSingleCourse(this.state.title, this.state.description, this.state.status));
+    link_course(posting_id) {
+        let state = {
+            course_name: null,
+            requirements: null,
+            end_date: null,
+            showComponent: null,
+            course_id: null,
+            posting_id: posting_id
+        }
+        this.props.dispatch(setSingleCourse(state));
         if(!this.props.show){
             this.props.dispatch(toggleComponent());
         }
     }
 
     getCourses(){
-        var courses = [this.props.courses][0][0];
-        return Object.keys(courses).map((course) => {
+        var courses = this.props.courses;
+        console.log(this.props.showComponent)
+        return courses.map((course, index) => {
+
             return (
-                <h5 style={{display:"inline",marginRight:16}} key={course} type="submit" ><a onClick={this.link_course}>{courses[course]}</a></h5>
+                <h5 style={{display:"inline",marginRight:16}} key={index}><a onClick={() => this.link_course(course.posting_id)}>{course.course_code}</a></h5>
             );
         });
     }
@@ -110,11 +122,14 @@ class ApplicantList extends Component{
         this.props.dispatch(fetchApplicants(
             applicantClient.get("/application", config)
         ));
+        this.props.dispatch(fetchAllRankings(
+            applicantClient.get("/rankings", config)
+        ));
     }
 
     constructor(props){
         super(props);
-        const {applicants} = this.props.applicants;
+            const {applicants} = this.props.applicants;
 
         this.state = {
             applicants: applicants
@@ -128,14 +143,18 @@ class ApplicantList extends Component{
             this.setState({...this.state,
                 applicants: applicants.applicants
             });
-        }
 
+        }
     }
+
+
 
     getApplicants(){
         //console.log(this.props.applicants.applicants);
         var obj = [this.props.applicants.applicants_copy][0];
-        if (this.props.applicants.fetched){
+        var rankings = this.props.applicants.allRankings;
+        //console.log(rankings)
+        if (this.props.applicants.fetched && this.props.applicants.ranking_fetched){
 
             return Object.keys(obj).map((applicant) => {
                 let dragStyle = {};
@@ -143,6 +162,7 @@ class ApplicantList extends Component{
                 if (this.state.dragging === obj[applicant].user_id) {
                     dragStyle['border'] = '2px solid blue';
                 }
+                //console.log(rankings[obj[applicant].user_id])
 
                 return(
                     <Draggable type='applicant'
@@ -157,7 +177,7 @@ class ApplicantList extends Component{
                             {<div>
                                 <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}/>
                             </div>}
-                               footer={<div><Courses courses={obj[applicant].courses}/></div>}
+                               footer={<div><Courses dispatch={this.props.dispatch} show={this.props.courses.showComponent} courses={rankings[obj[applicant].user_id]} /></div>}
                                eventKey={obj[applicant].user_id}  style={{...dragStyle, marginBottom:15}}>
                             <div style={{padding:0}}>
                                 <AboutMe
@@ -197,11 +217,11 @@ class ApplicantList extends Component{
             <div style={{overflow: 'auto', maxHeight: 500}}>
 
                 <div className="filler" />
-                <LazyLoad height={762} offsetVertical={300}>
-                    <Accordion>
-                        {this.getApplicants()}
-                    </Accordion>
-                </LazyLoad>
+                    <LazyLoad height={762} offsetVertical={300}>
+                        <Accordion>
+                            {this.getApplicants()}
+                        </Accordion>
+                    </LazyLoad>
                 <div className="filler" />
 
 
@@ -213,19 +233,11 @@ class ApplicantList extends Component{
 function mapStateToProps(state) {
     return {
         applicants: state.applicants,
-        user: state.user
+        user: state.user,
+        allRankings: state.allRankings,
+        courses: state.courses
     }
 
 }
-
-// function matchDispatchToProps(dispatch) {
-//     return bindActionCreators({
-//         setSingleCourse: setSingleCourse,
-//         toggleComponent: toggleComponent,
-//         fetchApplicants: fetchApplicants
-//
-//     }, dispatch)
-//
-// }
 
 export default connect(mapStateToProps)(ApplicantList);
