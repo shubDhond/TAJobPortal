@@ -1,57 +1,53 @@
 import React from "react";
-import {Button, Col, FormControl, FormGroup, Row, DropdownButton, MenuItem} from "react-bootstrap";
-import { Modal } from "react-bootstrap";
+import {Button, DropdownButton, FormControl, FormGroup, MenuItem, Modal} from "react-bootstrap";
 
 import NewAd from "./NewAd";
 
 export default class JobsFilterBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showModal: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            showModal: false
+        }
+        this.open = this.open.bind(this);
+        this.close = this.close.bind(this);
     }
-    this.open = this.open.bind(this);
-    this.close = this.close.bind(this);
-  }
 
-  open() {
-    this.setState({
-      showModal: true
-    });
-  }
+    open() {
+        this.setState({
+            showModal: true
+        });
+    }
 
-  close() {
-    this.setState({
-      showModal: false
-    });
-  }
+    close() {
+        this.setState({
+            showModal: false
+        });
+    }
 
     render() {
         return (
-            <FormGroup style={{margin: 0}}>
-            <Row>
-                <Col xs={8}  style={{paddingRight:0}}>
-                        <FormControl bsSize="large" type="text" placeholder="Search"/>
-                </Col>
+            <div>
+                <FormGroup style={{margin: 0, display: 'flex', flexDirection: "row"}}>
 
+                    <FormControl style={{flexGrow: 1}}
+                                 bsSize="large" type="text" placeholder="Search"/>
 
-                <Col xs={2}>
-                    <DropdownButton title="Sort By" bsSize="large"  pullRight id="split-button-pull-right">
+                    <DropdownButton style={{marginLeft: 8, marginRight: 8}} title="Sort By"
+                                    bsSize="large" pullRight
+                                    id="split-button-pull-right">
                         <MenuItem eventKey="1">Year</MenuItem>
                         <MenuItem eventKey="2">Program</MenuItem>
                     </DropdownButton>
-                </Col>
-                <Col xs={2}>
 
-                    <Button type="submit" style={{padding:12}} bsStyle="primary" block={true} onClick={this.open}>New Ad+</Button>
+                    <Button type="submit" style={{padding: 12, flexShrink: 1}} bsStyle="primary"
+                            onClick={this.open}>Create posting+</Button>
 
-                    <Modal show={this.state.showModal} onHide={this.close}>
+                    <Modal show={this.state.showModal} onHide={this.close} bsSize="large">
                         <NewAd/>
                     </Modal>
-
-                </Col>
-            </Row>
-            </FormGroup>
+                </FormGroup>
+            </div>
         );
     }
 }

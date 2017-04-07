@@ -35,7 +35,12 @@ let offerSchema = mongoose.Schema({
     },
 
     deadline: {
+<<<<<<< HEAD
        type: Date
+=======
+       type: Date,
+        required: true
+>>>>>>> origin/master
     },
 
     notes: {
@@ -44,4 +49,8 @@ let offerSchema = mongoose.Schema({
 
 });
 
+<<<<<<< HEAD
 module.exports = mongoose.model('Offer', offerSchema);
+=======
+module.exports = mongoose.model('Offer', offerSchema);
+>>>>>>> origin/master

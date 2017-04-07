@@ -3,6 +3,7 @@ import {browserHistory} from "react-router";
 import {connect} from "react-redux";
 import { Col, Row, Grid} from "react-bootstrap";
 import Header from "./TopNav"
+import {logout} from "../../actions/userActions"
 
 @connect((store) => {
 
@@ -14,8 +15,9 @@ import Header from "./TopNav"
 
 export default class Layout extends React.Component {
     componentWillMount(){
-        if (!this.props.user.user.id){
-            browserHistory.push("/")
+        if (!this.props.user.user.id || this.props.user.user.user_type === "ta-coordinator"){
+            browserHistory.push("/");
+            this.props.dispatch(logout());
         }
     }
 

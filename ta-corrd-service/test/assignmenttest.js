@@ -300,8 +300,8 @@ describe('assignments', function(){
         chai.request(app)
         .delete('/assignment/' + course_id)
         .set('x-access-token', coordinator_token)
-        .send({
-          student_id
+        .query({
+            student_id : student_id
         })
         .end(function(err,res){
           expect(res).to.have.status(200);
