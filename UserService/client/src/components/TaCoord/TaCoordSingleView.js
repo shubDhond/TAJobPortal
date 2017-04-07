@@ -113,8 +113,8 @@ export default class TaCoordSingleView extends React.Component {
 
         return (
 
-            <div>
-                <h4 style={{marginTop: 22, marginBottom: 15}}>
+            <div style={{padding:15}}>
+                <h4 style={{marginBottom: 15}}>
                     <a onClick={this.toggleBack.bind(this)} className="see-more">
                         <Glyphicon glyph="chevron-left"/>Back</a>
                 </h4>
