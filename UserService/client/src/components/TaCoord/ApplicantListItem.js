@@ -1,12 +1,13 @@
 import React from "react";
 import {Button, Glyphicon} from "react-bootstrap";
-import {updateAssignments} from "../../actions/assignmentsActions";
+import {updateAssignments, getAssignments} from "../../actions/assignmentsActions";
 import {taCoordClient} from "../../axiosClient";
 import { connect } from "react-redux";
 
 @connect((store) => {
   return {
-    user: store.user
+    user: store.user,
+    assignments: store.assignments
   };
 })
 
@@ -21,19 +22,26 @@ export default class ApplicantListItem extends React.Component {
 
   handleRemoveClick = () => {
       var config = {
-          headers: {'x-access-token': this.props.user.user.user_token
+          headers: {
+            'x-access-token': this.props.user.user.user_token
           }
       };
 
-      let data = {
-        student_id: this.state.student_id
-      }
       this.props.dispatch(updateAssignments(
-          taCoordClient.delete("/assignment/"+ this.state.course_id, data, config)
+          taCoordClient.delete("/assignment/"+ this.state.course_id + '?student_id=' + this.state.student_id, config)
       ));
   }
 
     render() {
+      if(this.props.assignments.updated){
+        var config = {
+          headers: {'x-access-token': this.props.user.user.user_token}
+        };
+        this.props.dispatch(getAssignments(
+          taCoordClient.get('/assignment', config)
+        ));
+      }
+
         return (
           <div>
             <h5>{this.state.student_id}</h5>
