@@ -174,7 +174,8 @@ class ApplicantList extends Component{
                                onDragEnd={() => this.setState({...this.state, dragging: null})} >
                         <Panel key={obj[applicant].user_id} header=
                             {<div>
-                                <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}/>
+                                <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}
+                                             user_id={obj[applicant].user_id} application_id={obj[applicant].id}/>
                             </div>}
                                footer={<div><Courses dispatch={this.props.dispatch} show={this.props.courses.showComponent} courses={rankings[obj[applicant].user_id]} /></div>}
                                eventKey={obj[applicant].user_id}  style={{...dragStyle, marginBottom:15}}>
@@ -213,17 +214,12 @@ class ApplicantList extends Component{
     render(){
 
         return (
-            <div style={{overflow: 'auto', maxHeight: 500}}>
-
-                <div className="filler" />
-                    <LazyLoad height={762} offsetVertical={300}>
-                        <Accordion>
-                            {this.getApplicants()}
-                        </Accordion>
-                    </LazyLoad>
-                <div className="filler" />
-
-
+            <div style={{padding:15,overflow: 'auto'}} className="fullheight">
+                <LazyLoad height={'100%'} offsetVertical={300}>
+                    <Accordion>
+                        {this.getApplicants()}
+                    </Accordion>
+                </LazyLoad>
             </div>
         );
     }

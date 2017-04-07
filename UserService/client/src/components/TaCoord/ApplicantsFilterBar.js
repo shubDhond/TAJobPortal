@@ -1,15 +1,16 @@
 import React from "react";
-import {connect} from 'react-redux';
-import {Col, FormControl, FormGroup, Row, DropdownButton, MenuItem} from "react-bootstrap";
+import {connect} from "react-redux";
+import {DropdownButton, FormControl, FormGroup, MenuItem, Row} from "react-bootstrap";
 import {setApplicants} from "../../actions/applicantsActions";
-import sortBy from 'lodash/sortBy';
-import orderBy from 'lodash/orderBy';
-import filter from 'lodash/filter';
-import includes from 'lodash/includes';
+import sortBy from "lodash/sortBy";
+import orderBy from "lodash/orderBy";
+import filter from "lodash/filter";
+import includes from "lodash/includes";
 
 @connect((store) => {
     return {
-        applicants : store.applicants.applicants
+        applicants: store.applicants.applicants,
+        applicants_copy: store.applicants.applicants_copy
     };
 })
 export default class ApplicantsFilterBar extends React.Component {
@@ -27,8 +28,8 @@ export default class ApplicantsFilterBar extends React.Component {
     handleChange(event) {
         this.setState({value: event.target.value});
 
-        var sorted_applicants = filter(this.props.applicants, function(n) {
-            return includes(n.first_name.toLowerCase() + ' '.concat(n.last_name).toLowerCase()+' '.concat(n.student_number), event.target.value.toLowerCase());
+        var sorted_applicants = filter(this.props.applicants_copy, function (n) {
+            return includes(n.first_name.toLowerCase() + ' '.concat(n.last_name).toLowerCase() + ' '.concat(n.student_number), event.target.value.toLowerCase());
         });
         this.props.dispatch(setApplicants(sorted_applicants));
 
@@ -110,31 +111,30 @@ export default class ApplicantsFilterBar extends React.Component {
 
         return (
 
-            <FormGroup style={{marginBottom:0}}>
-            <Row>
-                <Col xs={6}  style={{paddingRight:0}}>
-                        <FormControl
-                            bsSize="large"
-                            type="text"
-                            placeholder="Search Applicant"
-                            value={this.state.value}
-                            onChange={this.handleChange}
-                        />
-                </Col>
-                <Col xs={2}>
-                    <DropdownButton bsSize="large" title={"Filter by: "+this.state.filter} pullRight id="split-button-pull-right">
-                        <MenuItem eventKey="1" onClick={this.YearInc.bind(this)}>Year (ascending)</MenuItem>
-                        <MenuItem eventKey="2" onClick={this.YearDes.bind(this)}>Year (descending)</MenuItem>
+            <FormGroup  style={{margin: 0, display: 'flex',flexDirection:"row"}}>
+                    <FormControl
+                        bsSize="large"
+                        type="text"
+                        placeholder="Search Applicant"
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                        style={{marginRight:8}}
+                    />
+                    <DropdownButton bsSize="large" title={this.state.filter} pullRight
+                                    id="split-button-pull-right">
+                        <MenuItem eventKey="1" onClick={this.YearInc.bind(this)}>Year
+                            (ascending)</MenuItem>
+                        <MenuItem eventKey="2" onClick={this.YearDes.bind(this)}>Year
+                            (descending)</MenuItem>
                         <MenuItem eventKey="3" onClick={this.UG.bind(this)}>UG</MenuItem>
                         <MenuItem eventKey="4" onClick={this.MSC.bind(this)}>MSC</MenuItem>
                         <MenuItem eventKey="5" onClick={this.MSAC.bind(this)}>MSAC</MenuItem>
                         <MenuItem eventKey="6" onClick={this.PHD.bind(this)}>PHD</MenuItem>
                         <MenuItem eventKey="7">Unassigned</MenuItem>
-                        <MenuItem eventKey="8" onClick={this.GetAll.bind(this)}>All Applicants</MenuItem>
+                        <MenuItem eventKey="8" onClick={this.GetAll.bind(this)}>All
+                            Applicants</MenuItem>
 
                     </DropdownButton>
-                </Col>
-            </Row>
                 {header}
             </FormGroup>
 

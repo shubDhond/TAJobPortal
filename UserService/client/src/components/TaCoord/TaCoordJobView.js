@@ -110,14 +110,12 @@ export default class TaCoordJobView extends React.Component {
     }
 
     return (
-        <div style={{overflow: 'auto', maxHeight: 500}}>
-          <div className="filler" />
-          <LazyLoad height={762} offsetVertical={300}>
+        <div style={{padding:15,overflow: 'auto'}} className="fullheight">
+          <LazyLoad height='100%'>
             <Accordion>
                 {this.getCourses()}
             </Accordion>
           </LazyLoad>
-          <div className="filler" />
         </div>
 
     );

@@ -10,3 +10,17 @@ export function setCourses(state) {
           }
       }
 }
+
+export function fetchCourses(requestPromise) {
+  return {
+          type: "FETCH_COURSES",
+          payload: requestPromise
+      }
+}
+
+export function postAd(requestPromise) {
+  return {
+          type: "POST_AD",
+          payload: requestPromise
+      }
+}

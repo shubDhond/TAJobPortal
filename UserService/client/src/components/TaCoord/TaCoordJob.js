@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import ListItem from "../pages/views/ListItem";
 import { toggleComponent } from "../../actions/courseListingsActions";
 import { setSingleCourse } from "../../actions/courseListingsActions";
@@ -23,10 +22,9 @@ export default class TaCoordJob extends React.Component {
       course_id: this.props.course_id,
       posting_id: this.props.posting_id
     };
-    this.buttonClick = this.buttonClick.bind(this);
   }
 
-  buttonClick() {
+  toggleView() {
     this.props.dispatch(setSingleCourse(this.state));
     this.props.dispatch(toggleComponent());
 
@@ -36,11 +34,10 @@ export default class TaCoordJob extends React.Component {
     return (
       <div>
         <ListItem>
-          <h3>{this.state.course_name}</h3>
+          <h3><a onClick={this.toggleView.bind(this)} >{this.state.course_name}</a></h3>
           <h7>{this.state.requirements}</h7>
           <h5>{this.state.end_date}</h5>
 
-          <Button onClick={this.buttonClick}>View</Button>
         </ListItem>
       </div>
     );
