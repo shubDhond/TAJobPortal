@@ -18,22 +18,35 @@ class PanelHeader extends Component{
         let dragStyle = {};
 
         if (this.state.dragging) {
-            dragStyle['border'] = '2px solid blue';
+            dragStyle['background'] = '#F5F5F5';
+            dragStyle['color'] = '#F5F5F5';
         }
 
         return (
-            <div style={{padding:"16px 16px 8px 16px"}}>
-                <Glyphicon glyph="user"  style={{marginRight:8}}/>
-                {this.props.first_name} {this.props.last_name}, {this.props.student_id}
+            <div style={{padding: "16px", display: 'flex', alignItems: 'center'}}>
+                <Glyphicon glyph="user" style={{marginRight: 8}}/>
+
+                <div style={{flexGrow: "1"}}>
+                    {this.props.first_name} {this.props.last_name}, {this.props.student_id}
+                </div>
                 <Draggable type='applicant'
-                               data={JSON.stringify({
-                                   student_id: this.props.user_id,
-                                   application_id: this.props.application_id
-                               })}
-                               key={this.props.user_id}
-                               onDrag={() => this.setState({...this.state, dragging: true})}
-                               onDragEnd={() => this.setState({...this.state, dragging: false})}>
-                    <p style={dragStyle}>Drag this to assign</p>
+                           data={JSON.stringify({
+                               student_id: this.props.user_id,
+                               application_id: this.props.application_id
+                           })}
+                           style={Object.assign({
+                               background: "#E0E0E0",
+                               padding: "4px 8px",
+                               borderRadius: 4
+                           }, dragStyle)}
+                           key={this.props.user_id}
+                           onDrag={() => this.setState({...this.state, dragging: true})}
+                           onDragEnd={() => this.setState({...this.state, dragging: false})}>
+                    <p style={{
+                        display: "inline-block",
+                        margin: 0
+                    }}>Drag to assign</p>
+                    <Glyphicon glyph="arrow-right" style={{marginLeft: 8}}/>
                 </Draggable>
             </div>
         );
@@ -99,7 +112,18 @@ class Courses extends Component{
             return courses.map((course, index) => {
 
                 return (
-                    <h5 style={{display:"inline",marginRight:16}} key={index}><a onClick={() => this.link_course(course.posting_id)}>{course.course_code}</a></h5>
+                    <div>
+                        <h4 style={{
+                            display: "inline",
+                            padding: "4px 8px",
+                            background: '#EEEEEE',
+                            borderRadius: 4
+                        }}>{index + 1}</h4>
+
+                        <h4 style={{display: "inline", marginRight: 16}} key={index}><a
+                            onClick={() => this.link_course(course.posting_id)}> {course.course_code}</a>
+                        </h4>
+                    </div>
                 );
             });
         }
@@ -108,8 +132,8 @@ class Courses extends Component{
 
     render(){
         return (
-            <div>
-                Course Rank: {this.getCourses()}
+            <div style={{padding: "16px 0px"}}>
+                {this.getCourses()}
             </div>
         );
     }
@@ -134,7 +158,7 @@ class ApplicantList extends Component{
 
     constructor(props){
         super(props);
-            const {applicants} = this.props.applicants;
+        const {applicants} = this.props.applicants;
 
         this.state = {
             applicants: applicants
@@ -144,8 +168,9 @@ class ApplicantList extends Component{
     componentWillReceiveProps(nextProps){
         const { applicants } = nextProps;
 
-        if(applicants.fetched){
-            this.setState({...this.state,
+        if (applicants.fetched) {
+            this.setState({
+                ...this.state,
                 applicants: applicants.applicants
             });
 
@@ -170,7 +195,7 @@ class ApplicantList extends Component{
                 //console.log(rankings[obj[applicant].user_id])
 
                 return(
-                    <LazyLoad height={762} onContentVisible={() => console.log('load')}>
+                    <LazyLoad height={'100%'} offsetVertical={300}>
                         <Accordion>
                             <Draggable type='applicant'
                                        data={JSON.stringify({
