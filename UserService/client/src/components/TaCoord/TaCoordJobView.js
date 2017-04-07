@@ -21,6 +21,10 @@ export default class TaCoordJobView extends React.Component {
     super(props);
     const {listings} = this.props.listings;
     this.state = {
+      title: this.props.title,
+      description: this.props.description,
+      deadline: this.props.deadline,
+      status: this.props.status,
       showComponent: true
     };
   }
@@ -102,7 +106,7 @@ export default class TaCoordJobView extends React.Component {
 
   render() {
     if (this.props.assignments.assignment) {
-      console.log(this.props.assignments.assignment);
+      //console.log(this.props.assignments.assignment);
     }
 
     return (

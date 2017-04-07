@@ -1,8 +1,11 @@
 export default function reducer(state={
 	applicants: [],
 	applicants_copy: [],
+	allRankings: [],
 	fetching: false,
 	fetched: false,
+    ranking_fetching: false,
+    ranking_fetched: false,
 	error: null,
 	}, action) {
 
@@ -33,7 +36,7 @@ export default function reducer(state={
             var data = action.payload.data;
             var applicants = [];
 
-            for(let i = 0 ; i < data.length ; i++){
+            for (let i = 0; i < data.length; i++) {
                 var id = data[i]._id;
                 var user_id = data[i].user_id;
                 var student_number = data[i].student_number;
@@ -54,7 +57,7 @@ export default function reducer(state={
 
                 var obj = {
                     id: id,
-                    user_id : user_id,
+                    user_id: user_id,
                     student_number: student_number,
                     first_name: first_name,
                     last_name: last_name,
@@ -69,7 +72,7 @@ export default function reducer(state={
                     student_status_explain: student_status_explain,
                     status: status,
                     previous_assignments: [previous_assignments],
-                    courses : [courses]
+                    courses: [courses]
                 };
 
                 applicants.push(obj);
@@ -87,6 +90,33 @@ export default function reducer(state={
                 fetched: true,
                 error: null,
             }
+        }
+        case 'FETCH_ALLRANKINGS_PENDING': {
+                return {
+                    ...state,
+                    ranking_fetching: true,
+                    ranking_fetched: false,
+                }
+        }
+        case 'FETCH_ALLRANKINGS_REJECTED': {
+                return {
+                    ...state,
+                    ranking_fetching: false,
+                    ranking_fetched: false,
+                    error: action.payload,
+                }
+        }
+        case 'FETCH_ALLRANKINGS_FULFILLED': {
+                var data = action.payload.data;
+                var allRankings = data;
+
+                return {
+                    ...state,
+                    allRankings: allRankings,
+                    ranking_fetching: false,
+                    ranking_fetched: true,
+                    error: null,
+                }
         }
 
         default:

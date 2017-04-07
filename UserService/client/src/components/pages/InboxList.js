@@ -32,6 +32,14 @@ export default class InboxList extends Component{
 				inbox: nextProps.inbox.inbox
 			})
 		}
+        if(nextProps.inbox.accepted){
+            var config = {
+                headers: {'x-access-token': this.props.user.user.user_token}
+            };
+            this.props.dispatch(fetchInbox(
+                taCoordClient.get("/offers?user_id=" + this.props.user.user.id, config)
+            ));
+        }
 	}
 
 	constructor(props){
@@ -43,9 +51,12 @@ export default class InboxList extends Component{
 	}
 
 	getListItems(){
+		if(this.state.inbox.length == 0){
+			return <h2>No Offers</h2>
+		}
 		return this.state.inbox.map((course, index) => {
 			return (
-				<InboxListItem key={index} application_id={course._id} course_name={course.course_name} status={course.status}/>
+				<InboxListItem key={index} application_id={course._id} course_name={course.course.course_code} status={course.status}/>
 			);
 		});
 	}
