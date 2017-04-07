@@ -5,6 +5,13 @@ export function fetchApplicants(requestPromise) {
     };
 }
 
+export function fetchAllRankings(requestPromise) {
+    return {
+        type: 'FETCH_ALLRANKINGS',
+        payload: requestPromise
+    };
+}
+
 export function setApplicants(applicants) {
     return {
         type: 'SET_APPLICANTS',
