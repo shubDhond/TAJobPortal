@@ -1,11 +1,12 @@
 import React, {Component} from "react";
-import {connect} from "react-redux";
-import {Accordion, Glyphicon, Panel} from "react-bootstrap";
-import LazyLoad from "react-lazy-load";
-import {applicantClient} from "../../axiosClient";
-import {fetchAllRankings, fetchApplicants} from "../../actions/applicantsActions";
-import {setSingleCourse, toggleComponent} from "../../actions/courseListingsActions";
-import {Draggable} from "react-drag-and-drop";
+import {bindActionCreators} from "redux";
+import {connect} from 'react-redux';
+import { Panel, Accordion, Glyphicon} from 'react-bootstrap';
+import LazyLoad from 'react-lazy-load';
+import { applicantClient, taCoordClient } from "../../axiosClient";
+import {fetchApplicants, fetchAllRankings, fetchUnassigned} from "../../actions/applicantsActions";
+import { setSingleCourse, toggleComponent } from "../../actions/courseListingsActions";
+import {Draggable} from 'react-drag-and-drop';
 
 class PanelHeader extends Component {
     constructor(props) {
@@ -107,23 +108,25 @@ class Courses extends Component {
 
     getCourses() {
         var courses = this.props.courses;
-        return courses.map((course, index) => {
+        if (courses) {
+            return courses.map((course, index) => {
+                return (
+                    <div>
+                        <h4 style={{
+                            display: "inline",
+                            padding: "4px 8px",
+                            background: '#EEEEEE',
+                            borderRadius: 4
+                        }}>{index + 1}</h4>
 
-            return (
-                <div>
-                    <h4 style={{
-                        display: "inline",
-                        padding: "4px 8px",
-                        background: '#EEEEEE',
-                        borderRadius: 4
-                    }}>{index + 1}</h4>
+                        <h4 style={{display: "inline", marginRight: 16}} key={index}><a
+                            onClick={() => this.link_course(course.posting_id)}> {course.course_code}</a>
+                        </h4>
+                    </div>
+                );
+            });
+        }
 
-                    <h4 style={{display: "inline", marginRight: 16}} key={index}><a
-                        onClick={() => this.link_course(course.posting_id)}> {course.course_code}</a>
-                    </h4>
-                </div>
-            );
-        });
     }
 
     render() {
@@ -146,6 +149,9 @@ class ApplicantList extends Component {
         ));
         this.props.dispatch(fetchAllRankings(
             applicantClient.get("/rankings", config)
+        ));
+        this.props.dispatch(fetchUnassigned(
+            taCoordClient.get("/assignment/unassigned", config)
         ));
     }
 
@@ -174,52 +180,51 @@ class ApplicantList extends Component {
         //console.log(this.props.applicants.applicants);
         var obj = [this.props.applicants.applicants_copy][0];
         var rankings = this.props.applicants.allRankings;
-        if (this.props.applicants.fetched) {
+        //console.log(rankings)
+        if (this.props.applicants.fetched && this.props.applicants.ranking_fetched && this.props.applicants.unassigned_fetched) {
 
             return Object.keys(obj).map((applicant) => {
                 return (
+                    <Accordion style={{marginBottom:8}}>
+                        <Panel key={obj[applicant].user_id} header=
+                            {<div>
+                                <PanelHeader first_name={obj[applicant].first_name}
+                                             last_name={obj[applicant].last_name}
+                                             student_id={obj[applicant].student_number}
+                                             profile_pic={obj[applicant].profile_pic}
+                                             user_id={obj[applicant].user_id}
+                                             application_id={obj[applicant].id}/>
+                            </div>}
+                               footer={
+                                   <div>
+                                       <Courses dispatch={this.props.dispatch}
+                                                show={this.props.courses.showComponent}
+                                                courses={rankings[obj[applicant].user_id]}/>
+                                   </div>}
+                               eventKey={obj[applicant].user_id}>
+                            <div style={{padding: 0}}>
+                                <AboutMe
+                                    phone_number={obj[applicant].phone_number}
+                                    email={obj[applicant].email}
+                                    program={obj[applicant].program}
+                                    year_of_study={obj[applicant].year_of_study}
+                                    department_explain={obj[applicant].department_explain}
+                                    work_status={obj[applicant].work_status}
+                                    work_status_explain={obj[applicant].work_status_explain}
+                                    student_status={obj[applicant].student_status}
+                                    student_status_explain={obj[applicant].student_status_explain}
+                                    status={obj[applicant].status}
+                                    previous_assignments={obj[applicant].previous_assignments}
+                                    courses={obj[applicant].courses}
+                                />
 
-                    <Panel key={obj[applicant].user_id} header=
-                        {<div>
-                            <PanelHeader first_name={obj[applicant].first_name}
-                                         last_name={obj[applicant].last_name}
-                                         student_id={obj[applicant].student_number}
-                                         profile_pic={obj[applicant].profile_pic}
-                                         user_id={obj[applicant].user_id}
-                                         application_id={obj[applicant].id}/>
-                        </div>}
-                           footer={
-                               <div>
-                                   <Courses dispatch={this.props.dispatch}
-                                            show={this.props.courses.showComponent}
-                                            courses={rankings[obj[applicant].user_id]}/>
-                               </div>}
-                           eventKey={obj[applicant].user_id}>
-                        <div style={{padding: 0}}>
-                            <AboutMe
-                                phone_number={obj[applicant].phone_number}
-                                email={obj[applicant].email}
-                                program={obj[applicant].program}
-                                year_of_study={obj[applicant].year_of_study}
-                                department_explain={obj[applicant].department_explain}
-                                work_status={obj[applicant].work_status}
-                                work_status_explain={obj[applicant].work_status_explain}
-                                student_status={obj[applicant].student_status}
-                                student_status_explain={obj[applicant].student_status_explain}
-                                status={obj[applicant].status}
-                                previous_assignments={obj[applicant].previous_assignments}
-                                courses={obj[applicant].courses}
-                            />
-
-                        </div>
-                    </Panel>
+                            </div>
+                        </Panel>
+                    </Accordion>
                 );
-
             });
-
         } else {
             return null
-
         }
 
     }
@@ -228,12 +233,8 @@ class ApplicantList extends Component {
     render() {
 
         return (
-            <div style={{padding: 15, overflow: 'auto'}} className="fullheight">
-                <LazyLoad height={'100%'} offsetVertical={300}>
-                    <Accordion>
-                        {this.getApplicants()}
-                    </Accordion>
-                </LazyLoad>
+            <div style={{paddingLeft:15,paddingRight:15,paddingTop:15, overflow: 'auto'}} className="fullheight">
+                {this.getApplicants()}
             </div>
         );
     }
