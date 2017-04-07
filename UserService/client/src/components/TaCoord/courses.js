@@ -3,8 +3,6 @@ import {connect} from "react-redux";
 import {Col} from "react-bootstrap";
 import TaCoordListing from "./TaCoordListing";
 import JobsFilterBar from "./JobsFilterBar";
-import ApplicantListview from './ApplicantListview';
-import ApplicantsFilterBar from "./ApplicantsFilterBar";
 @connect((store) => {
     return {};
 })
@@ -25,7 +23,7 @@ export default class Courses extends React.Component {
                     borderBottom: " 1px solid #E0E0E0"
                 }}>
                     <h3 style={{marginTop: 24, marginBottom: 16}}>Courses</h3>
-                    <ApplicantsFilterBar  />
+                    <JobsFilterBar  />
                 </div>
                 <TaCoordListing style={{flexGrow:1,height:'auto'}}/>
             </Col>
