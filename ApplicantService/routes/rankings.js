@@ -76,7 +76,17 @@ router.get('/', checkGenericToken, function(req, res) {
                 message :"No Rankings found."
             });
         } else {
-            res.status(200).json(rankings);
+            rankings = JSON.parse(JSON.stringify(rankings));
+            let response = {};
+            for (let i =0; i < rankings.length; i++){
+                if(response[rankings[i].user_id] === undefined){
+                  response[rankings[i].user_id] = []
+                }
+                response[rankings[i].user_id].push(rankings[i]);
+            }
+
+            res.status(200).json(response);
+
         }
     });
 });
