@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {connect} from 'react-redux';
 import { Table } from 'react-bootstrap';
 import InboxListItem from "./InboxListItem"
+import {fetchInbox} from "../../actions/inboxActions"
 
 @connect((store) => {
 
@@ -29,7 +30,6 @@ export default class InboxList extends Component{
 	}
 
 	getListItems(){
-
 		return this.state.inbox.map((course, index) => {
 			return (
 				<InboxListItem key={index} course_name={course.course_name} status={course.status}/>
