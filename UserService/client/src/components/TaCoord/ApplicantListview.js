@@ -225,9 +225,7 @@ class ApplicantList extends Component{
 
         return (
             <div style={{padding:15,overflow: 'auto'}} className="fullheight">
-
-                        {this.getApplicants()}
-
+                {this.getApplicants()}
             </div>
         );
     }
