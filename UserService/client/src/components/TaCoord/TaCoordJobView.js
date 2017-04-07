@@ -1,7 +1,8 @@
 import React from "react";
-import {taCoordClient} from "../../axiosClient";
-import {fetchListings} from "../../actions/listingsActions";
-import {createAssignment} from "../../actions/assignmentsActions";
+import { taCoordClient } from "../../axiosClient";
+import { fetchListings } from "../../actions/listingsActions";
+import { createAssignment } from "../../actions/assignmentsActions";
+import { resetAd } from "../../actions/courseActions";
 import {connect} from "react-redux";
 import TaCoordJob from "./TaCoordJob";
 import LazyLoad from "react-lazy-load";
@@ -9,11 +10,12 @@ import {Droppable} from "react-drag-and-drop";
 import {Accordion} from "react-bootstrap";
 
 @connect((store) => {
-    return {
-        listings: store.listings,
-        user: store.user,
-        assignments: store.assignments
-    };
+  return {
+    listings : store.listings,
+    user: store.user,
+    assignments: store.assignments,
+    courses: store.courses
+  };
 })
 
 export default class TaCoordJobView extends React.Component {
@@ -52,11 +54,24 @@ export default class TaCoordJobView extends React.Component {
         }
     }
 
-    getCourses() {
-        if (this.props.listings.listings) {
-            var listings = [];
-            var object = this.props.listings.listings
-            var count = 0;
+  componentWillReceiveProps(nextProps){
+    if(nextProps.courses.posted){
+      var config = {
+        headers: {'x-access-token': this.props.user.user.user_token}
+      };
+      this.props.dispatch(resetAd())
+      this.props.dispatch(fetchListings(
+        taCoordClient.get("/posting", config)
+      ));
+    }
+  }
+
+  getCourses(){
+    if (this.props.listings.listings){
+        var listings = [];
+        var object = this.props.listings.listings
+        var count = 0;
+
 
             for (var id in object) {
                 if (object.hasOwnProperty(id)) {
@@ -65,7 +80,7 @@ export default class TaCoordJobView extends React.Component {
                 }
             }
 
-            return Object.keys(listings).map((course) => {
+            return Object.keys(listings).map((course, index) => {
                 let dragOverStyle = {};
 
                 if (this.state.dragOver === course) {
@@ -75,7 +90,7 @@ export default class TaCoordJobView extends React.Component {
                     dragOverStyle['boxShadow'] = "";
                 }
                 return (
-                    <LazyLoad>
+                    <LazyLoad key={index}>
                             <Droppable types={['applicant']}
                                        onDragOver={() => this.setState({
                                            ...this.state,

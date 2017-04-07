@@ -2,9 +2,10 @@ import React from "react";
 import {connect} from "react-redux";
 import {Button, Checkbox, Col, Form, FormControl, FormGroup, Header, Row} from "react-bootstrap";
 import {setHeading} from "../../actions/headingsActions";
-import {submitProfile} from "../../actions/applicantsActions";
+import {submitProfile,fetchApplicant} from "../../actions/applicantsActions";
 import every from "lodash/every";
 import {applicantClient} from "../../axiosClient";
+import {browserHistory} from "react-router";
 
 @connect((store) => {
 
@@ -49,6 +50,18 @@ export default class Profile extends React.Component {
         }
 
         this.props.dispatch(setHeading(payload))
+
+
+            var config = {
+                headers: {'x-access-token': this.props.user.user.user_token}
+            };
+            console.log(this.props.user.user.id)
+            this.props.dispatch(fetchApplicant(
+                applicantClient.get("/application/?user_id=" + this.props.user.user.id, config)
+            ));
+
+
+
     }
 
     handleInputChange(event) {
@@ -133,11 +146,32 @@ export default class Profile extends React.Component {
         this.props.dispatch(submitProfile(
             applicantClient.post("/application", app, config)
         ));
+        browserHistory.push("/app/jobs")
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.application.submitted) {
-            this.setState(this.baseState)
+        if(nextProps.application.fetched){
+            let applicant = nextProps.application.applicant[0]
+            console.log(applicant)
+
+            this.setState({
+                courses: applicant.course_taken,
+                emailaddress: applicant.email,
+                familyname: applicant.last_name,
+                givenname: applicant.first_name,
+                phonenumber: applicant.phone_number,
+                program: applicant.program,
+                studentdepartment: applicant.department,
+                studentdepartmentexplain: applicant.department_explain,
+                studentnumber: applicant.student_number,
+                tacourses: applicant.previous_assignments,
+                workstatus: applicant.work_status,
+                workstatusexplain: applicant.work_status_explain,
+                studentstatus: applicant.student_status,
+                studentstatusexplain: applicant.student_status_explain,
+                year: applicant.year_of_study,
+
+            })
         }
     }
 
@@ -146,9 +180,7 @@ export default class Profile extends React.Component {
         if (this.props.application.submitted) {
             message = <h2>Profile Submitted</h2>
         }
-        else if (this.props.application.error) {
-            message = <h2>Error. Try Again Later.</h2>
-        }
+
         return (
             <div>
                 {message}
