@@ -3,8 +3,8 @@ import {bindActionCreators} from "redux";
 import {connect} from 'react-redux';
 import { Panel, Accordion, Glyphicon} from 'react-bootstrap';
 import LazyLoad from 'react-lazy-load';
-import { applicantClient } from "../../axiosClient";
-import {fetchApplicants, fetchAllRankings} from "../../actions/applicantsActions";
+import { applicantClient, taCoordClient } from "../../axiosClient";
+import {fetchApplicants, fetchAllRankings, fetchUnassigned} from "../../actions/applicantsActions";
 import { setSingleCourse, toggleComponent } from "../../actions/courseListingsActions";
 import {Draggable} from 'react-drag-and-drop';
 
@@ -95,12 +95,15 @@ class Courses extends Component{
 
     getCourses(){
         var courses = this.props.courses;
-        return courses.map((course, index) => {
+        if (courses){
+            return courses.map((course, index) => {
 
-            return (
-                <h5 style={{display:"inline",marginRight:16}} key={index}><a onClick={() => this.link_course(course.posting_id)}>{course.course_code}</a></h5>
-            );
-        });
+                return (
+                    <h5 style={{display:"inline",marginRight:16}} key={index}><a onClick={() => this.link_course(course.posting_id)}>{course.course_code}</a></h5>
+                );
+            });
+        }
+
     }
 
     render(){
@@ -123,6 +126,9 @@ class ApplicantList extends Component{
         ));
         this.props.dispatch(fetchAllRankings(
             applicantClient.get("/rankings", config)
+        ));
+        this.props.dispatch(fetchUnassigned(
+            taCoordClient.get("/assignment/unassigned", config)
         ));
     }
 
@@ -153,7 +159,7 @@ class ApplicantList extends Component{
         var obj = [this.props.applicants.applicants_copy][0];
         var rankings = this.props.applicants.allRankings;
         //console.log(rankings)
-        if (this.props.applicants.fetched && this.props.applicants.ranking_fetched){
+        if (this.props.applicants.fetched && this.props.applicants.ranking_fetched && this.props.applicants.unassigned_fetched){
 
             return Object.keys(obj).map((applicant) => {
                 let dragStyle = {};
