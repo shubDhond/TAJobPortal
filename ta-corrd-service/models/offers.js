@@ -35,8 +35,7 @@ let offerSchema = mongoose.Schema({
     },
 
     deadline: {
-       type: Date,
-        required: true
+       type: Date
     },
 
     notes: {

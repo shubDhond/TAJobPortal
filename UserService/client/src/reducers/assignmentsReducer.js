@@ -7,6 +7,8 @@ export default function reducer(state={
   created: true,
   updating: false,
   updated: false,
+  sending: false,
+  sent: false,
   error: null
 }, action) {
   switch (action.type) {
@@ -80,6 +82,28 @@ export default function reducer(state={
             updating: false,
             updated: true,
             fetched: false,
+            error: null,
+        }
+    }
+    case 'SEND_ASSIGNMENTS_PENDING': {
+        return {
+            ...state,
+            sending: true
+        }
+    }
+    case 'SEND_ASSIGNMENTS_REJECTED': {
+        return {
+            ...state,
+            sending: false,
+            sent: false,
+            error: action.payload,
+        }
+    }
+    case 'SEND_ASSIGNMENTS_FULFILLED': {
+        return {
+            ...state,
+            sending: false,
+            sent: true,
             error: null,
         }
     }

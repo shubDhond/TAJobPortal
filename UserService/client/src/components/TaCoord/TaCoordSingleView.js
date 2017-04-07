@@ -72,6 +72,7 @@ export default class TaCoordSingleView extends React.Component {
             term: course.term,
         });
     }
+  }
 
   render() {
     let tas = [];
@@ -82,15 +83,16 @@ export default class TaCoordSingleView extends React.Component {
         marginBottom: 4
     }
 
-    if(this.props.assignments.fetched){
+    if(this.props.assignments.assignments){
       //look for course_id matching this one
-      let assignments = this.props.assignments.assignments
+      let assignments = this.props.assignments.assignments;
       for(var i = 0; i < assignments.length; i++){
         if(assignments[i].course_id===this.state.course_id){
           if(assignments[i].ta_assignments.length){
 
             for(var ta in assignments[i].ta_assignments){
-              tas.push(<ApplicantListItem key={ta} course_id={this.state.course_id} student_id={assignments[i].ta_assignments[ta].student_id} />)
+              let assignment = assignments[i].ta_assignments[ta];
+              tas.push(<ApplicantListItem key={ta} course_id={this.state.course_id} student_id={assignment.student_id} user_id={assignment.application.user_id} application_id={assignment.application._id} posting_id={assignment.posting_id}/>)
             }
           }
           break;
