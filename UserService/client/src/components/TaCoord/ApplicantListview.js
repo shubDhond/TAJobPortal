@@ -8,13 +8,13 @@ import {fetchApplicants, fetchAllRankings, fetchUnassigned} from "../../actions/
 import { setSingleCourse, toggleComponent } from "../../actions/courseListingsActions";
 import {Draggable} from 'react-drag-and-drop';
 
-class PanelHeader extends Component {
+class PanelHeader extends Component{
     constructor(props) {
         super(props);
         this.state = {};
     }
 
-    render() {
+    render(){
         let dragStyle = {};
 
         if (this.state.dragging) {
@@ -53,29 +53,29 @@ class PanelHeader extends Component {
     }
 }
 
-class AboutMe extends Component {
+class AboutMe extends Component{
 
-    render() {
+    render(){
         return (
             <div >
                 <h4>About me:</h4>
                 <p>Phone Number: {this.props.phone_number}</p>
                 <p>Email: {this.props.email}</p>
                 <p>Program: {this.props.program}</p>
-                <p>year_of_study: {this.props.year_of_study}</p>
-                <p>department_explain: {this.props.department_explain}</p>
-                <p>work_status: {this.props.work_status}</p>
-                <p>work_status_explain: {this.props.work_status_explain}</p>
-                <p>student_status: {this.props.student_status}</p>
-                <p>student_status_explain: {this.props.student_status_explain}</p>
-                <p>status: {this.props.status}</p>
-                <p>previous_assignments: {this.props.previous_assignments}</p>
-                <p>courses: {this.props.courses}</p>
+                <p>Year of study: {this.props.year_of_study}</p>
+                <p>Department explain: {this.props.department_explain}</p>
+                <p>Work status: {this.props.work_status}</p>
+                <p>Work status explain: {this.props.work_status_explain}</p>
+                <p>Student status: {this.props.student_status}</p>
+                <p>Student status explain: {this.props.student_status_explain}</p>
+                <p>Status: {this.props.status}</p>
+                <p>Previous assignments: {this.props.previous_assignments}</p>
+                <p>Courses: {this.props.courses}</p>
             </div>
         );
     }
 }
-class Courses extends Component {
+class Courses extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -101,15 +101,16 @@ class Courses extends Component {
             posting_id: posting_id
         }
         this.props.dispatch(setSingleCourse(state));
-        if (!this.props.show) {
+        if(!this.props.show){
             this.props.dispatch(toggleComponent());
         }
     }
 
-    getCourses() {
+    getCourses(){
         var courses = this.props.courses;
-        if (courses) {
+        if (courses){
             return courses.map((course, index) => {
+
                 return (
                     <div>
                         <h4 style={{
@@ -129,7 +130,7 @@ class Courses extends Component {
 
     }
 
-    render() {
+    render(){
         return (
             <div style={{padding: "16px 0px"}}>
                 {this.getCourses()}
@@ -138,9 +139,9 @@ class Courses extends Component {
     }
 }
 
-class ApplicantList extends Component {
+class ApplicantList extends Component{
 
-    componentWillMount() {
+    componentWillMount(){
         var config = {
             headers: {'x-access-token': this.props.user.user.user_token}
         };
@@ -155,7 +156,7 @@ class ApplicantList extends Component {
         ));
     }
 
-    constructor(props) {
+    constructor(props){
         super(props);
         const {applicants} = this.props.applicants;
 
@@ -164,8 +165,8 @@ class ApplicantList extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        const {applicants} = nextProps;
+    componentWillReceiveProps(nextProps){
+        const { applicants } = nextProps;
 
         if (applicants.fetched) {
             this.setState({
@@ -176,66 +177,79 @@ class ApplicantList extends Component {
         }
     }
 
-    getApplicants() {
+
+
+    getApplicants(){
         //console.log(this.props.applicants.applicants);
         var obj = [this.props.applicants.applicants_copy][0];
         var rankings = this.props.applicants.allRankings;
         //console.log(rankings)
-        if (this.props.applicants.fetched && this.props.applicants.ranking_fetched && this.props.applicants.unassigned_fetched) {
+        if (this.props.applicants.fetched && this.props.applicants.ranking_fetched && this.props.applicants.unassigned_fetched){
 
             return Object.keys(obj).map((applicant) => {
-                return (
-                    <LazyLoad >
-                        <Accordion>
-                            <Panel key={obj[applicant].user_id} header=
-                                {<div>
-                                    <PanelHeader first_name={obj[applicant].first_name}
-                                                 last_name={obj[applicant].last_name}
-                                                 student_id={obj[applicant].student_number}
-                                                 profile_pic={obj[applicant].profile_pic}
-                                                 user_id={obj[applicant].user_id}
-                                                 application_id={obj[applicant].id}/>
-                                </div>}
-                                   footer={
-                                       <div>
-                                           <Courses dispatch={this.props.dispatch}
-                                                    show={this.props.courses.showComponent}
-                                                    courses={rankings[obj[applicant].user_id]}/>
-                                       </div>}
-                                   eventKey={obj[applicant].user_id}>
-                                <div style={{padding: 0}}>
-                                    <AboutMe
-                                        phone_number={obj[applicant].phone_number}
-                                        email={obj[applicant].email}
-                                        program={obj[applicant].program}
-                                        year_of_study={obj[applicant].year_of_study}
-                                        department_explain={obj[applicant].department_explain}
-                                        work_status={obj[applicant].work_status}
-                                        work_status_explain={obj[applicant].work_status_explain}
-                                        student_status={obj[applicant].student_status}
-                                        student_status_explain={obj[applicant].student_status_explain}
-                                        status={obj[applicant].status}
-                                        previous_assignments={obj[applicant].previous_assignments}
-                                        courses={obj[applicant].courses}
-                                    />
+                let dragStyle = {};
 
-                                </div>
-                            </Panel>
+                if (this.state.dragging === obj[applicant].user_id) {
+                    dragStyle['border'] = '2px solid blue';
+                }
+                //console.log(rankings[obj[applicant].user_id])
+
+                return(
+                    <LazyLoad height={'100%'} offsetVertical={300}>
+                        <Accordion>
+                            <Draggable type='applicant'
+                                       data={JSON.stringify({
+                                           student_id: obj[applicant].user_id,
+                                           application_id: obj[applicant].id
+                                       })}
+                                       key={obj[applicant].user_id}
+                                       onDrag={() => this.setState({...this.state, dragging: obj[applicant].user_id})}
+                                       onDragEnd={() => this.setState({...this.state, dragging: null})} >
+                                <Panel key={obj[applicant].user_id} header=
+                                    {<div>
+                                        <PanelHeader first_name={obj[applicant].first_name} last_name={obj[applicant].last_name} student_id={obj[applicant].student_number} profile_pic={obj[applicant].profile_pic}
+                                                     user_id={obj[applicant].user_id} application_id={obj[applicant].id}/>
+                                    </div>}
+                                       footer={<div><Courses dispatch={this.props.dispatch} show={this.props.courses.showComponent} courses={rankings[obj[applicant].user_id]} /></div>}
+                                       eventKey={obj[applicant].user_id}  style={{...dragStyle, marginBottom:15}}>
+                                    <div style={{padding:0}}>
+                                        <AboutMe
+                                            phone_number={obj[applicant].phone_number}
+                                            email={obj[applicant].email}
+                                            program={obj[applicant].program}
+                                            year_of_study={obj[applicant].year_of_study}
+                                            department_explain={obj[applicant].department_explain}
+                                            work_status={obj[applicant].work_status}
+                                            work_status_explain={obj[applicant].work_status_explain}
+                                            student_status={obj[applicant].student_status}
+                                            student_status_explain={obj[applicant].student_status_explain}
+                                            status={obj[applicant].status}
+                                            previous_assignments={obj[applicant].previous_assignments}
+                                            courses={obj[applicant].courses}
+                                        />
+
+                                    </div>
+                                </Panel>
+                            </Draggable>
                         </Accordion>
                     </LazyLoad>
+
                 );
+
             });
-        } else {
+
+        }else {
             return null
+
         }
 
     }
 
 
-    render() {
+    render(){
 
         return (
-            <div style={{padding: 15, overflow: 'auto'}} className="fullheight">
+            <div style={{padding:15,overflow: 'auto'}} className="fullheight">
                 {this.getApplicants()}
             </div>
         );
